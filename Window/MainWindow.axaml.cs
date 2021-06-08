@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using vaYolo;
 using vaYolo.ViewModels;
 using Avalonia.Interactivity;
+using Avalonia.Media;
 
 namespace vaYolo.Views
 {
@@ -91,7 +92,7 @@ namespace vaYolo.Views
         protected void ImageClickUp(object sender, PointerReleasedEventArgs e)
         {
             Draw = false;
-            Ctrl.Add(e.GetCurrentPoint((Avalonia.Controls.Image)sender).Position);
+            Ctrl.Add();
         }
 
         protected void ImageClickMove(object sender, PointerEventArgs e)
@@ -312,12 +313,23 @@ namespace vaYolo.Views
         public void ShowSetClass()
         {
             Setup.Show(this);
-        }                    
+        }
+
+        public override void Render(DrawingContext context)
+        {
+            base.Render(context);
+        }
 
 
-#region menuclick_handlers
+        #region menuclick_handlers
         public void OnNativeLoadFolderClicked(object sender, EventArgs args) => LoadFolder();
-        public void OnLoadFolderClicked(object sender, RoutedEventArgs args) => LoadFolder();        
+        public void OnLoadFolderClicked(object sender, RoutedEventArgs args) => LoadFolder();
+
+        public void OnNativePrevImageClicked(object sender, EventArgs args) => LoadImageByPath(GetPrevPath());
+        public void OnPrevImageClicked(object sender, RoutedEventArgs args) => LoadImageByPath(GetPrevPath());
+
+        public void OnNativeNextImageClicked(object sender, EventArgs args) => LoadImageByPath(GetNextPath());
+        public void OnNextImageClicked(object sender, RoutedEventArgs args) => LoadImageByPath(GetNextPath());
 
         public void OnNativeAboutClicked(object sender, EventArgs args) => ShowAbout();
         public void OnAboutClicked(object sender, RoutedEventArgs args) => ShowAbout();

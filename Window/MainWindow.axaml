@@ -28,6 +28,8 @@
 			<NativeMenuItem Header="Segmentation">
 				<NativeMenuItem.Menu>
 					<NativeMenu>
+						<NativeMenuItem Header="Previous image" Clicked="OnNativePrevImageClicked"/>
+						<NativeMenuItem Header="Next image" Clicked="OnNativeNextImageClicked"/>
 						<NativeMenuItem Header="Set Class" Clicked="OnNativeSetClassClicked"/>
 						<NativeMenuItem Header="Review" Clicked="OnNativeReviewClicked"/>
 					</NativeMenu>
@@ -50,10 +52,12 @@
 			IsVisible="{Binding IsWindowsPlatform}" 
 			IsEnabled="{Binding IsWindowsPlatform}">
 			<MenuItem Header="File">
-				<MenuItem Header="Open Folder" Click="OnSetupClicked"/>
+				<MenuItem Header="Open Folder" Click="OnLoadFolderClicked"/>
 				<MenuItem Header="About vaYolo" Click="OnAboutClicked"/>
 			</MenuItem>
 			<MenuItem Header="Segmentation">
+				<MenuItem Header="Next image" Click="OnPrevImageClicked"/>
+				<MenuItem Header="Previous image" Click="OnNextImageClicked"/>				
 				<MenuItem Header="Set Class" Click="OnSetClassClicked"/>
 				<MenuItem Header="Review" Click="OnReviewClicked"/>
 			</MenuItem>
@@ -66,6 +70,6 @@
 		<loc:VaImage Name="SegImage" Source="{Binding Img}" DockPanel.Dock="Top"
 			PointerPressed="ImageClickDown"
 			PointerMoved="ImageClickMove"
-			PointerReleased="ImageClickUp" Stretch="None"/>
+			PointerReleased="ImageClickUp" Stretch="Uniform"/>
     </DockPanel>
 </Window>

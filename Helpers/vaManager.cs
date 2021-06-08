@@ -78,18 +78,18 @@ namespace vaYolo
             MyFormattedText = texts.ToArray();
         }
 
-        public void Render(DrawingContext context) {
+        public void Render(DrawingContext context, Size size) {
             
             if (SelectedRect != null)
-                SelectedRect.Draw(context, true);
+                SelectedRect.Draw(context, size, true);
 
             if (EditingRect != null)
-                EditingRect.Draw(context);            
+                EditingRect.Draw(context, size);
 
-            Rects.ForEach((r) => r.Draw(context));
+            Rects.ForEach((r) => r.Draw(context, size));
         }
 
-        public void Add(Point pt) {
+        public void Add() {
             if (IsEditMode())
             {
                 if (EditingRect != null)
@@ -126,12 +126,12 @@ namespace vaYolo
 
             if (IsEditMode())
             {
-                EditingRect = SelectedRect != null ? SelectedRect : GetNewRect(pt, objClass);
+                EditingRect = SelectedRect != null ? SelectedRect : GetNewRect(pt, Settings.defaultRectSize, objClass);
                 SelectedRect = null;                
             }
             else
             {
-                SelectedRect = selRects.Count > 0 ? selRects.First() : GetNewRect(pt, objClass);
+                SelectedRect = selRects.Count > 0 ? selRects.First() : GetNewRect(pt, Settings.defaultRectSize, objClass);
                 EditingRect = null;
             }
             selRects.ForEach(r => { Rects.Remove(r); });         
@@ -168,17 +168,17 @@ namespace vaYolo
                     if (SelectedRect == null)
                         throw new Exception("Moving selected Rect Exception");
 
-                    SelectedRect = GetNewRect(pt, SelectedRect.ObjectClass, SelectedRect._Rect.Width, SelectedRect._Rect.Height);
+                    SelectedRect = GetNewRect(pt, new Size(SelectedRect._Rect.Width, SelectedRect._Rect.Height), SelectedRect.ObjectClass);
                     EditingRect = null;
                 break;
             }
         }
 
-        public static VaRect GetNewRect(Point pt, uint objClass = 0, double Width = 32, double Height = 32)
+        public static VaRect GetNewRect(Point pt, Size sz, uint objClass = 0)
         {
             return new VaRect() {
                 ObjectClass = objClass,
-                _Rect = new Rect(pt - new Point(Width / 2, Height / 2), new Size(Width, Height))
+                _Rect = pt.RectCenteredIn(sz.Width, sz.Height)
              };
         }
     }

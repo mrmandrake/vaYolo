@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
+using System;
 
 namespace vaYolo
 {
@@ -22,26 +23,28 @@ namespace vaYolo
         public override void Render(DrawingContext context)
         {
             base.Render(context);
-            manager.Render(context);
+            manager.Render(context, DesiredSize);
         }
 
-        public void Add(Point pt)
+        public void Add()
         {
-            manager.Add(pt);
+            manager.Add();
             EditStartPoint = null;
             InvalidateVisual();
         }
 
-        public void Set(Point pt) 
+        public void Set(Point pt)
         {
-            manager.Set(pt, CurrentObjectClass);
-            EditStartPoint = pt;
+            var normPt = pt.DivBySize(DesiredSize);
+            manager.Set(normPt, CurrentObjectClass);
+            EditStartPoint = normPt;
             InvalidateVisual();
         }
 
         public void Del(Point pt)
         {
-            manager.Del(pt);
+            var normPt = pt.DivBySize(DesiredSize);
+            manager.Del(normPt);
             InvalidateVisual();
         }
 
@@ -49,10 +52,11 @@ namespace vaYolo
         {
             if (!EditStartPoint.HasValue)
                 return;
-                
-            manager.Move(pt, EditStartPoint.Value, CurrentObjectClass);
+
+            var normPt = pt.DivBySize(DesiredSize);
+            manager.Move(normPt, EditStartPoint.Value, CurrentObjectClass);
             if (manager.IsEditMode())
-                EditStartPoint = pt;
+                EditStartPoint = normPt;
 
             InvalidateVisual();
         }
