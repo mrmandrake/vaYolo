@@ -1,0 +1,135 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:sshtest.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="vaYolo.Views.Setup"
+        Title="Setup" 
+        SizeToContent="WidthAndHeight" 
+        WindowStartupLocation="CenterOwner"
+        CanResize="False"        
+        HasSystemDecorations="False"
+        Width="800" Height="400">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <StackPanel>
+        <ExperimentalAcrylicBorder CornerRadius="10" Grid.Row="0" Grid.Column="0" Height="400">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial TintColor="Black" TintOpacity="0.7"
+                                MaterialOpacity="0.7" BackgroundSource="Digger"/>
+            </ExperimentalAcrylicBorder.Material>
+            <TabControl>
+                <TabItem Header="Model">
+                    <StackPanel Margin="10">
+                        <TextBox Name="DarknetDirectory" Watermark="Darknet directory" DockPanel.Dock="Top" Margin="4"/>
+                        <TextBox Name="ConfigurationTemplate" Watermark="Darknet Configuration Template" DockPanel.Dock="Top" Margin="4"/>				
+                    </StackPanel>						
+                </TabItem>
+                <TabItem Header="Configuration">
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150" Text="Network width" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="NetworkWidth" Minimum="32" Maximum="2048" Margin="8"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150"  Text="Network height" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="NetworkHeight" Minimum="32" Maximum="2048" Margin="8"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150"  Text="Batch size" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="BatchSize" Minimum="1" Maximum="512" Margin="8"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150"  Text="Subdivision" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="Subdivision" Minimum="1" Maximum="512" Margin="8"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150"  Text="Max Batches" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="MaxBatches" Minimum="1000" Maximum="100000" Margin="8"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150"  Text="Learning rate" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="LearningRate" Minimum="0.000001" Maximum="0.999999" Margin="8"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150"  Text="Max loss chart.png" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="MaxLossChartPng" Minimum="0.000001" Maximum="0.999999" Margin="8"/>
+                        </StackPanel>
+                        
+                        <CheckBox Name="ResizeImage" Content="Resize Image" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Yolo">
+                    <StackPanel Margin="10">
+                        <CheckBox Name="RecalcYoloAnchors" Content="Recalculate yolo anchors" />
+
+                        <StackPanel Margin="30 10 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Width="200"  Text="Number of anchor clusters" Margin="0 16 0 0"/>
+                                
+                                <NumericUpDown Name="NumAnchorClusters" Minimum="0.000001" Maximum="0.999999" Margin="8"/>
+                            </StackPanel>
+                            <CheckBox Name="HandleClassImbalance" Content="Handle class Imbalance" />
+                        </StackPanel>					
+                    </StackPanel>				
+                    
+                </TabItem>
+                <TabItem Header="Weights">
+                    <StackPanel Margin="10">
+                        <CheckBox Name="TrainAllImages" Content="Train all images" IsChecked="True" />
+
+                        <StackPanel Margin="30 10 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Width="200"  Text="Number of anchor clusters" Margin="0 16 0 0"/>
+                                <NumericUpDown Name="PercTrainingImages" Minimum="0.000001" Maximum="0.999999" Margin="8"/>
+                            </StackPanel>
+                            <CheckBox Name="DeleteTemporaryWeights" Content="Delete temporary weights" />
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Data Aug.">
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150" Text="Saturation" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="Saturation" Minimum="32" Maximum="2048" Margin="8"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150"  Text="Exposure" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="Exposure" Minimum="32" Maximum="2048" Margin="8"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="150"  Text="Hue" Margin="0 16 0 0"/>
+                            <NumericUpDown Name="Hue" Minimum="1" Maximum="512" Margin="8"/>
+                        </StackPanel>
+
+                        <CheckBox Name="EnableFlip" Content="Enable Flip" />
+                        
+                        <CheckBox Name="EnableMosaic" Content="Enable Mosaic" />
+                        
+                        <CheckBox Name="EnableCutMix" Content="Enable CutMix" />
+                        
+                        <CheckBox Name="EnableMixup" Content="Enable Mixup" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Debug">
+                    <StackPanel Margin="10">			
+                        <CheckBox Name="KeepImages" Content="Keep Images" />
+                        <CheckBox Name="ShowReceptiveField" Content="Show receptive fields" />
+                    </StackPanel>
+                </TabItem>
+            </TabControl>    
+        </ExperimentalAcrylicBorder> 
+        <Button Name="Confirm" Content="Confirm" HorizontalAlignment="Right" Margin="10"/>
+    </StackPanel>
+</Window>

@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:vaYolo.ViewModels"
+		xmlns:vw="using:vaYolo.Views"
+		xmlns:loc="using:vaYolo"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="vaYolo.Views.MainWindow"
+        Icon="/Assets/virus.ico"
+        Title="avadmtx"
+		Background="Black">
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<NativeMenu.Menu>
+		<NativeMenu>
+			<NativeMenuItem Header="File">
+				<NativeMenuItem.Menu>
+					<NativeMenu>
+						<NativeMenuItem Header="Open Folder" Clicked="OnNativeLoadFolderClicked"/>
+						<NativeMenuItem Header="About vaYolo" Clicked="OnNativeAboutClicked"/>
+					</NativeMenu>
+				</NativeMenuItem.Menu>
+			</NativeMenuItem>
+			<NativeMenuItem Header="Segmentation">
+				<NativeMenuItem.Menu>
+					<NativeMenu>
+						<NativeMenuItem Header="Set Class" Clicked="OnNativeSetClassClicked"/>
+						<NativeMenuItem Header="Review" Clicked="OnNativeReviewClicked"/>
+					</NativeMenu>
+				</NativeMenuItem.Menu>
+			</NativeMenuItem>
+			<NativeMenuItem Header="Training">
+				<NativeMenuItem.Menu>
+					<NativeMenu>
+						<NativeMenuItem Header="Setup" Clicked="OnNativeSetupClicked"/>
+						<NativeMenuItem Header="Console" Clicked="OnNativeConsoleClicked"/>
+					</NativeMenu>
+				</NativeMenuItem.Menu>
+			</NativeMenuItem>
+		</NativeMenu>	
+	</NativeMenu.Menu>
+
+	<DockPanel LastChildFill="True">
+
+		<Menu DockPanel.Dock="Top" 
+			IsVisible="{Binding IsWindowsPlatform}" 
+			IsEnabled="{Binding IsWindowsPlatform}">
+			<MenuItem Header="File">
+				<MenuItem Header="Open Folder" Click="OnSetupClicked"/>
+				<MenuItem Header="About vaYolo" Click="OnAboutClicked"/>
+			</MenuItem>
+			<MenuItem Header="Segmentation">
+				<MenuItem Header="Set Class" Click="OnSetClassClicked"/>
+				<MenuItem Header="Review" Click="OnReviewClicked"/>
+			</MenuItem>
+			<MenuItem Header="Training">
+				<MenuItem Header="Setup" Click="OnSetupClicked"/>
+				<MenuItem Header="Console" Click="OnConsoleClicked"/>
+			</MenuItem>
+		</Menu>	
+
+		<loc:VaImage Name="SegImage" Source="{Binding Img}" DockPanel.Dock="Top"
+			PointerPressed="ImageClickDown"
+			PointerMoved="ImageClickMove"
+			PointerReleased="ImageClickUp" Stretch="None"/>
+    </DockPanel>
+</Window>
