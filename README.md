@@ -2,7 +2,7 @@
 
 ![vayolo](https://user-images.githubusercontent.com/50768285/121197227-6d90d500-c871-11eb-841e-7bdf9898b320.png)
 
-with vaYolo you can label any dataset at Light speed!
+**with vaYolo you can label any dataset at Light speed!**
 
 Best configuration: **MACBOOK  <------> IPAD + PENCIL** with useful ASTROPAD Studio
 
