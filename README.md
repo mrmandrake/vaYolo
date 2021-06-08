@@ -1,6 +1,6 @@
-<<<<<<< HEAD
-# vaYolo
-Very Anonymous Yolo Segmentation toolkit in the Covid Era
+    Very Anonymous Yolo Segmentation toolkit in the Covid Era
+
+![vayolo](https://user-images.githubusercontent.com/50768285/121197227-6d90d500-c871-11eb-841e-7bdf9898b320.png)
 
 It will create .txt-file for each .jpg-image-file in the same directory and with the same name, but with .txt-extension
 
@@ -41,10 +41,3 @@ Variation:
 - If instead you have 5 big variations and your image set contains 200 images of each one, the neural network trained on those 1000 images will probably be much better than the one from the previous example with 1000 nearly identical images.
 
 - The MAP (mean average precision) and the LOSS charts can somewhat help with that during training, letting you know if the neural network training is successful. But if things aren't working as expected, it wont tell you why, which images, or which classes are causing a problem.
-
-
-=======
-    Very Anonymous Yolo Segmentation toolkit in the Covid Era
-
-![vayolo](https://user-images.githubusercontent.com/50768285/121197227-6d90d500-c871-11eb-841e-7bdf9898b320.png)
->>>>>>> 220a8a220b3db3aedcb0f754a66869dbfd8fb326
