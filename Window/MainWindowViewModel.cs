@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reactive;
 using System.Threading.Tasks;
+using vaYolo.Helpers;
 using vaYolo.Models;
+
 
 namespace vaYolo.ViewModels
 {
@@ -69,8 +71,17 @@ namespace vaYolo.ViewModels
                         Img = Bitmap.DecodeToWidth(File.OpenRead(ImagePath), Settings.ImageDecodeWidth,
                         Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
                     });
+
+                if (!IsJpeg(imagePath))
+                    JpegSaver.Convert(imagePath);
             }
 
+        }
+
+        private bool IsJpeg(string imagePath)
+        {
+            return (Path.GetExtension(imagePath).ToLower() == "jpg") || 
+                   (Path.GetExtension(imagePath).ToLower() == "jpeg");
         }
 
         private string? AddSuffix(string filename, string suffix = "_res")
