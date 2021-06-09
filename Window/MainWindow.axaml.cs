@@ -193,11 +193,11 @@ namespace vaYolo.Views
                 switch (e.Key)
                 {
                     case Key.Left:
-                        LoadImageByPath(GetPrevPath());
+                        LoadImageByPath(GetNextPath());
                         break;
 
                     case Key.Right:
-                        LoadImageByPath(GetNextPath());
+                        LoadImageByPath(GetPrevPath());
                         break;
 
                     case Key.O:
