@@ -1,0 +1,1 @@
+cd /tmp/vayolo.setok && screen -dmSL vayolo.setok /usr/bin/time --verbose /home/manovella/src/darknet/darknet detector -map -dont_show train /tmp/vayolo.setok/setok.data /tmp/vayolo.setok/setok.cfg 2>&1

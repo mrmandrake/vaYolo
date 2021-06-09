@@ -72,10 +72,18 @@ namespace vaYolo.ViewModels
                         Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
                     });
 
-                if (!IsJpeg(imagePath))
-                    JpegSaver.Convert(imagePath);
+                if (!IsJpeg(imagePath)) 
+                    ConvertImageToJpeg(imagePath);
             }
+        }
 
+        private void ConvertImageToJpeg(string imagePath) {
+            try {
+                JpegSaver.Convert(imagePath);
+            }
+            catch (Exception exc) {
+                System.Diagnostics.Debug.WriteLine(exc.Message);                
+            }
         }
 
         private bool IsJpeg(string imagePath)
@@ -143,6 +151,7 @@ namespace vaYolo.ViewModels
                 }
             }
             catch (Exception exc) {
+                System.Diagnostics.Debug.WriteLine(exc.Message);                
             }
 
             return rects;
