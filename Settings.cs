@@ -10,14 +10,24 @@ namespace vaYolo
 {
     public class Settings
     {
-        public static int ImageDecodeWidth = 1920;
+        public static int ImageDecodeWidth { get; set; } = 1920;
 
-        public static Point GaugeDelta = new Point(12, 12);
+        public static Point GaugeDelta { get; set; } = new Point(12, 12);
 
-        public static Point TextDelta = new Point(2, 6);
+        public static Point TextDelta { get; set; } = new Point(2, 6);
 
-        public static Size NormalizedDefaultRectSize = new Size(0.023, 0.04);
+        public static Size NormalizedDefaultRectSize { get; set; }= new Size(0.023, 0.04);
 
-        public static bool MaximizeAfterLoad = false;
+        public static bool MaximizeAfterLoad { get; set; } = false;
+
+        public static string SshServer { get; set; } = "10.171.76.76";
+
+        public static uint SshPort { get; set; } = 22;
+
+        public static string SshUsername { get; set; } = "manovella";
+
+        public static string SshPassword { get; set; } = "";
+
+        public static string SshRemoteYolo { get; set; } = "/home/manovella/darknet";
     }
 }

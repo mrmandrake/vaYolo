@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:vaYolo.ViewModels"
+		xmlns:vw="using:vaYolo.Views"
+		xmlns:loc="using:vaYolo"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avaloniaedit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="vaYolo.Views.Console"
+        Title="Console" CanResize="False"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
+	<Design.DataContext>
+		<vm:ConsoleViewModel/>
+	</Design.DataContext>
+
+	<DockPanel LastChildFill="True" Height="800">
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="4">
+			<TextBlock Text="Server" Margin="0 8 0 0"/>
+			<TextBox Name="Server" Text="{Binding SshServer}" Width="200" Margin="4 0 10 0" />
+			<TextBlock Text="Port"  Margin="10 8 0 0"/>
+			<TextBox Name="Port" Text="{Binding SshPort}" Width="150" Margin="4 0 10 0" />
+			<TextBlock Text="Username" Margin="10 8 0 0"/>
+			<TextBox Name="Username" Text="{Binding SshUsername}" Width="150" Margin="4 0 10 0" />
+			<TextBlock Text="Pwd" Margin="10 8 0 0"/>
+			<TextBox Name="Password" Text="{Binding SshPassword}" PasswordChar="*" Width="150" Margin="4 0 10 0" />
+			<Button Name="btnConn" Click="OnConnectClick" Content="Conn" Margin="30 0 0 0"/>
+			<Button Name="btnDisconn" Click="OnQuitClick" Content="Quit"/>
+		</StackPanel>
+		
+		<Grid RowDefinitions="*,42" ColumnDefinitions="*">
+			<ExperimentalAcrylicBorder CornerRadius="10" Grid.Row="0" Grid.Column="0">
+				<ExperimentalAcrylicBorder.Material>
+					<ExperimentalAcrylicMaterial TintColor="Black" TintOpacity="0.7"
+                                    MaterialOpacity="0.7" BackgroundSource="Digger"/>
+				</ExperimentalAcrylicBorder.Material>
+				<avaloniaedit:TextEditor Name="ConsoleOutput" Margin="8" Document="{Binding Document}"
+                    HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible"/>
+			</ExperimentalAcrylicBorder>
+			<TextBox Grid.Row="1" Grid.Column="0" Height="42" Text="{Binding ConsoleInput}"
+                Background="DarkGray" Foreground="LightGray" FontFamily="Consolas" Margin="0 8 0 8"
+                Name="InputBlock" BorderBrush="{x:Null}" SelectionBrush="{x:Null}"/>
+		</Grid>
+		
+	</DockPanel>
+</Window>

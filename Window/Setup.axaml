@@ -22,7 +22,34 @@
                                 MaterialOpacity="0.7" BackgroundSource="Digger"/>
             </ExperimentalAcrylicBorder.Material>
             <TabControl>
-                <TabItem Header="Model">
+				<TabItem Header="Settings">
+					<StackPanel Margin="10">
+						<StackPanel Orientation="Horizontal">
+						<TextBlock Width="150"  Text="ImageDecodeWidth" Margin="0 16 0 0"/>
+						<NumericUpDown Name="ImageDecodeWidth" Minimum="720" Maximum="6000" Margin="8"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="150"  Text="Gauge Dim" Margin="0 16 0 0"/>
+						<NumericUpDown Name="GaugeDim" Minimum="4" Maximum="32" Margin="8"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="150"  Text="Normalized Default Rect Size" Margin="0 16 0 0"/>
+						<NumericUpDown Name="NormalizedDefaultRectSize" Minimum="0.01" Maximum="0.5" Margin="8"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Width="150"  Text="Maximize After Load" Margin="0 16 0 0"/>
+						<CheckBox Name="MaximizeAfterLoad" Margin="8"/>
+					</StackPanel>
+
+						<StackPanel Orientation="Horizontal">
+						    <TextBox Name="SshServer" Watermark="Ssh Server" DockPanel.Dock="Top" Margin="4"/>
+						    <NumericUpDown Name="SshPort" Minimum="22" Maximum="65535" Margin="8"/>
+						</StackPanel>
+						<TextBox Name="SshUsername" Watermark="Ssh username" DockPanel.Dock="Top" Margin="4"/>
+						<TextBox Name="SshPassword" Watermark="Ssh password" DockPanel.Dock="Top" Margin="4" PasswordChar="."/>
+					</StackPanel>
+				</TabItem>
+				<TabItem Header="Model">
                     <StackPanel Margin="10">
                         <TextBox Name="DarknetDirectory" Watermark="Darknet directory" DockPanel.Dock="Top" Margin="4"/>
                         <TextBox Name="ConfigurationTemplate" Watermark="Darknet Configuration Template" DockPanel.Dock="Top" Margin="4"/>				
@@ -129,7 +156,8 @@
                     </StackPanel>
                 </TabItem>
             </TabControl>    
-        </ExperimentalAcrylicBorder> 
-        <Button Name="Confirm" Content="Confirm" HorizontalAlignment="Right" Margin="10"/>
+        </ExperimentalAcrylicBorder>
+		<Button Name="Cancel" Content="Cancel" HorizontalAlignment="Right" Margin="10" Click="OnCancel"/>
+		<Button Name="Confirm" Content="Confirm" HorizontalAlignment="Right" Margin="10"/>
     </StackPanel>
 </Window>

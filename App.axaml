@@ -9,7 +9,8 @@
 
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
-    </Application.Styles>
+		<StyleInclude Source="avares://AvaloniaEdit/AvaloniaEdit.xaml" />
+	</Application.Styles>
 
     <NativeMenu.Menu>
         <NativeMenu>

@@ -305,7 +305,7 @@ namespace vaYolo.Views
 
         public void ShowConsoleTrain()
         {
-            Setup.Show(this);
+            Console.Show(null);
         }                    
 
         public void ShowSetClass()

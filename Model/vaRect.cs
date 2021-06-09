@@ -23,6 +23,9 @@ namespace vaYolo.Models
 
         public void Draw(DrawingContext context, Size sz, bool selected = false)
         {
+            if (VaManager.MyPens == null)
+                return;
+
             var selIdx = VaManager.MyBrushes.Length - 1;
             var pen = VaManager.MyPens[selected ? selIdx : ObjectClass];
             var brush = VaManager.MyBrushes[selected ? selIdx : ObjectClass];

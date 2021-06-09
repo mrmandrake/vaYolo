@@ -1,6 +1,7 @@
 using System.IO;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
 namespace vaYolo.Views
@@ -28,6 +29,8 @@ namespace vaYolo.Views
             else 
                 dlg.Show();
         }
+
+        public void OnCancel(object sender, RoutedEventArgs args) => Close();
 
         // public void Save() {
         //     string darknetDir;
