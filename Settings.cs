@@ -10,6 +10,8 @@ namespace vaYolo
 {
     public class Settings
     {
+        public static int ImageDecodeWidth = 1920;
+
         public static Point GaugeDelta = new Point(12, 12);
 
         public static Point TextDelta = new Point(2, 6);
@@ -17,7 +19,5 @@ namespace vaYolo
         public static Size NormalizedDefaultRectSize = new Size(0.023, 0.04);
 
         public static bool MaximizeAfterLoad = false;
-
-
     }
 }

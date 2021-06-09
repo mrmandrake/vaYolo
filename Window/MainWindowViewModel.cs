@@ -66,7 +66,7 @@ namespace vaYolo.ViewModels
                 await Task.Run(
                     () =>
                     {
-                        Img = Bitmap.DecodeToWidth(File.OpenRead(ImagePath), 1440,
+                        Img = Bitmap.DecodeToWidth(File.OpenRead(ImagePath), Settings.ImageDecodeWidth,
                         Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
                     });
             }
@@ -81,7 +81,7 @@ namespace vaYolo.ViewModels
             return (fDir != null) ? Path.Combine(fDir, String.Concat(fName, suffix, fExt)) : null;
         }
 
-        public string? SaveData(List<VaRect> rects, Size imgSize)
+        public string? SaveData(List<VaRect> rects)
         {
             if (DataPath == null)
                 return null;
@@ -92,10 +92,10 @@ namespace vaYolo.ViewModels
                 rects.ForEach((r) =>
                 {
                     txtWriter.WriteField(r.ObjectClass.ToString());
-                    txtWriter.WriteField(r._Rect.Center.X / imgSize.Width);
-                    txtWriter.WriteField(r._Rect.Center.Y / imgSize.Height);
-                    txtWriter.WriteField(r._Rect.Width / imgSize.Width);
-                    txtWriter.WriteField(r._Rect.Height / imgSize.Height);
+                    txtWriter.WriteField(r._Rect.Center.X);
+                    txtWriter.WriteField(r._Rect.Center.Y);
+                    txtWriter.WriteField(r._Rect.Width);
+                    txtWriter.WriteField(r._Rect.Height);
                     txtWriter.NextRecord();
                 });
             }
@@ -103,7 +103,7 @@ namespace vaYolo.ViewModels
             return DataPath;
         }
 
-        public List<VaRect> LoadData(Size imgSize)
+        public List<VaRect> LoadData()
         {
             List<VaRect> rects = new();
 
@@ -116,10 +116,10 @@ namespace vaYolo.ViewModels
 
                         while (txtReader.NextRecord()) {
                             uint objClass = txtReader.ReadField<uint>();
-                            var cX = txtReader.ReadField<double>() * imgSize.Width;
-                            var cY = txtReader.ReadField<double>() * imgSize.Height;
-                            var w = txtReader.ReadField<double>() * imgSize.Width;
-                            var h = txtReader.ReadField<double>() * imgSize.Height;
+                            var cX = txtReader.ReadField<double>();
+                            var cY = txtReader.ReadField<double>();
+                            var w = txtReader.ReadField<double>();
+                            var h = txtReader.ReadField<double>();
 
                             rects.Add(new VaRect() {
                                 _Rect = new Rect(

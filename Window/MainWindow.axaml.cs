@@ -225,7 +225,7 @@ namespace vaYolo.Views
             if (ViewModel == null)
                 return;
 
-            var path = ViewModel.SaveData(VaManager.Instance.Rects, Ctrl.DesiredSize);
+            var path = ViewModel.SaveData(VaManager.Instance.Rects);
             Saved = true;
         }        
 
@@ -254,7 +254,7 @@ namespace vaYolo.Views
 
             await ViewModel.LoadImage(imagePath);
             if (ViewModel.Img != null)
-                VaManager.Instance.Rects = ViewModel.LoadData(ViewModel.Img.Size);
+                VaManager.Instance.Rects = ViewModel.LoadData();
 
             if (Settings.MaximizeAfterLoad)
                 MaximizeAfterLoad();
@@ -276,7 +276,7 @@ namespace vaYolo.Views
 
             await ViewModel.LoadImage(await GetPath());
             if (ViewModel.Img != null)
-                VaManager.Instance.Rects = ViewModel.LoadData(ViewModel.Img.Size);
+                VaManager.Instance.Rects = ViewModel.LoadData();
 
             if (Settings.MaximizeAfterLoad)
                 MaximizeAfterLoad();
