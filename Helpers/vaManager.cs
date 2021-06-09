@@ -79,7 +79,8 @@ namespace vaYolo
         }
 
         public void Render(DrawingContext context, Size size) {
-            
+            VaRect.Update(size);
+
             if (SelectedRect != null)
                 SelectedRect.Draw(context, size, true);
 
@@ -126,12 +127,12 @@ namespace vaYolo
 
             if (IsEditMode())
             {
-                EditingRect = SelectedRect != null ? SelectedRect : GetNewRect(pt, Settings.defaultRectSize, objClass);
+                EditingRect = SelectedRect != null ? SelectedRect : GetNewRect(pt, Settings.NormalizedDefaultRectSize, objClass);
                 SelectedRect = null;                
             }
             else
             {
-                SelectedRect = selRects.Count > 0 ? selRects.First() : GetNewRect(pt, Settings.defaultRectSize, objClass);
+                SelectedRect = selRects.Count > 0 ? selRects.First() : GetNewRect(pt, Settings.NormalizedDefaultRectSize, objClass);
                 EditingRect = null;
             }
             selRects.ForEach(r => { Rects.Remove(r); });         

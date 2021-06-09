@@ -5,14 +5,19 @@ namespace vaYolo.Models
 {
     public class VaRect
     {
+        public static Point normalizedGaugeDelta;
+
+        public static Point normalizedTextDelta;
+
         public Rect _Rect { get; set; }
         public uint ObjectClass { get; set; }
+
         public Rect[] GetGauges()
         {
             return new Rect[]
             {
-                new Rect(_Rect.TopLeft, _Rect.TopLeft + Settings.gaugeDelta),
-                new Rect(_Rect.BottomRight - Settings.gaugeDelta, _Rect.BottomRight)
+                new Rect(_Rect.TopLeft, _Rect.TopLeft + normalizedGaugeDelta),
+                new Rect(_Rect.BottomRight - normalizedGaugeDelta, _Rect.BottomRight)
             };
         }
 
@@ -21,13 +26,14 @@ namespace vaYolo.Models
             var selIdx = VaManager.MyBrushes.Length - 1;
             var pen = VaManager.MyPens[selected ? selIdx : ObjectClass];
             var brush = VaManager.MyBrushes[selected ? selIdx : ObjectClass];
-            context.DrawRectangle(pen, _Rect.MulBySize(sz));
             var gs = GetGauges();
-            //context.FillRectangle(brush, gs[0].MulBySize(sz));
-            //context.FillRectangle(brush, gs[1].MulBySize(sz));
+            var rc = _Rect.MulBySize(sz);
+            context.DrawRectangle(pen, rc);
+            context.FillRectangle(brush, gs[0].MulBySize(sz));
+            context.FillRectangle(brush, gs[1].MulBySize(sz));
             context.DrawText(VaManager.MyBrushes[ObjectClass], 
-                             _Rect.TopRight + Settings.textDelta, 
-                             VaManager.MyFormattedText[ObjectClass]);
+                rc.TopRight +Settings.TextDelta, 
+                VaManager.MyFormattedText[ObjectClass]);
         }
 
         public bool IsInLowerGauge(Point pt)
@@ -44,6 +50,12 @@ namespace vaYolo.Models
                 return true;
 
             return false;
+        }
+
+        internal static void Update(Size size)
+        {
+            VaRect.normalizedGaugeDelta = Settings.GaugeDelta.DivBySize(size);
+            VaRect.normalizedTextDelta = Settings.TextDelta.DivBySize(size);
         }
     }
 }

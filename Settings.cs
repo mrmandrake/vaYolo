@@ -10,11 +10,13 @@ namespace vaYolo
 {
     public class Settings
     {
-        public static Point gaugeDelta = new Point(0.001, 0.001);
+        public static Point GaugeDelta = new Point(12, 12);
 
-        public static Point textDelta = new Point(0.02, 0.06);
+        public static Point TextDelta = new Point(2, 6);
 
-        public static Size defaultRectSize = new Size(0.023, 0.04);
+        public static Size NormalizedDefaultRectSize = new Size(0.023, 0.04);
+
+        public static bool MaximizeAfterLoad = false;
 
 
     }

@@ -155,7 +155,7 @@ namespace vaYolo.Views
                 Notify("No Images found!!", "Loading content");
         }
 
-        private string? GetPrevPath()
+        private string? GetNextPath()
         {
             var images = GetImagesInFolder(ViewModel.ImagePath);
             var idx = images.IndexOf(ViewModel.ImagePath);
@@ -167,7 +167,7 @@ namespace vaYolo.Views
             return images[--idx];
         }
 
-        private string? GetNextPath()
+        private string? GetPrevPath()
         {
             var images = GetImagesInFolder(ViewModel.ImagePath);
             var idx = images.IndexOf(ViewModel.ImagePath);
@@ -252,16 +252,18 @@ namespace vaYolo.Views
             DataSavedCheck();
             Saved = false;
 
-            ViewModel.ImagePath = imagePath;
-            if (ViewModel.ImagePath != null)
-            {
-                await ViewModel.LoadImage();
-                if (ViewModel.Img != null)
-                    VaManager.Instance.Rects = ViewModel.LoadData(ViewModel.Img.Size);
+            await ViewModel.LoadImage(imagePath);
+            if (ViewModel.Img != null)
+                VaManager.Instance.Rects = ViewModel.LoadData(ViewModel.Img.Size);
 
-                this.WindowState = WindowState.Maximized;
-                // Notify(ViewModel.ImagePath + " Loaded!", "Loaded Image");
-            }
+            if (Settings.MaximizeAfterLoad)
+                MaximizeAfterLoad();
+        }
+
+        private void MaximizeAfterLoad()
+        {
+            this.WindowState = WindowState.Maximized;
+            Notify(ViewModel.ImagePath + " Loaded!", "Loaded Image");
         }
 
         private async void LoadImage()
@@ -272,16 +274,12 @@ namespace vaYolo.Views
             DataSavedCheck();
             Saved = false;
 
-            ViewModel.ImagePath = await GetPath();
-            if (ViewModel.ImagePath != null)
-            {
-                await ViewModel.LoadImage();
-                if (ViewModel.Img != null)
-                    VaManager.Instance.Rects = ViewModel.LoadData(ViewModel.Img.Size);
+            await ViewModel.LoadImage(await GetPath());
+            if (ViewModel.Img != null)
+                VaManager.Instance.Rects = ViewModel.LoadData(ViewModel.Img.Size);
 
-                this.WindowState = WindowState.Maximized;
-                Notify(ViewModel.ImagePath + " Loaded!", "Loaded Image");
-            }
+            if (Settings.MaximizeAfterLoad)
+                MaximizeAfterLoad();
         }
 
         private void SetCurrentClass(uint c)

@@ -49,8 +49,8 @@
 	<DockPanel LastChildFill="True">
 
 		<Menu DockPanel.Dock="Top" 
-			IsVisible="{Binding IsWindowsPlatform}" 
-			IsEnabled="{Binding IsWindowsPlatform}">
+			IsVisible="{Binding IsWin}" 
+			IsEnabled="{Binding IsWin}">
 			<MenuItem Header="File">
 				<MenuItem Header="Open Folder" Click="OnLoadFolderClicked"/>
 				<MenuItem Header="About vaYolo" Click="OnAboutClicked"/>

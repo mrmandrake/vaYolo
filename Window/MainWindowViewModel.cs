@@ -58,16 +58,21 @@ namespace vaYolo.ViewModels
             NormalizedRoi.Add(rc);
         }
 
-        public async Task LoadImage()
+        public async Task LoadImage(string? imagePath)
         {
-            if (ImagePath != null)
+            if (imagePath != null)
+            {
+                ImagePath = imagePath;
                 await Task.Run(
                     () =>
                     {
                         Img = Bitmap.DecodeToWidth(File.OpenRead(ImagePath), 1440,
                         Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
                     });
+            }
+
         }
+
         private string? AddSuffix(string filename, string suffix = "_res")
         {
             string? fDir = Path.GetDirectoryName(filename);
