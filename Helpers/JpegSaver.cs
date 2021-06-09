@@ -24,15 +24,17 @@ namespace vaYolo.Helpers
 
         public static void Convert(string imagePath)
         {
-            Encoder myEncoder = Encoder.Quality;
-            var encPars = new System.Drawing.Imaging.EncoderParameters(1);
-            var encPar = new System.Drawing.Imaging.EncoderParameter(myEncoder, 100L);
-            encPars.Param[0] = encPar;
-            new System.Drawing.Bitmap(imagePath)
-                    .Save(Path.Combine(Path.GetDirectoryName(imagePath), Path.GetFileNameWithoutExtension(imagePath) + ".jpg"),
-                          GetEncoderInfo("image/jpeg"),
-                          encPars);
-        }
+            var jpegPath = Path.Combine(Path.GetDirectoryName(imagePath), Path.GetFileNameWithoutExtension(imagePath) + ".jpg");
 
+            if (!File.Exists(jpegPath))
+            {
+                Encoder myEncoder = Encoder.Quality;
+                var encPars = new System.Drawing.Imaging.EncoderParameters(1);
+                var encPar = new System.Drawing.Imaging.EncoderParameter(myEncoder, 100L);
+                encPars.Param[0] = encPar;
+                var encInfo = GetEncoderInfo("image/jpeg");
+                new System.Drawing.Bitmap(imagePath).Save(jpegPath, encInfo, encPars);
+            }
+        }
     }
 }
