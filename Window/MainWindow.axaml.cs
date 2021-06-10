@@ -149,6 +149,8 @@ namespace vaYolo.Views
                 Title = "Open Folder Dialog"
             }.ShowAsync(this);
 
+            Settings.Load(folder);
+
             if (!TryLoadFirstImage(folder, new List<string>() {
                 ".png", ".jpg", ".jpeg",
                 ".PNG", ".JPG", ".JPEG"}))
@@ -256,7 +258,7 @@ namespace vaYolo.Views
             if (ViewModel.Img != null)
                 VaManager.Instance.Rects = ViewModel.LoadData();
 
-            if (Settings.MaximizeAfterLoad)
+            if (Settings.Get().MaximizeAfterLoad)
                 MaximizeAfterLoad();
         }
 
@@ -278,7 +280,7 @@ namespace vaYolo.Views
             if (ViewModel.Img != null)
                 VaManager.Instance.Rects = ViewModel.LoadData();
 
-            if (Settings.MaximizeAfterLoad)
+            if (Settings.Get().MaximizeAfterLoad)
                 MaximizeAfterLoad();
         }
 

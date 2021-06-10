@@ -35,7 +35,7 @@ namespace vaYolo.Models
             context.FillRectangle(brush, gs[0].MulBySize(sz));
             context.FillRectangle(brush, gs[1].MulBySize(sz));
             context.DrawText(VaManager.MyBrushes[ObjectClass], 
-                rc.TopRight +Settings.TextDelta, 
+                rc.TopRight + Settings.Get().TextDelta, 
                 VaManager.MyFormattedText[ObjectClass]);
         }
 
@@ -57,8 +57,11 @@ namespace vaYolo.Models
 
         internal static void Update(Size size)
         {
-            VaRect.normalizedGaugeDelta = Settings.GaugeDelta.DivBySize(size);
-            VaRect.normalizedTextDelta = Settings.TextDelta.DivBySize(size);
+            if (Settings.Get() != null)
+            {
+                VaRect.normalizedGaugeDelta = Settings.Get().GaugeDelta.DivBySize(size);
+                VaRect.normalizedTextDelta = Settings.Get().TextDelta.DivBySize(size);
+            }
         }
     }
 }

@@ -68,7 +68,7 @@ namespace vaYolo.ViewModels
                 await Task.Run(
                     () =>
                     {
-                        Img = Bitmap.DecodeToWidth(File.OpenRead(ImagePath), Settings.ImageDecodeWidth,
+                        Img = Bitmap.DecodeToWidth(File.OpenRead(ImagePath), Settings.Get().ImageDecodeWidth,
                         Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
                     });
 

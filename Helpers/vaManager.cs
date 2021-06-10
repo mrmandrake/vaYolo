@@ -267,12 +267,12 @@ namespace vaYolo
 
             if (IsEditMode())
             {
-                EditingRect = SelectedRect != null ? SelectedRect : GetNewRect(pt, Settings.NormalizedDefaultRectSize, objClass);
+                EditingRect = SelectedRect != null ? SelectedRect : GetNewRect(pt, Settings.Get().NormalizedDefaultRectSize, objClass);
                 SelectedRect = null;                
             }
             else
             {
-                SelectedRect = selRects.Count > 0 ? selRects.First() : GetNewRect(pt, Settings.NormalizedDefaultRectSize, objClass);
+                SelectedRect = selRects.Count > 0 ? selRects.First() : GetNewRect(pt, Settings.Get().NormalizedDefaultRectSize, objClass);
                 EditingRect = null;
             }
             selRects.ForEach(r => { Rects.Remove(r); });         

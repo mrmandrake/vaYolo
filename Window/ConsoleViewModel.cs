@@ -13,6 +13,7 @@ using Renci.SshNet;
 using System.IO;
 using AvaloniaEdit.Document;
 using Renci.SshNet.Common;
+using Avalonia.Media.Imaging;
 
 namespace vaYolo.ViewModels
 {
@@ -29,27 +30,27 @@ namespace vaYolo.ViewModels
             set => this.RaiseAndSetIfChanged(ref document, value);
         }
         
-        string sshServer = Settings.SshServer;
+        string sshServer = Settings.Get().SshServer;
         public string SshServer
         {
             get => sshServer;
             set => this.RaiseAndSetIfChanged(ref sshServer, value);
         }
         
-        string sshPort = Convert.ToString(Settings.SshPort);
+        string sshPort = Convert.ToString(Settings.Get().SshPort);
         public string SshPort
         {
             get => sshPort;
             set => this.RaiseAndSetIfChanged(ref sshPort, value);
         }
         
-        string sshUsername = Settings.SshUsername;
+        string sshUsername = Settings.Get().SshUsername;
         public string SshUsername
         {
             get => sshUsername;
             set => this.RaiseAndSetIfChanged(ref sshUsername, value);
         }
-        string sshPassword = Settings.SshPassword;
+        string sshPassword = Settings.Get().SshPassword;
         public string SshPassword
         {
             get => sshPassword;
@@ -109,7 +110,6 @@ namespace vaYolo.ViewModels
                 sshclient.IsConnected) {
                 write("Disconnect...");
                 sshclient.Disconnect();
-                sshclient.Dispose();
                 write("Disconnected!");
             }
         }
@@ -145,13 +145,34 @@ namespace vaYolo.ViewModels
             }   
         }
 
-        public void SftpCopy(string folder) {
+
+        public string? RunCommandEx(string cmd)
+        {
+            if (sshclient == null)
+            {
+                write("client not connected!!!");
+                return null;
+            }
+
+            try
+            {
+                using (var _cmd = sshclient.CreateCommand(cmd))
+                    return _cmd.Execute();
+            }
+            catch (Exception exc)
+            {
+                write(exc.Message);
+            }
+
+            return null;
+        }
+
+        public void SftpGet(string local, string remote, string filename) {
             var sftp = new SftpClient(conn);
-            string uploadfn = "Renci.SshNet.dll";
             sftp.Connect();
-            sftp.ChangeDirectory("/tmp/uploadtest");
-            using (var uplfileStream = System.IO.File.OpenRead(uploadfn))
-                sftp.UploadFile(uplfileStream, uploadfn, true);
+            sftp.ChangeDirectory(remote);
+            using (Stream f = File.OpenWrite(Path.Combine(local, filename)))
+                sftp.DownloadFile(filename, f);
 
             sftp.Disconnect();
         }
@@ -182,6 +203,35 @@ namespace vaYolo.ViewModels
 
                 return true;
             }
-        }           
+        }
+
+        private int GetScreenPid()
+        {
+            var output = RunCommandEx("Screen -list");
+            return -1;
+        }
+
+        private void LaunchTrain(string remote, string name, string darknetPath)
+        {
+            string setfolder = String.Format("cd {0} &&", remote);
+            string screencmd = String.Format("screen -dmSL {0} ", name);
+            string timecmd = "/usr/bin/time --verbose ";
+            string darknetcmd = String.Format("{0} detector -map -dont_show train", darknetPath);
+            string dataPath = String.Format("{0}/setok.data");
+            string cfgPath = String.Format("{0}/setok.cfg");
+            string redirectStd = "2>&1";
+            RunCommand(setfolder + screencmd + timecmd + darknetcmd + dataPath + cfgPath + redirectStd);
+        }
+
+        private void GetLogTail(string remote)
+        {
+            RunCommand(String.Format("tail " + remote + "screenlog.0"));
+        }
+
+        private void GetChart()
+        {
+            //if (SftpGet(remote, "chart.png"))
+
+        }
     }
 }
