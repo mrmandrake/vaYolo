@@ -66,7 +66,7 @@ namespace vaYolo.Views
 
             this.WhenActivated((d) => { 
                 HasSystemDecorations = true;
-                // WindowState = WindowState.Maximized; 
+                LoadFolder();
             });
         }
 

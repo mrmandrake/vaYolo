@@ -60,7 +60,7 @@ namespace vaYolo.Views
         void InputBlock_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) {
-                ViewModel.ShowCommand(input.Text);
+                ViewModel.Run(input.Text);
                 input.Text = string.Empty;
                 input.Focus();
                 output.TextArea.ScrollToLine(output.Document.LineCount);

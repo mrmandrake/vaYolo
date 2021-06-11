@@ -15,25 +15,12 @@ using AvaloniaEdit.Document;
 using Renci.SshNet.Common;
 using Avalonia.Media.Imaging;
 using System.Text.RegularExpressions;
+using vaYolo.Helpers;
 
 namespace vaYolo.ViewModels
 {
     public class ConsoleViewModel : ReactiveObject
     {
-        private List<string> lstExt = new()
-        {
-            "*.png",
-            "*.jpg",
-            "*.txt",
-            "*.cfg",
-            "*.names",
-            "*.data"
-        };
-
-        ConnectionInfo conn;
-        SshClient sshclient;
-        SftpClient sftpclient;
-
         TextDocument document;
         public TextDocument Document
         {
@@ -147,210 +134,48 @@ namespace vaYolo.ViewModels
             write("Local Folder:" + SshLocalFolder);
             write("Remote Folder:" + SshRemoteFolder);
 
-            try
-            {
-                conn = new(SshServer, Convert.ToUInt16(SshPort),
-                    SshUsername,
-                    new AuthenticationMethod[] {
-                        new PasswordAuthenticationMethod(SshUsername, SshPassword)}) {
-                    Timeout = new TimeSpan(0, 0, 5)
-                };
+            if (Ssh.Init(sshServer, 
+                    Convert.ToUInt16(sshPort), 
+                    sshUsername, 
+                    sshPassword))
+                    write("Connected!");
 
-                sshclient = new SshClient(conn);
-                sshclient.Connect();
-                write("Connected!");
-            }
-            catch (Exception exc)
-            {
-                write(exc.Message);
-            }
-
-            ScreenPid = GetScreenPid();
-            if (ScreenPid > 0) 
-                write(String.Format("Found screen active with pid {0}", ScreenPid));
-            else
-                write("No active screen found");
-
-
-            write("Remote Folder " + (!SftpExists(SshRemoteFolder) ? "NOT" : "") + " exist!");
-            SftpSyncTo(SshLocalFolder, SshRemoteFolder);
+            ScreenPid = GetScreenPid();            
+            write("Remote Folder " + (!Sftp.Exists(Ssh.Connection, SshRemoteFolder) ? "NOT" : "") + " exist!");
+            var (s1, s2) = Sftp.Sync(Ssh.Connection, SshLocalFolder, SshRemoteFolder);
+            if (s1)
+                s2.ForEach((f) => write("updaload file" + f));
             return true;
         }
 
         public void Finish()
         {
-            if (sshclient != null &&
-                sshclient.IsConnected)
-            {
-                write("Disconnect...");
-                sshclient.Disconnect();
-                write("Disconnected!");
-            }
-        }
+            write("Disconnect...");            
+            Ssh.Finish();
+            write("Disconnected!");
 
-        public void ShowCommand(string cmd)
-        {
-            if (sshclient == null)
-            {
-                write("client not connected!!!");
-                return;
-            }
-
-            try
-            {
-                using (var _cmd = sshclient.CreateCommand(cmd))
-                {
-                    var result = _cmd.BeginExecute();
-                    using (var reader = new StreamReader(_cmd.ExtendedOutputStream, Encoding.UTF8, true, 1024, true))
-                    {
-                        while (!result.IsCompleted || !reader.EndOfStream)
-                        {
-                            string line = reader.ReadLine();
-                            if (line != null)
-                                write(line);
-                        }
-
-                        if (_cmd.Result != null)
-                            write(_cmd.Result);
-                    }
-
-                    _cmd.EndExecute(result);
-                }
-            }
-            catch (Exception exc)
-            {
-                write(exc.Message);
-            }
-        }
-
-        public string? GetCommandResult(string cmd)
-        {
-            if (sshclient == null)
-            {
-                write("client not connected!!!");
-                return string.Empty;
-            }
-
-            try
-            {
-                using (var _cmd = sshclient.CreateCommand(cmd))
-                {
-                    var asres = _cmd.BeginExecute();
-                    using (var reader = new StreamReader(_cmd.ExtendedOutputStream, Encoding.UTF8, true, 1024, true))
-                    {
-                        while (!asres.IsCompleted || !reader.EndOfStream)
-                            reader.ReadLine();
-
-                        return _cmd.Result;
-                    }
-
-                    _cmd.EndExecute(asres);
-                }
-            }
-            catch (Exception exc)
-            {
-                write(exc.Message);
-            }
-
-            return string.Empty;
-        }
-
-        public bool SftpGet(string filename)
-        {
-            try
-            {
-                using (var sftp = new SftpClient(conn))
-                {
-                    sftp.Connect();
-                    sftp.ChangeDirectory(SshRemoteFolder);
-                    using (Stream f = File.OpenWrite(Path.Combine(SshLocalFolder, filename))) {
-                        write(String.Format("Downloading {0} from {1} in {2}", 
-                            filename, 
-                            SshRemoteFolder, 
-                            SshLocalFolder));
-
-                        sftp.DownloadFile(filename, f);
-                    }
-
-                    sftp.Disconnect();
-                }
-                return true;
-            }
-            catch (Exception exc)
-            {
-                write (exc.Message);
-            }
-
-            return false;
-        }
-
-        public bool SftpExists(string path)
-        {
-            bool result = false;
-            using (var sftp = new SftpClient(conn))
-            {
-                try
-                {
-                    sftp.Connect();
-                    result = sftp.Exists(path);
-                }
-                catch (Exception exc)
-                {
-                    write(exc.Message);
-                }
-            }
-
-            return result;
-        }
-
-        private bool SftpSyncTo(string local, string remote)
-        {
-            using (var sftp = new SftpClient(conn))
-            {
-                try {
-                    sftp.Connect();
-                    if (!sftp.IsConnected)
-                        return false;
-
-                    // Try to create a remote directory. If it throws an exception, we will assume
-                    // for now that the directory already exists. See https://github.com/sshnet/SSH.NET/issues/25
-                    try {
-                        sftp.CreateDirectory(remote);
-                    }
-                    catch (SshException exc)
-                    {
-                        // write(exc.Message);
-                    }
-
-                    lstExt.ForEach((ext) =>
-                    {
-                        foreach (var file in sftp.SynchronizeDirectories(local, remote, ext))
-                            write("Updating " + file.Name);
-                    });
-
-                }
-                catch (Exception exc)
-                {
-                    write(exc.Message);
-                }
-
-
-                return true;
-            }
-
-            return false;
-        }
+        }    
 
         private int GetScreenPid()
         {
+            int pid = -1;
             string re = String.Format("[0123456789]+(.{0})", sshScreenName);
-            string output = GetCommandResult("screen -list");
-            Match m = Regex.Match(output, re, RegexOptions.IgnoreCase);
+            string? output = Ssh.GetCmdResult("screen -list");
+            if (output != null) {
+                Match m = Regex.Match(output, re, RegexOptions.IgnoreCase);
 
-            if (m.Success)
-                return Convert.ToInt32(m.Value.Substring(0, m.Value.IndexOf('.')));
+                if (m.Success) {
+                    pid = Convert.ToInt32(m.Value.Substring(0, m.Value.IndexOf('.')));                    
+                    if (pid > 0) 
+                        write(String.Format("Found screen active with pid {0}", pid));
+                    else
+                        write("No active screen found");
+                }
+                else
+                    write("Error analyzing re");
+            }
 
-            return -1;
+            return pid;
         }
 
         private void LaunchTrain(string remote, string name, string darknetPath)
@@ -363,15 +188,19 @@ namespace vaYolo.ViewModels
             string dataPath = String.Format("{0}/setok.data", remote);
             string cfgPath = String.Format("{0}/setok.cfg", remote);
             string redirectStd = "2>&1";
-            // ShowCommand(setfolder + screencmd + timecmd + darknetcmd + dataPath + cfgPath + redirectStd);
-            ShowCommand(setfolder + screencmd + test);
+            // var cmd = setfolder + screencmd + timecmd + darknetcmd + dataPath + cfgPath + redirectStd;
+            var cmd = setfolder + screencmd + test;
+            write("run " + cmd);
+            write(Ssh.Run(cmd));
         }
 
-        private void GetLogTail(string remote) => ShowCommand("tail -n 50 " + Path.Combine(SshRemoteFolder,"screenlog.0"));
+        private void GetLogTail(string remote, int lines = 30) {
+            write(Ssh.Run(String.Format("tail -n {0} {1} ", lines, Path.Combine(SshRemoteFolder,"screenlog.0"))));
+        }
 
         private void GetChart()
         {
-            if (SftpGet("chart.png")) {
+            if (Sftp.Download(Ssh.Connection, sshRemoteFolder, sshLocalFolder, "chart.png")) {
                 try {
                     Chart = Bitmap.DecodeToWidth(File.OpenRead(Path.Combine(sshLocalFolder,"chart.png")),
                             1920, Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
@@ -384,19 +213,21 @@ namespace vaYolo.ViewModels
 
         public void Start() {
             LaunchTrain(SshRemoteFolder, sshScreenName, sshDarknet);
+            ScreenPid = GetScreenPid();
         }
 
         public void Refresh() {
+            Document = new TextDocument();
             GetLogTail(SshRemoteFolder);
             GetChart();
         } 
 
         public void Kill() {
-            write("Killing PID:" + ScreenPid);
-            if (ScreenPid > 0) 
-                ShowCommand("kill " + ScreenPid);
-            else
-                write("no valid pid to kill");
+            Ssh.Kill(ScreenPid);
+        }
+
+        public void Run(string cmd) {
+            write(Ssh.Run(cmd));
         }
     }
 }
