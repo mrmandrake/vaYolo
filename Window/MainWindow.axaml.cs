@@ -312,7 +312,7 @@ namespace vaYolo.Views
 
         public void ShowSetClass()
         {
-            Setup.Show(this);
+            SetClass.Show(this);
         }
 
         public override void Render(DrawingContext context)
@@ -321,7 +321,7 @@ namespace vaYolo.Views
         }
 
 
-        #region menuclick_handlers
+#region menuclick_handlers
         public void OnNativeLoadFolderClicked(object sender, EventArgs args) => LoadFolder();
         public void OnLoadFolderClicked(object sender, RoutedEventArgs args) => LoadFolder();
 

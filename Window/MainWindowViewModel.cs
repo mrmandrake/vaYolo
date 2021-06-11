@@ -67,10 +67,17 @@ namespace vaYolo.ViewModels
                 ImagePath = imagePath;
                 FolderPath = Path.GetDirectoryName(imagePath);
                 await Task.Run(
-                    () =>
-                    {
-                        Img = Bitmap.DecodeToWidth(File.OpenRead(ImagePath), Settings.Get().ImageDecodeWidth,
-                        Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
+                    () => { 
+                        try
+                        {
+                            Img = Bitmap.DecodeToWidth(
+                                    File.OpenRead(ImagePath), 
+                                    Settings.Get().ImageDecodeWidth,
+                                    Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
+                        }
+                        catch (Exception exc)
+                        {
+                        }
                     });
 
                 if (!IsJpeg(imagePath)) 

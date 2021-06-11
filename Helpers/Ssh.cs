@@ -50,7 +50,7 @@ namespace vaYolo.Helpers
 
         public static string Run(string cmd)
         {
-            if (sshclient == null)
+            if (sshclient == null || !sshclient.IsConnected)
                 return string.Empty;
 
             string str = "";
@@ -85,7 +85,7 @@ namespace vaYolo.Helpers
 
         public static string? GetCmdResult(string cmd)
         {
-            if (sshclient == null)
+            if (sshclient == null || !sshclient.IsConnected)
                 return string.Empty;
 
             try

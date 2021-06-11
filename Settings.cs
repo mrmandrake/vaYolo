@@ -43,6 +43,9 @@ namespace vaYolo
 
         public static Settings? Get()
         {
+           if (instance == null)
+                instance = Default();
+
             return instance;
         }
 
@@ -98,29 +101,32 @@ namespace vaYolo
             }
         }
 
+        private static Settings Default()
+        {
+            return new Settings()
+            {
+                ImageDecodeWidth = 1920,
+                GaugeSize = 12,
+                OffsetTextX = 2,
+                OffsetTextY = 6,
+                NormalizedDefaultRectWidth = 0.023,
+                NormalizedDefaultRectHeight = 0.04,
+                MaximizeAfterLoad = false,
+                SshServer = "10.171.69.69",
+                SshPort = 22,
+                SshUsername = "manovella",
+                SshPassword = "",
+                SshRemoteDarknet = "/home/manovella/darknet",
+                SshRemote = "/tmp"
+            };
+        }
+
         private static Settings? CreateNew(string path)
         {
             Settings? data = null;
             try
             {
-                var newdata = new Settings()
-                {
-                    ImageDecodeWidth = 1920,
-                    GaugeSize = 12,
-                    OffsetTextX = 2,
-                    OffsetTextY = 6,
-                    NormalizedDefaultRectWidth = 0.023,
-                    NormalizedDefaultRectHeight = 0.04,
-                    MaximizeAfterLoad = false,
-                    SshServer = "10.171.69.69",
-                    SshPort = 22,
-                    SshUsername = "manovella",
-                    SshPassword = "",
-                    SshRemoteDarknet = "/home/manovella/darknet",
-                    SshRemote = "/tmp"
-                };
-
-
+                var newdata = Default();
                 FileStream fStream = new FileStream(path, FileMode.Create);
                 XmlSerializer xmlReader = new XmlSerializer(newdata.GetType());
                 xmlReader.Serialize(fStream, newdata);

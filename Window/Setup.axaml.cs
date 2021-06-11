@@ -21,7 +21,7 @@ namespace vaYolo.Views
             AvaloniaXamlLoader.Load(this);
         }
 
-        public static void Show(Window parent)
+        public static new void Show(Window parent)
         {
             var dlg = new Setup();
             if (parent != null)

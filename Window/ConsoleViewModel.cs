@@ -120,7 +120,7 @@ namespace vaYolo.ViewModels
             {
                 SshLocalFolder = folder;
                 SshScreenName = "vayolo." + new DirectoryInfo(folder).Name;
-                SshRemoteFolder = Path.Combine(Settings.Get().SshRemote, SshScreenName);
+                SshRemoteFolder = Path.Combine(Settings.Get().SshRemote, SshScreenName).Replace('\\', '/');
             }
         }
 
@@ -180,7 +180,7 @@ namespace vaYolo.ViewModels
 
         private void LaunchTrain(string remote, string name, string darknetPath)
         {
-            string setfolder = String.Format("cd {0} &&", remote);
+            string setfolder = String.Format("cd {0} && ", remote);
             string screencmd = String.Format("screen -d -m -L -S {0} ", name);
             string timecmd = "/usr/bin/time --verbose ";
             string test = "ping 127.0.0.1 &2>&1";
@@ -195,15 +195,20 @@ namespace vaYolo.ViewModels
         }
 
         private void GetLogTail(string remote, int lines = 30) {
-            write(Ssh.Run(String.Format("tail -n {0} {1} ", lines, Path.Combine(SshRemoteFolder,"screenlog.0"))));
+            write(Ssh.Run(String.Format("tail -n {0} {1} ", lines, Path.Combine(SshRemoteFolder,"screenlog.0").Replace('\\', '/'))));
         }
 
         private void GetChart()
         {
             if (Sftp.Download(Ssh.Connection, sshRemoteFolder, sshLocalFolder, "chart.png")) {
                 try {
-                    Chart = Bitmap.DecodeToWidth(File.OpenRead(Path.Combine(sshLocalFolder,"chart.png")),
-                            1920, Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
+                    var chartPath = Path.Combine(sshLocalFolder, "chart.png");
+
+                    if (new FileInfo(chartPath).Length > 0)
+                        Chart = Bitmap.DecodeToWidth(File.OpenRead(chartPath),
+                                1920, Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
+
+                    File.Delete(chartPath);
                 }
                 catch (Exception exc) {
                     write(exc.Message);
