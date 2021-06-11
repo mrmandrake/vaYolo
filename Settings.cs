@@ -13,25 +13,31 @@ namespace vaYolo
 {
     public class Settings
     {
-        public int ImageDecodeWidth { get; set; } = 1920;
+        public int ImageDecodeWidth { get; set; }
 
-        public Point GaugeDelta { get; set; } = new Point(12, 12);
+        public int GaugeSize { get; set; }
 
-        public Point TextDelta { get; set; } = new Point(2, 6);
+        public int OffsetTextX { get; set; }
+        
+        public int OffsetTextY { get; set; }
 
-        public Size NormalizedDefaultRectSize { get; set; }= new Size(0.023, 0.04);
+        public double NormalizedDefaultRectWidth { get; set; }
+        
+        public double NormalizedDefaultRectHeight { get; set; }
 
-        public bool MaximizeAfterLoad { get; set; } = false;
+        public bool MaximizeAfterLoad { get; set; }
 
-        public string SshServer { get; set; } = "10.171.76.76";
+        public string? SshServer { get; set; }
 
-        public uint SshPort { get; set; } = 22;
+        public uint SshPort { get; set; }
 
-        public string SshUsername { get; set; } = "manovella";
+        public string? SshUsername { get; set; }
 
-        public string SshPassword { get; set; } = "";
+        public string? SshPassword { get; set; }
 
-        public string SshRemoteYolo { get; set; } = "/home/manovella/darknet";
+        public string SshRemoteDarknet { get; set; } = "/home/manovella/darknet";
+
+        public string SshRemote { get; set; } = "/tmp";
 
         private static Settings? instance = null;
 
@@ -39,6 +45,24 @@ namespace vaYolo
         {
             return instance;
         }
+
+        public Size DefaultRectSize {
+            get {
+                return new Size(1,2);
+            }
+        }
+
+        public Point TextDelta {
+            get {
+                return new Point(1,2);
+            }
+        }
+
+        public Point GaugePoint {
+            get {
+                return new Point(1,2);
+            }
+        }        
 
         public static void Load(string folder)
         {
@@ -82,15 +106,18 @@ namespace vaYolo
                 var newdata = new Settings()
                 {
                     ImageDecodeWidth = 1920,
-                    GaugeDelta = new Point(12, 12),
-                    TextDelta = new Point(2, 6),
-                    NormalizedDefaultRectSize = new Size(0.023, 0.04),
+                    GaugeSize = 12,
+                    OffsetTextX = 2,
+                    OffsetTextY = 6,
+                    NormalizedDefaultRectWidth = 0.023,
+                    NormalizedDefaultRectHeight = 0.04,
                     MaximizeAfterLoad = false,
                     SshServer = "10.171.69.69",
                     SshPort = 22,
                     SshUsername = "manovella",
                     SshPassword = "",
-                    SshRemoteYolo = "/home/manovella/darknet"
+                    SshRemoteDarknet = "/home/manovella/darknet",
+                    SshRemote = "/tmp"
                 };
 
 

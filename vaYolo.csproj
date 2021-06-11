@@ -29,6 +29,9 @@
     <PackageReference Include="Dotnet.Bundle" Version="*" />
     <PackageReference Include="SSH.NET" Version="*"/>
     <PackageReference Include="Avalonia.AvaloniaEdit" Version="*"/>	
+    <PackageReference Include="OpenCvSharp4" Version="*"/>
+    <PackageReference Include="OpenCvSharp4.runtime.osx.10.15-x64" Version="*" Condition="$([MSBuild]::IsOsPlatform('OSX'))" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="*" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />    
   </ItemGroup>
   
   <ItemGroup>

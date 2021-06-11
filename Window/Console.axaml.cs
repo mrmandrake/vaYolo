@@ -24,9 +24,9 @@ namespace vaYolo.Views
             get => this.Find<TextBox>("InputBlock");
         }
 
-        public static void Show(Window parent)
+        public static void Show(MainWindow parent)
         {
-            var dlg = new Console() { ViewModel = new ConsoleViewModel() };
+            var dlg = new Console() { ViewModel = new ConsoleViewModel(parent.ViewModel.FolderPath) };
             if (parent != null)
                 dlg.ShowDialog(parent);
             else
@@ -41,19 +41,26 @@ namespace vaYolo.Views
                 input.KeyDown += InputBlock_KeyDown;
                 input.Focus();
                 output.TextArea.Caret.CaretBrush = Brushes.Transparent;
-            });
+                ViewModel.Init();
+            });        
         }
+
+        protected void OnStartClick(object sender, RoutedEventArgs e) => ViewModel?.Start();
 
         protected void OnConnectClick(object sender, RoutedEventArgs e) => ViewModel?.Init();
 
         protected void OnQuitClick(object sender, RoutedEventArgs e) => ViewModel?.Finish();
+
+        protected void OnRefreshClick(object sender, RoutedEventArgs e) => ViewModel?.Refresh();
+
+        protected void OnKillClick(object sender, RoutedEventArgs e) => ViewModel?.Kill();
 
         protected override void OnClosing(CancelEventArgs e) => ViewModel?.Finish();
 
         void InputBlock_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) {
-                ViewModel.RunCommand(input.Text);
+                ViewModel.ShowCommand(input.Text);
                 input.Text = string.Empty;
                 input.Focus();
                 output.TextArea.ScrollToLine(output.Document.LineCount);

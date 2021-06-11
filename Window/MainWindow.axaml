@@ -25,7 +25,7 @@
 					</NativeMenu>
 				</NativeMenuItem.Menu>
 			</NativeMenuItem>
-			<NativeMenuItem Header="Segmentation">
+			<NativeMenuItem Header="Segmentation" IsEnabled="{Binding FolderPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
 				<NativeMenuItem.Menu>
 					<NativeMenu>
 						<NativeMenuItem Header="Previous image" Clicked="OnNativePrevImageClicked"/>
@@ -35,7 +35,7 @@
 					</NativeMenu>
 				</NativeMenuItem.Menu>
 			</NativeMenuItem>
-			<NativeMenuItem Header="Training">
+			<NativeMenuItem Header="Training" IsEnabled="{Binding FolderPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
 				<NativeMenuItem.Menu>
 					<NativeMenu>
 						<NativeMenuItem Header="Setup" Clicked="OnNativeSetupClicked"/>
@@ -55,13 +55,13 @@
 				<MenuItem Header="Open Folder" Click="OnLoadFolderClicked"/>
 				<MenuItem Header="About vaYolo" Click="OnAboutClicked"/>
 			</MenuItem>
-			<MenuItem Header="Segmentation">
+			<MenuItem Header="Segmentation" IsEnabled="{Binding FolderPath, Converter={x:Static ObjectConverters.IsNotNull}}">
 				<MenuItem Header="Next image" Click="OnPrevImageClicked"/>
 				<MenuItem Header="Previous image" Click="OnNextImageClicked"/>				
 				<MenuItem Header="Set Class" Click="OnSetClassClicked"/>
 				<MenuItem Header="Review" Click="OnReviewClicked"/>
 			</MenuItem>
-			<MenuItem Header="Training">
+			<MenuItem Header="Training" IsEnabled="{Binding FolderPath, Converter={x:Static ObjectConverters.IsNotNull}}">
 				<MenuItem Header="Setup" Click="OnSetupClicked"/>
 				<MenuItem Header="Console" Click="OnConsoleClicked"/>
 			</MenuItem>

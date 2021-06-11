@@ -59,7 +59,7 @@ namespace vaYolo.Models
         {
             if (Settings.Get() != null)
             {
-                VaRect.normalizedGaugeDelta = Settings.Get().GaugeDelta.DivBySize(size);
+                VaRect.normalizedGaugeDelta = Settings.Get().GaugePoint.DivBySize(size);
                 VaRect.normalizedTextDelta = Settings.Get().TextDelta.DivBySize(size);
             }
         }

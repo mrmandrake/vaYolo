@@ -19,7 +19,7 @@ namespace vaYolo.ViewModels
     public class MainWindowViewModel : ReactiveObject
     {          
         public List<Rect> NormalizedRoi = new List<Rect>();
-        public string? FolderPath { get; set; }
+        public string? FolderPath { get; set; } = null;
         public string? DataPath { get; set; }
         private string? _imagePath;
         public string? ImagePath
@@ -65,6 +65,7 @@ namespace vaYolo.ViewModels
             if (imagePath != null)
             {
                 ImagePath = imagePath;
+                FolderPath = Path.GetDirectoryName(imagePath);
                 await Task.Run(
                     () =>
                     {
