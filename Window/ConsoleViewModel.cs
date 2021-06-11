@@ -223,7 +223,10 @@ namespace vaYolo.ViewModels
         } 
 
         public void Kill() {
+            write("killing pid:" + ScreenPid);
             Ssh.Kill(ScreenPid);
+            write("killed");
+            ScreenPid = -1;
         }
 
         public void Run(string cmd) {
