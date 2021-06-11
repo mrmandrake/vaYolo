@@ -51,8 +51,8 @@
 				</TabItem>
 				<TabItem Header="Classes">
 					<StackPanel Margin="10">
-						<TextBox Name="SshUsername" Watermark="Ssh username" DockPanel.Dock="Top" Margin="4"/>
-						<TextBox Name="SshPassword" Watermark="Ssh password" DockPanel.Dock="Top" Margin="4" PasswordChar="."/>
+						<TextBox Watermark="Ssh username" DockPanel.Dock="Top" Margin="4"/>
+						<TextBox  Watermark="Ssh password" DockPanel.Dock="Top" Margin="4" PasswordChar="."/>
 					</StackPanel>
 				</TabItem>
 

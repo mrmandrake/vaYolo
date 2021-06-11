@@ -51,19 +51,19 @@ namespace vaYolo
 
         public Size DefaultRectSize {
             get {
-                return new Size(1,2);
+                return new Size(NormalizedDefaultRectWidth, NormalizedDefaultRectHeight);
             }
         }
 
         public Point TextDelta {
             get {
-                return new Point(1,2);
+                return new Point(OffsetTextX, OffsetTextY);
             }
         }
 
         public Point GaugePoint {
             get {
-                return new Point(1,2);
+                return new Point(GaugeSize, GaugeSize);
             }
         }        
 
