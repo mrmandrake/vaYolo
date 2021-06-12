@@ -5,5 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="vaYolo.Views.SetClass"
         Title="SetClass">
-  Welcome to Avalonia!
+  <DockPanel>
+    <ListBox Items="{Binding Items}">
+  </DockPanel
 </Window>

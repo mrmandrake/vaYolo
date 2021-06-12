@@ -150,6 +150,7 @@ namespace vaYolo.Views
             }.ShowAsync(this);
 
             Settings.Load(folder);
+            VaNames.Load(folder);
 
             if (!TryLoadFirstImage(folder, new List<string>() {
                 ".png", ".jpg", ".jpeg",
@@ -312,7 +313,7 @@ namespace vaYolo.Views
 
         public void ShowSetClass()
         {
-            SetClass.Show(this);
+            SetClass.Show(this, new SetClassViewModel(VaNames.GetNames()));
         }
 
         public override void Render(DrawingContext context)

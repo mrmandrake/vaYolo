@@ -21,8 +21,16 @@ namespace vaYolo.ViewModels
 {
     public class SetClassViewModel : ReactiveObject
     {
-        public SetClassViewModel()
+        private ObservableCollection<string> items;
+
+        public ObservableCollection<string> Items {
+            get { return items; }
+            set { items = value;}
+        }
+
+        public SetClassViewModel(IEnumerable<string> names)
         {
+            Items = new ObservableCollection<string>(names);
         }
     }
 }
