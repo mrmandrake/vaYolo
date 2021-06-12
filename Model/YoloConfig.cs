@@ -50,95 +50,46 @@ namespace vaYolo
             },
             new YoloCfg()
             {
-                ShortName = "yolov3-tiny_occlusion_track.cfg",
-                RelatedName = "yolov3-tiny.cfg",
-                WeightSize = "33.1 MiB",
-                Link = "2552",
-                Notes = "object Detection & Tracking using conv-rnn layer on frames from video"
-            },
-            new YoloCfg()
-            {
                 ShortName = "yolov3-tiny-prn.cfg",
-                RelatedName = "yolov3-tiny.cfg",
+                RelatedName = "yolov3-tiny-prn.cfg",
                 Link = "2552",
                 Notes = "partial residual network Enriching Variety of Layer-wise Learning Information by Gradient Combination"
             },
             new YoloCfg()
             {
-                ShortName = "yolov3-tiny_xnor.cfg",
-                RelatedName = "yolov3-tiny.cfg",
-                Link = "3054",
-                Notes = "XNOR-net ~2x faster than cuDNN on CUDA"
+                ShortName = "yolov4.cfg.cfg",
+                RelatedName = "yolov4.cfg.cfg",
+                Link = "2552",
+                Notes = "https://arxiv.org/pdf/2004.10934.pdf"
             },
             new YoloCfg()
             {
-                ShortName = "yolov3-voc.cfg",
-                RelatedName = "yolov3.cfg",
-                Notes = "similar to the usual yolov3.cfg but pre-configured for 20 VOC classes"
+                ShortName = "yolov4-custom.cfg",
+                RelatedName = "yolov4.cfg",
+                Link = "2552",
+                Notes = "nearly identical; lower learning rate; one additional change to a convolutional layer"
+            },
+            new YoloCfg()
+            {
+                ShortName = "yolov4-tiny-3l.cfg",
+                RelatedName = "yolov4-tiny.cfg",
+                Link = "2552",
+                Notes = "better at finding small objects; 3l refers to 3 YOLO layers vs the usual 2 in tiny"
+            },
+            new YoloCfg()
+            {
+                ShortName = "yolov4-tiny.cfg",
+                RelatedName = "yolov4-tiny.cfg",
+                Link = "2552",
+                Notes = "https://github.com/AlexeyAB/darknet/issues/5346#issuecomment-649566598"
+            },
+            new YoloCfg()
+            {
+                ShortName = "yolov4-tiny-custom.cfg",
+                RelatedName = "yolov4-tiny.cfg",
+                Link = "https://github.com/AlexeyAB/darknet/issues/5346#issuecomment-649566598",
+                Notes = "similar to yolov4-tiny.cfg, but contains 1 minor change to the first YOLO layer"
             }
         };
     }
 }
-
-// else if (short_name == "yolov4.cfg")
-// {
-// 	row.field[Fields::kNotes		] = "contains 3 YOLO layers";
-// 	row.field[Fields::kWeightsSize	] = "245.7 MiB";
-// 	row.field[Fields::kLink1		] = "YOLOv4 whitepaper";
-// 	row.field[Fields::kUrl1			] = "https://arxiv.org/pdf/2004.10934.pdf";
-// }
-// else if (short_name == "yolov4-custom.cfg")
-// {
-// 	row.field[Fields::kRelated		] = "yolov4.cfg";
-// 	row.field[Fields::kWeightsSize	] = "245.7 MiB";
-// 	row.field[Fields::kLink1		] = "YOLOv4 whitepaper";
-// 	row.field[Fields::kUrl1			] = "https://arxiv.org/pdf/2004.10934.pdf";
-// 	row.field[Fields::kNotes		] = "nearly identical; lower learning rate; one additional change to a convolutional layer";
-// }
-// else if (short_name == "yolov4-tiny-3l.cfg")
-// {
-// 	row.field[Fields::kWeightsSize	] = "23.3 MiB";
-// 	row.field[Fields::kRelated		] = "yolov4-tiny.cfg";
-// 	row.field[Fields::kNotes		] = "better at finding small objects; \"3l\" refers to 3 YOLO layers vs the usual 2 in \"tiny\"";
-// }
-// else if (short_name == "yolov4-tiny.cfg")
-// {
-// 	row.field[Fields::kNotes		] = "contains 2 YOLO layers";
-// 	row.field[Fields::kWeightsSize	] = "23.1 MiB";
-// 	row.field[Fields::kLink1		] = "5346";
-// 	row.field[Fields::kUrl1			] = "https://github.com/AlexeyAB/darknet/issues/5346#issuecomment-649566598";
-// }
-// else if (short_name == "yolov4-tiny-custom.cfg")
-// {
-// 	row.field[Fields::kNotes		] = "similar to yolov4-tiny.cfg, but contains 1 minor change to the first YOLO layer";
-// 	row.field[Fields::kRelated		] = "yolov4-tiny.cfg";
-// 	row.field[Fields::kWeightsSize	] = "23.1 MiB";
-// 	row.field[Fields::kLink1		] = "5346";
-// 	row.field[Fields::kUrl1			] = "https://github.com/AlexeyAB/darknet/issues/5346#issuecomment-649566598";
-// }
-// else if (short_name == "yolov4-tiny_contrastive.cfg")
-// {
-// 	row.field[Fields::kNotes		] = "\"experimental\"; \"suitable for un-supervised learning and for multi-camera object tracking\"";
-// 	row.field[Fields::kRelated		] = "yolov4-tiny.cfg";
-// 	row.field[Fields::kWeightsSize	] = "27.5 MiB";
-// 	row.field[Fields::kLink1		] = "6892";
-// 	row.field[Fields::kUrl1			] = "https://github.com/AlexeyAB/darknet/issues/6892";
-// }
-// else if (short_name == "yolov4-csp.cfg")
-// {
-// 	row.field[Fields::kNotes		] = "cross-stage-partial; more accurate and faster than YOLOv4";
-// 	row.field[Fields::kRelated		] = "yolov4.cfg";
-// 	row.field[Fields::kWeightsSize	] = "202.1 MiB";
-// 	row.field[Fields::kLink1		] = "Scaled YOLO v4";
-// 	row.field[Fields::kUrl1			] = "https://alexeyab84.medium.com/scaled-yolo-v4-is-the-best-neural-network-for-object-detection-on-ms-coco-dataset-39dfa22fa982";
-// 	row.field[Fields::kLink2		] = "YOLOv4-CSP whitepaper";
-// 	row.field[Fields::kUrl2			] = "https://arxiv.org/pdf/2011.08036.pdf";
-// }
-// else if (short_name == "yolov4x-mish.cfg")
-// {
-// 	row.field[Fields::kNotes		] = "detector; something between yolov4-csp and yolov4-p5; more suitable for high resolutions 640x640 - 832x832 than yolov4.cfg; should be trained longer";
-// 	row.field[Fields::kRelated		] = "yolov4-csp.cfg";
-// 	row.field[Fields::kWeightsSize	] = "380.9 MiB";
-// 	row.field[Fields::kLink1		] = "7131";
-// 	row.field[Fields::kUrl1			] = "https://github.com/AlexeyAB/darknet/issues/7131";
-// }
