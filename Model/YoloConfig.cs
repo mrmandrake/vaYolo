@@ -14,45 +14,6 @@ namespace vaYolo
         public List<YoloCfg> Configs = new() {
             new YoloCfg()
             {
-                ShortName = "cd53paspp-gamma.cfg",
-                RelatedName = "yolov4.cfg",
-                Notes = "detector, the same as yolov4.cfg, but with leaky instead of mish",
-            },
-            new YoloCfg()
-            {
-                ShortName = "csdarknet53-omega.cfg",
-                RelatedName = "yolov4.cfg",
-                Notes = "classifier, backbone for yolov4.cfg"
-            },
-            new YoloCfg()
-            {
-                ShortName = "rnn.train.cfg",
-                Link = "1624"
-            },
-            new YoloCfg()
-            {
-                ShortName = "rnn.train.cfg",
-                RelatedName = "cspx-p7-mish.cfg",
-                Notes = "classifier, backbone for cspx-p7-mish.cfg"
-            },
-            new YoloCfg()
-            {
-                ShortName = "cspx-p7-mish.cfg",
-                RelatedName = "cspx-p7-mish.cfg",
-                Notes = "detector, yolov4-p7-large"
-            },
-            new YoloCfg()
-            {
-                ShortName = "cspx-p7-mish_hp.cfg",
-                Notes = "detector, experimental cfg file"
-            },
-            new YoloCfg()
-            {
-                ShortName = "csresnext50-panet-spp.cfg",
-                Link = "2859"
-            },
-            new YoloCfg()
-            {
                 ShortName = "yolov3_5l.cfg",
                 RelatedName = "yolov3.cfg",
                 WeightSize = "236.2 MiB",
