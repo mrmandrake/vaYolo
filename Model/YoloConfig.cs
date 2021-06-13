@@ -1,95 +1,84 @@
 using System;
 using System.Collections.Generic;
-
+using vaYolo.Models;
 namespace vaYolo
 {
     public class YoloCfg
     {
-        public string ShortName { get; set; }
-        public string RelatedName { get; set; }
-        public string Notes { get; set; }
-        public string Link { get; set; }
-        public string WeightSize { get; set; }
+        public string Name { get; set; }
+        public string CfgName { get; set; }
+        public string Pretrained { get; set; }
 
         public List<YoloCfg> Configs = new() {
             new YoloCfg()
             {
-                ShortName = "yolov3_5l.cfg",
-                RelatedName = "yolov3.cfg",
-                WeightSize = "236.2 MiB",
-                Notes = "\"5l\" refers to 5 YOLO layers; \"...or very small objects, or if you want to set high network resolution\"",
-                Link = "5092"
+                Name = "yolo v3 5 layers",
+                CfgName = "yolov3_5l.cfg",
+                Pretrained = "darknet53.conv.74.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov3.cfg",
-                RelatedName = "yolov3.cfg",
-                WeightSize = "234.9 MiB",
-                Notes = "contains 3 YOLO layers",
+                Name = "yolo v3",
+                CfgName = "yolov3.cfg",
+                Pretrained = "darknet53.conv.74.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov3-spp.cfg",
-                RelatedName = "yolov3.cfg",
-                WeightSize = "234.9 MiB",
-                Link = "2859",
-                Notes = "YOLOv3 but with extra layers for spacial pyramid pooling"
+                Name = "yolo v3 spp",
+                CfgName = "yolov3-spp.cfg",
+                Pretrained = "darknet53.conv.74.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov3-tiny_3l.cfg",
-                RelatedName = "yolov3-tiny.cfg",
-                WeightSize = "34.4 MiB",
-                Notes = "better at finding small objects; \"3l\" refers to 3 YOLO layers vs the usual 2 in \"tiny\""
+                Name = "yolo v3 tiny 3 layers",
+                CfgName = "yolov3-tiny_3l.cfg",
+                Pretrained = "yolov3-tiny.conv.11.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov3-tiny.cfg",
-                WeightSize = "33.1 MiB",
-                Notes = "contains 2 YOLO layers"
+                Name = "yolo v3 tiny",
+                CfgName = "yolov3-tiny.cfg",
+                Pretrained = "yolov3-tiny.conv.11.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov3-tiny-prn.cfg",
-                RelatedName = "yolov3-tiny-prn.cfg",
-                Link = "2552",
-                Notes = "partial residual network Enriching Variety of Layer-wise Learning Information by Gradient Combination"
+                Name = "yolo v3 tiny prn",
+                CfgName = "yolov3-tiny-prn.cfg",
+                Pretrained = "yolov3-tiny.conv.11.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov4.cfg.cfg",
-                RelatedName = "yolov4.cfg.cfg",
-                Link = "2552",
-                Notes = "https://arxiv.org/pdf/2004.10934.pdf"
+                Name = "yolo v4",
+                CfgName = "yolov4.cfg",
+                Pretrained = "yolov4.conv.137.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov4-custom.cfg",
-                RelatedName = "yolov4.cfg",
-                Link = "2552",
-                Notes = "nearly identical; lower learning rate; one additional change to a convolutional layer"
+                Name = "yolo v4 custom",
+                CfgName = "yolov4-custom.cfg",
+                Pretrained = "yolov4.conv.137.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov4-tiny-3l.cfg",
-                RelatedName = "yolov4-tiny.cfg",
-                Link = "2552",
-                Notes = "better at finding small objects; 3l refers to 3 YOLO layers vs the usual 2 in tiny"
+                Name = "yolo v4 tiny 3 layers",
+                CfgName = "yolov4-tiny-3l.cfg",
+                Pretrained = "yolov4-tiny.conv.29.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov4-tiny.cfg",
-                RelatedName = "yolov4-tiny.cfg",
-                Link = "2552",
-                Notes = "https://github.com/AlexeyAB/darknet/issues/5346#issuecomment-649566598"
+                Name = "yolo v4 tiny",
+                CfgName = "yolov4-tiny.cfg",
+                Pretrained = "yolov4-tiny.conv.29.weights"
             },
             new YoloCfg()
             {
-                ShortName = "yolov4-tiny-custom.cfg",
-                RelatedName = "yolov4-tiny.cfg",
-                Link = "https://github.com/AlexeyAB/darknet/issues/5346#issuecomment-649566598",
-                Notes = "similar to yolov4-tiny.cfg, but contains 1 minor change to the first YOLO layer"
+                Name = "yolo v4 tiny custom",
+                CfgName = "yolov4-tiny-custom.cfg",
+                Pretrained = "yolov4-tiny.conv.29.weights"
             }
         };
+
+        public static void Create(string name, VaSetup setup) {
+        }
     }
 }

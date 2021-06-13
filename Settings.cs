@@ -67,8 +67,11 @@ namespace vaYolo
             }
         }        
 
-        public static void Load(string folder)
+        public static void Load(string? folder)
         {
+            if (folder == null)
+                return;
+                
             string path = Path.Combine(folder, "vayolo.xml");
             Settings? result = null;
             if (File.Exists(path))

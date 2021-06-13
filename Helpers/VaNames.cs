@@ -8,17 +8,17 @@ namespace vaYolo
 {
     public class VaNames
     {
-        private static List<vaClass> Classes = new ();
+        private static List<VaClass> Classes = new ();
 
         private static string NamesPath(string folder) {
             return Path.Combine(folder, new DirectoryInfo(folder).Name + ".names");
         }
 
         public static void Load(string folder) {
-            List<vaClass> result = new ();
+            List<VaClass> result = new ();
             try {    
                 if (!File.Exists(NamesPath(folder))) {
-                    result.Add(new vaClass() { 
+                    result.Add(new VaClass() { 
                             Class = 0,
                             Description = "Undefined"
                         });
@@ -29,7 +29,7 @@ namespace vaYolo
                     var lines = File.ReadAllLines(NamesPath(folder)).ToList();
                     int tmp = 0;
                     lines.ForEach((l) => {
-                        result.Add(new vaClass() {
+                        result.Add(new VaClass() {
                             Class = tmp++,
                             Description = l
                         });

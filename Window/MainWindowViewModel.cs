@@ -21,6 +21,13 @@ namespace vaYolo.ViewModels
         public List<Rect> NormalizedRoi = new List<Rect>();
         public string? FolderPath { get; set; } = null;
         public string? DataPath { get; set; }
+
+        private string title = "vaYolo Labeling toolkit - mrMandrake";
+        public string Title {
+            get => title;
+            set => this.RaiseAndSetIfChanged(ref title, value);
+        }
+
         private string? _imagePath;
         public string? ImagePath
         {
@@ -66,6 +73,8 @@ namespace vaYolo.ViewModels
             {
                 ImagePath = imagePath;
                 FolderPath = Path.GetDirectoryName(imagePath);
+                Title = "vaYolo - " + ImagePath;
+
                 await Task.Run(
                     () => { 
                         try

@@ -8,7 +8,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="vaYolo.Views.MainWindow"
         Icon="/Assets/virus.ico"
-        Title="vaYolo Labeling toolkit - mrMandrake"
+        Title="{Binding Title}"
 		Background="Black">
 
 	<Design.DataContext>

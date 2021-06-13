@@ -18,9 +18,12 @@ namespace vaYolo.Views
             AvaloniaXamlLoader.Load(this);
         }
 
-        public static new void Show(Window parent)
+        public static new void Show(Window parent, SetClassViewModel model)
         {
-            var dlg = new SetClass();
+            var dlg = new SetClass() {
+                ViewModel = model            
+            };
+            
             if (parent != null)
                 dlg.ShowDialog(parent);
             else

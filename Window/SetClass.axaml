@@ -6,6 +6,6 @@
         x:Class="vaYolo.Views.SetClass"
         Title="SetClass">
   <DockPanel>
-    <ListBox Items="{Binding Items}">
-  </DockPanel
+    <ListBox Items="{Binding Items}"/>
+  </DockPanel>
 </Window>
