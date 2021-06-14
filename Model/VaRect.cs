@@ -13,6 +13,7 @@ namespace vaYolo.Models
         public static Point normalizedTextDelta;
 
         public Rect _Rect { get; set; }
+
         public uint ObjectClass { get; set; }
 
         public Rect[] GetGauges()
@@ -24,6 +25,12 @@ namespace vaYolo.Models
             };
         }
 
+        public Rect UnNormalized(Size sz)
+        {
+            return _Rect.MulBySize(sz);
+
+        }
+
         public void Draw(DrawingContext context, Size sz, bool selected = false)
         {
             if (VaManager.MyPens == null)
@@ -33,7 +40,7 @@ namespace vaYolo.Models
             var pen = VaManager.MyPens[selected ? selIdx : ObjectClass];
             var brush = VaManager.MyBrushes[selected ? selIdx : ObjectClass];
             var gs = GetGauges();
-            var rc = _Rect.MulBySize(sz);
+            var rc = UnNormalized(sz);
             context.DrawRectangle(pen, rc);
             context.FillRectangle(brush, gs[0].MulBySize(sz));
             context.FillRectangle(brush, gs[1].MulBySize(sz));
@@ -66,7 +73,6 @@ namespace vaYolo.Models
                 VaRect.normalizedTextDelta = Settings.Get().TextDelta.DivBySize(size);
             }
         }
-
         
         public static string? SaveData(string datapath, List<VaRect> rects)
         {

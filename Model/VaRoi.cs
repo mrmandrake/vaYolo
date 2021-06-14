@@ -15,7 +15,7 @@ namespace vaYolo.Models
         public string ImagePath {get; set;}
 
         public VaRoi(VaRect rect, Bitmap bmp, string imagePath) {
-            Roi = new CroppedBitmap();
+            Roi = new CroppedBitmap(bmp, new PixelRect());
             Class = rect.ObjectClass;
             ImagePath = imagePath;
         }
