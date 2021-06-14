@@ -98,11 +98,9 @@
                             <TextBlock Width="150"  Text="Max loss chart.png" Margin="0 16 0 0"/>
                             <NumericUpDown Name="MaxLossChartPng" Minimum="0.000001" Maximum="0.999999" Margin="8"/>
                         </StackPanel>
-                        
-                        <CheckBox Name="ResizeImage" Content="Resize Image" />
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Yolo">
+                <!--<TabItem Header="Yolo" IsVisibile="False">
                     <StackPanel Margin="10">
                         <CheckBox Name="RecalcYoloAnchors" Content="Recalculate yolo anchors" />
 
@@ -113,11 +111,12 @@
                                 <NumericUpDown Name="NumAnchorClusters" Minimum="0.000001" Maximum="0.999999" Margin="8"/>
                             </StackPanel>
                             <CheckBox Name="HandleClassImbalance" Content="Handle class Imbalance" />
-                        </StackPanel>					
-                    </StackPanel>				
-                    
+                        </StackPanel>
+
+						<CheckBox Name="ResizeImage" Content="Resize Image" />
+					</StackPanel>				                    
                 </TabItem>
-                <TabItem Header="Weights">
+                <TabItem Header="Weights" IsVisibile="False">
                     <StackPanel Margin="10">
                         <CheckBox Name="TrainAllImages" Content="Train all images" IsChecked="True" />
 
@@ -130,7 +129,7 @@
                         </StackPanel>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Data Aug.">
+                <TabItem Header="Data Aug." IsVisibile="False">
                     <StackPanel Margin="10">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Width="150" Text="Saturation" Margin="0 16 0 0"/>
@@ -156,15 +155,17 @@
                         <CheckBox Name="EnableMixup" Content="Enable Mixup" />
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="Debug">
+                <TabItem Header="Debug" IsVisibile="False">
                     <StackPanel Margin="10">			
                         <CheckBox Name="KeepImages" Content="Keep Images" />
                         <CheckBox Name="ShowReceptiveField" Content="Show receptive fields" />
                     </StackPanel>
-                </TabItem>
+                </TabItem>-->
             </TabControl>    
         </ExperimentalAcrylicBorder>
-		<Button Name="Cancel" Content="Cancel" HorizontalAlignment="Right" Margin="10" Click="OnCancel"/>
-		<Button Name="Confirm" Content="Confirm" HorizontalAlignment="Right" Margin="10"/>
-    </StackPanel>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Name="Cancel" Content="Cancel" HorizontalAlignment="Right" Margin="10" Click="OnCancel"/>
+			<Button Name="Confirm" Content="Confirm" HorizontalAlignment="Right" Margin="10"/>
+		</StackPanel>
+	</StackPanel>
 </Window>
