@@ -17,5 +17,17 @@ namespace vaYolo.Views
         {
             AvaloniaXamlLoader.Load(this);
         }
+
+        public static new void Show(Window parent, ReviewViewModel model)
+        {
+            var dlg = new Review() {
+                ViewModel = model            
+            };
+            
+            if (parent != null)
+                dlg.ShowDialog(parent);
+            else
+                dlg.Show();
+        }
     }
 }

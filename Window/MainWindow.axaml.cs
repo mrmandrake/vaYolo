@@ -109,36 +109,11 @@ namespace vaYolo.Views
             return (result != null && result.Length > 0) ? result[0] : null;
         }
 
-        private List<string> GetImagesInFolder(string? path) {
-            try {
-                var dir = Path.GetDirectoryName(path);
-                var ext = Path.GetExtension(path);
-                return Directory.EnumerateFiles(dir,  "*" + ext).ToList();
-            }
-            catch (Exception ) {
-
-            }
-
-            return new List<string>();
-        }
-
-        private List<string> GetImagesInFolder(string dir, string ext) {
-            try {
-                return Directory.EnumerateFiles(dir,  "*" + ext).ToList();
-            }
-            catch (Exception ) {
-            }
-
-            return new List<string>();
-        }        
-
-        private bool TryLoadFirstImage(string dir, List<string> extList) {
-            foreach (var e in extList) {
-                var imgs = GetImagesInFolder(dir, e);
-                if (imgs.Count > 0) {
-                    LoadImageByPath(imgs[0]);
-                    return true;
-                }
+        private bool LoadFirstImage(string dir) {
+            var imgs = VaUtil.ListImagesInFolder(dir);
+            if (imgs.Count > 0) {
+                LoadImageByPath(imgs[0]);
+                return true;
             }
 
             return false;
@@ -152,15 +127,13 @@ namespace vaYolo.Views
             Settings.Load(folder);
             VaNames.Load(folder);
 
-            if (!TryLoadFirstImage(folder, new List<string>() {
-                ".png", ".jpg", ".jpeg",
-                ".PNG", ".JPG", ".JPEG"}))
+            if (!LoadFirstImage(folder))
                 Notify("No Images found!!", "Loading content");
         }
 
         private string? GetNextPath()
         {
-            var images = GetImagesInFolder(ViewModel.ImagePath);
+            var images = VaUtil.ListImagesInFolder(Path.GetDirectoryName(ViewModel.ImagePath));
             var idx = images.IndexOf(ViewModel.ImagePath);
             if (idx <= 0) {
                 Notify("First Image", "Load Prev Image");
@@ -172,7 +145,7 @@ namespace vaYolo.Views
 
         private string? GetPrevPath()
         {
-            var images = GetImagesInFolder(ViewModel.ImagePath);
+             var images = VaUtil.ListImagesInFolder(Path.GetDirectoryName(ViewModel.ImagePath));
             var idx = images.IndexOf(ViewModel.ImagePath);
             if (idx == images.Count - 1) {
                 Notify("Last Image", "Load Next Image");
@@ -316,6 +289,11 @@ namespace vaYolo.Views
             SetClass.Show(this, new SetClassViewModel(VaNames.GetNames()));
         }
 
+        public void ShowReview()
+        {
+            Review.Show(this, new ReviewViewModel(ViewModel.FolderPath));
+        }        
+
         public override void Render(DrawingContext context)
         {
             base.Render(context);
@@ -339,7 +317,7 @@ namespace vaYolo.Views
         public void OnSetClassClicked(object sender, RoutedEventArgs args) => ShowSetClass();
 
         public void OnNativeReviewClicked(object sender, EventArgs args) => ShowSetClass();
-        public void OnReviewClicked(object sender, RoutedEventArgs args) => ShowSetClass();
+        public void OnReviewClicked(object sender, RoutedEventArgs args) => ShowReview();
 
 
         public void OnNativeSetupClicked(object sender, EventArgs args) => ShowSetupTrain();

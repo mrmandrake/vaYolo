@@ -35,7 +35,7 @@ namespace vaYolo.ViewModels
             set
             {
                 _imagePath = value;
-                DataPath = Path.ChangeExtension(value, "txt");
+                DataPath = VaUtil.GetDatapath(value);
             }
         }
 
@@ -89,7 +89,7 @@ namespace vaYolo.ViewModels
                         }
                     });
 
-                if (!IsJpeg(imagePath)) 
+                if (!VaUtil.IsJpeg(imagePath)) 
                     ConvertImageToJpeg(imagePath);
             }
         }
@@ -103,75 +103,12 @@ namespace vaYolo.ViewModels
             }
         }
 
-        private bool IsJpeg(string imagePath)
-        {
-            return (Path.GetExtension(imagePath).ToLower() == "jpg") || 
-                   (Path.GetExtension(imagePath).ToLower() == "jpeg");
+        public string? SaveData(List<VaRect> rects) {
+            return VaRect.SaveData(DataPath, rects);
         }
 
-        private string? AddSuffix(string filename, string suffix = "_res")
-        {
-            string? fDir = Path.GetDirectoryName(filename);
-            string fName = Path.GetFileNameWithoutExtension(filename);
-            string fExt = Path.GetExtension(filename);
-            return (fDir != null) ? Path.Combine(fDir, String.Concat(fName, suffix, fExt)) : null;
-        }
-
-        public string? SaveData(List<VaRect> rects)
-        {
-            if (DataPath == null)
-                return null;
-
-            using (var streamWr = new StreamWriter(DataPath))
-            {
-                var txtWriter = new VaTxtWriter(streamWr, " ");
-                rects.ForEach((r) =>
-                {
-                    txtWriter.WriteField(r.ObjectClass.ToString());
-                    txtWriter.WriteField(r._Rect.Center.X);
-                    txtWriter.WriteField(r._Rect.Center.Y);
-                    txtWriter.WriteField(r._Rect.Width);
-                    txtWriter.WriteField(r._Rect.Height);
-                    txtWriter.NextRecord();
-                });
-            }
-
-            return DataPath;
-        }
-
-        public List<VaRect> LoadData()
-        {
-            List<VaRect> rects = new();
-
-            try {
-                if ((DataPath != null) || (File.Exists(DataPath)))
-                {
-                    using (var streamWr = new StreamReader(DataPath))
-                    {
-                        var txtReader = new VaTxtReader(streamWr, " ");
-
-                        while (txtReader.NextRecord()) {
-                            uint objClass = txtReader.ReadField<uint>();
-                            var cX = txtReader.ReadField<double>();
-                            var cY = txtReader.ReadField<double>();
-                            var w = txtReader.ReadField<double>();
-                            var h = txtReader.ReadField<double>();
-
-                            rects.Add(new VaRect() {
-                                _Rect = new Rect(
-                                            new Point(cX - w / 2, cY - h / 2),
-                                            new Point(cX + w / 2, cY + h / 2)),
-                                ObjectClass = objClass
-                            });
-                        }                
-                    }
-                }
-            }
-            catch (Exception exc) {
-                System.Diagnostics.Debug.WriteLine(exc.Message);                
-            }
-
-            return rects;
+        public List<VaRect> LoadData() {
+            return VaRect.LoadData(DataPath);
         }
     }
 }

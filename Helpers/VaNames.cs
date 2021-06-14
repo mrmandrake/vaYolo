@@ -8,7 +8,7 @@ namespace vaYolo
 {
     public class VaNames
     {
-        private static List<VaClass> Classes = new ();
+        public static List<VaClass> Classes = new ();
 
         private static string NamesPath(string folder) {
             return Path.Combine(folder, new DirectoryInfo(folder).Name + ".names");
