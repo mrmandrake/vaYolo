@@ -89,8 +89,8 @@ namespace vaYolo.ViewModels
                         }
                     });
 
-                if (!VaUtil.IsJpeg(imagePath)) 
-                    ConvertImageToJpeg(imagePath);
+                //if (!VaUtil.IsJpeg(imagePath)) 
+                //    ConvertImageToJpeg(imagePath);
             }
         }
 

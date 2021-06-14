@@ -6,10 +6,10 @@
         x:Class="vaYolo.Views.Review"
         Title="Review">
 	<DockPanel>
-		<DataGrid Name="dataGrid" AutoGenerateColumns="True" IsReadOnly="True"
+		<TabControl Items="{Binding Tabs}" SelectionChanged="OnSelectionChanged" DockPanel.Dock="Top"/>
+		<DataGrid  Name="dataGrid" AutoGenerateColumns="True" IsReadOnly="True"
 					  Margin="12" HorizontalAlignment="Stretch" ColumnWidth="Auto"
-					  Items="{Binding ListRoi}"
 					  SelectionMode="Single"
-					  FontSize="12" />		
+					  FontSize="12" />
 	</DockPanel>
 </Window>

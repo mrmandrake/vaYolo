@@ -26,9 +26,10 @@ namespace vaYolo.ViewModels
             return (fDir != null) ? Path.Combine(fDir, String.Concat(fName, suffix, fExt)) : null;
         }
 
-        private static List<string> ValidExtensions = new () {
-                        ".png", ".jpg", ".jpeg",
-                        ".PNG", ".JPG", ".JPEG"};
+        private static List<string> ValidExtensions = new() {
+            ".png" };
+                        // ".jpg", ".jpeg",
+                        // ".PNG", ".JPG", ".JPEG"};
 
         public static List<string> ListImagesInFolder(string dir) 
         {

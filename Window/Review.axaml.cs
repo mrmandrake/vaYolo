@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using vaYolo.ViewModels;
@@ -28,6 +29,10 @@ namespace vaYolo.Views
                 dlg.ShowDialog(parent);
             else
                 dlg.Show();
+        }
+
+        public void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
         }
     }
 }
