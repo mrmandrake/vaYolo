@@ -42,7 +42,8 @@ namespace vaYolo.ViewModels
         public ReviewViewModel(string folder)
         {
             List<VaRoi> roiList = new ();
-            VaUtil.ListImagesInFolder(folder).ForEach((img) =>
+            var imgs = VaUtil.ListImagesInFolder(folder);
+            imgs.ForEach((img) =>
             {
                 var datapath = VaUtil.GetDatapath(img);
                 if (File.Exists(datapath)) {
