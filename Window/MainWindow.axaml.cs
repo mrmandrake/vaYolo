@@ -316,9 +316,8 @@ namespace vaYolo.Views
         public void OnNativeSetClassClicked(object sender, EventArgs args) => ShowSetClass();
         public void OnSetClassClicked(object sender, RoutedEventArgs args) => ShowSetClass();
 
-        public void OnNativeReviewClicked(object sender, EventArgs args) => ShowSetClass();
+        public void OnNativeReviewClicked(object sender, EventArgs args) => ShowReview();
         public void OnReviewClicked(object sender, RoutedEventArgs args) => ShowReview();
-
 
         public void OnNativeSetupClicked(object sender, EventArgs args) => ShowSetupTrain();
         public void OnSetupClicked(object sender, RoutedEventArgs args) => ShowSetupTrain();
