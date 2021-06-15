@@ -18,30 +18,26 @@ using Avalonia.Media.Imaging;
 using System.Text.RegularExpressions;
 using vaYolo.Helpers;
 using vaYolo.Models;
+using vaYolo.Model;
 
 namespace vaYolo.ViewModels
 {
-    public class TabItemViewModel
-    {
-        public string Header { get; set; }
-        public bool IsEnabled { get; set; } = true;
-    }
-
     public class ReviewViewModel : ReactiveObject
     {
         public TabItemViewModel[] Tabs { get; set; }
+
+        private List<VaRoi> roiList = new();
 
         private ObservableCollection<VaRoi> items;
 
         public ObservableCollection<VaRoi> Items
         {
-            get { return items; }
-            set { items = value; }
+            get => items;
+            set => this.RaiseAndSetIfChanged(ref items, value);
         }
 
         public ReviewViewModel(string folder)
         {
-            List<VaRoi> roiList = new ();
             var imgs = VaUtil.ListImagesInFolder(folder);
             imgs.ForEach((img) =>
             {
@@ -54,13 +50,20 @@ namespace vaYolo.ViewModels
 
             Items = new ObservableCollection<VaRoi>(roiList);
             List<TabItemViewModel> tabList = new ();
-            VaNames.GetNames().ToList().ForEach((c) => {
+            VaNames.Classes.ForEach((c) => {
                 tabList.Add(new TabItemViewModel() {
-                    Header = c
+                    ObjectClass = c.ObjectClass,
+                    Header = c.Description
                 });
             });
 
             Tabs = tabList.ToArray();
+            Update(Tabs[0].ObjectClass);
+        }
+
+        public void Update(int objectClass)
+        {
+            Items = new ObservableCollection<VaRoi>((from r in roiList where r.ObjectClass == objectClass select r).ToList());
         }
     }
 }

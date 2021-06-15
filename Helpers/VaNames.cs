@@ -19,7 +19,7 @@ namespace vaYolo
             try {    
                 if (!File.Exists(NamesPath(folder))) {
                     result.Add(new VaClass() { 
-                            Class = 0,
+                            ObjectClass = 0,
                             Description = "Undefined"
                         });
 
@@ -30,7 +30,7 @@ namespace vaYolo
                     int tmp = 0;
                     lines.ForEach((l) => {
                         result.Add(new VaClass() {
-                            Class = tmp++,
+                            ObjectClass = tmp++,
                             Description = l
                         });
                     });
@@ -43,7 +43,7 @@ namespace vaYolo
         }
 
         public static IEnumerable<string> GetNames() {
-            return Classes.OrderBy(l => l.Class).Select(l => l.Description);
+            return Classes.OrderBy(l => l.ObjectClass).Select(l => l.Description);
         }
 
         public static void Save(string namesPath) {

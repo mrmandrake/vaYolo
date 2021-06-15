@@ -6,10 +6,34 @@
         x:Class="vaYolo.Views.Review"
         Title="Review">
 	<DockPanel>
-		<TabControl Items="{Binding Tabs}" SelectionChanged="OnSelectionChanged" DockPanel.Dock="Top"/>
-		<DataGrid  Name="dataGrid" AutoGenerateColumns="True" IsReadOnly="True"
-					  Margin="12" HorizontalAlignment="Stretch" ColumnWidth="Auto"
-					  SelectionMode="Single"
-					  FontSize="12" />
+		<TabControl Items="{Binding Tabs}" SelectionChanged="OnSelectionChanged" DockPanel.Dock="Top">
+			<TabControl.ItemTemplate>
+				<DataTemplate>
+					<TextBlock
+						Text="{Binding Header}">
+					</TextBlock>
+				</DataTemplate>
+			</TabControl.ItemTemplate>
+			<TabControl.ContentTemplate>
+				<DataTemplate>
+					<DataGrid Name="dataGrid" Margin="4" SelectionMode="Single" Items="{Binding Items}"/>
+				</DataTemplate>
+			</TabControl.ContentTemplate>
+		</TabControl>
+		<DataGrid Name="dataGrid" Margin="4" AutoGenerateColumns="False"
+				  IsReadOnly="True" HorizontalAlignment="Stretch"
+				  ColumnWidth="Auto" SelectionMode="Single" Items="{Binding Items}">
+			<DataGrid.Columns>
+				<DataGridTemplateColumn Header="Roi" Width="64">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Image Name="Roi" Source="{Binding Roi}"/>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="Class" Binding="{Binding ObjectClass}"/>
+				<DataGridTextColumn Header="Image" Binding="{Binding ImagePath}"/>
+			</DataGrid.Columns>
+		</DataGrid>			
 	</DockPanel>
 </Window>

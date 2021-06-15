@@ -3,12 +3,18 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
+using vaYolo.Model;
 using vaYolo.ViewModels;
 
 namespace vaYolo.Views
 {
     public partial class Review : ReactiveWindow<ReviewViewModel>
     {
+        public DataGrid DG
+        {
+            get => this.FindControl<DataGrid>("dataGrid");
+        }
+
         public Review()
         {
             InitializeComponent();
@@ -33,6 +39,14 @@ namespace vaYolo.Views
 
         public void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var item = ((TabControl)sender).SelectedItem;
+            if (item != null)
+            {
+                ViewModel.Update(((TabItemViewModel)item).ObjectClass);
+                if (DG != null)
+                    DG.Items = ViewModel.Items;
+            }
+                
         }
     }
 }

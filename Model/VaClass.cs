@@ -4,7 +4,7 @@ using Avalonia.Media;
 namespace vaYolo.Models
 {
     public class VaClass {
-        public int Class {get; set;}
+        public int ObjectClass {get; set;}
 
         public string Description {get; set;}
     }
