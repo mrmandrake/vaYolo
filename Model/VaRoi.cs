@@ -26,20 +26,15 @@ namespace vaYolo.Models
             }
         }
 
-        public VaRoi(VaRect rect, Bitmap bmp, string imagePath) {
-            using (var img = new System.Drawing.Bitmap(imagePath))
-            {
-                Roi = CropBitmap(img, rect.UnNormalized(bmp.Size));
-            }
-
-            // Roi = new CroppedBitmap(bmp, PixelRect.FromRect(rect.UnNormalized(bmp.Size), 1.0));
+        public VaRoi(VaRect rect, System.Drawing.Bitmap bmp, string imagePath) {
+            Roi = CropBitmap(bmp, rect.UnNormalized(new Size(bmp.Width, bmp.Height)));
             ObjectClass = rect.ObjectClass;
             ImagePath = imagePath;
         }
 
         public static List<VaRoi> LoadData(List<VaRect> rect, string imagePath) {
             List<VaRoi> result = new ();
-            using (Bitmap img = new Bitmap(imagePath)) {
+            using (var img = new System.Drawing.Bitmap(imagePath)) {
                 rect.ForEach((r)=> {
                     result.Add(new VaRoi(r, img, imagePath));
                 });
