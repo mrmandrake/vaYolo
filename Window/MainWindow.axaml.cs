@@ -20,6 +20,8 @@ namespace vaYolo.Views
 {
     public class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
+        public static MainWindow Instance { get; private set; }
+
         public Dictionary<Key, uint> classDigit = new()
         {
             { Key.D0, 0 },
@@ -53,6 +55,7 @@ namespace vaYolo.Views
 
         public MainWindow()
         {
+            Instance = this;
             InitializeComponent();
             this.AttachDevTools();
             DataContext = new MainWindowViewModel();
@@ -155,6 +158,11 @@ namespace vaYolo.Views
             return images[++idx];
         }                
 
+        public void SetClass(uint objectClass)
+        {
+            Ctrl.CurrentObjectClass = objectClass;
+        }
+
         protected async override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -162,7 +170,7 @@ namespace vaYolo.Views
             uint classVal = 0;
             if (classDigit.TryGetValue(e.Key, out classVal))
             {
-                Ctrl.CurrentObjectClass = classVal;
+                SetClass(classVal);
                 Notify("Set Class " + classVal);
             }
             else
@@ -276,22 +284,29 @@ namespace vaYolo.Views
 
         public void ShowSetupTrain()
         {
-            Setup.Show(this);
+            new Setup().Show(this);
         }
 
         public void ShowConsoleTrain()
         {
-            Console.Show(this);
+            new Console() {
+                ViewModel = new ConsoleViewModel(ViewModel.FolderPath)
+            }.Show(this);
         }                    
 
         public void ShowSetClass()
         {
-            SetClass.Show(this, new SetClassViewModel(VaNames.GetNames()));
+            new SetClass() {
+                ViewModel = new SetClassViewModel(VaNames.GetNames())
+            }.Show();
         }
 
         public void ShowReview()
         {
-            Review.Show(this, new ReviewViewModel(ViewModel.FolderPath));
+            new Review()
+            {
+                ViewModel = new ReviewViewModel(ViewModel.FolderPath)
+            }.Show(this);
         }        
 
         public override void Render(DrawingContext context)

@@ -26,8 +26,6 @@ namespace vaYolo.ViewModels
     {
         public TabItemViewModel[] Tabs { get; set; }
 
-        private List<VaRoi> roiList = new();
-
         private ObservableCollection<VaRoi> items;
 
         public ObservableCollection<VaRoi> Items
@@ -36,19 +34,10 @@ namespace vaYolo.ViewModels
             set => this.RaiseAndSetIfChanged(ref items, value);
         }
 
+        private string Folder { get; set; }
+
         public ReviewViewModel(string folder)
         {
-            var imgs = VaUtil.ListImagesInFolder(folder);
-            imgs.ForEach((img) =>
-            {
-                var datapath = VaUtil.GetDatapath(img);
-                if (File.Exists(datapath)) {
-                    var rects = VaRect.LoadData(datapath);
-                    roiList.AddRange(VaRoi.LoadData(rects, img));
-                }
-            });
-
-            Items = new ObservableCollection<VaRoi>(roiList);
             List<TabItemViewModel> tabList = new ();
             VaNames.Classes.ForEach((c) => {
                 tabList.Add(new TabItemViewModel() {
@@ -59,11 +48,28 @@ namespace vaYolo.ViewModels
 
             Tabs = tabList.ToArray();
             Update(Tabs[0].ObjectClass);
+            Folder = folder;
         }
 
-        public void Update(int objectClass)
+        public async void Update(int objectClass)
         {
-            Items = new ObservableCollection<VaRoi>((from r in roiList where r.ObjectClass == objectClass select r).ToList());
+            List<VaRoi> roiList = new();
+            await Task.Run(new Action(() =>
+            {
+                var imgs = VaUtil.ListImagesInFolder(Folder);
+                imgs.ForEach((img) =>
+                {
+                    var datapath = VaUtil.GetDatapath(img);
+                    if (File.Exists(datapath))
+                    {
+                        var rects = (from r in VaRect.LoadData(datapath) where r.ObjectClass == objectClass select r).ToList();
+                        roiList.AddRange(VaRoi.LoadData(rects, img));
+                    }
+                });
+
+            }));
+
+            Items = new ObservableCollection<VaRoi>(roiList);
         }
     }
 }

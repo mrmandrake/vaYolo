@@ -24,15 +24,6 @@ namespace vaYolo.Views
             get => this.Find<TextBox>("InputBlock");
         }
 
-        public static void Show(MainWindow parent)
-        {
-            var dlg = new Console() { ViewModel = new ConsoleViewModel(parent.ViewModel.FolderPath) };
-            if (parent != null)
-                dlg.ShowDialog(parent);
-            else
-                dlg.Show();
-        }
-
         public Console()
         {
             AvaloniaXamlLoader.Load(this);

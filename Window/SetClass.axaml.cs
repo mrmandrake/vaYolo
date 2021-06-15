@@ -18,16 +18,10 @@ namespace vaYolo.Views
             AvaloniaXamlLoader.Load(this);
         }
 
-        public static new void Show(Window parent, SetClassViewModel model)
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var dlg = new SetClass() {
-                ViewModel = model            
-            };
-            
-            if (parent != null)
-                dlg.ShowDialog(parent);
-            else
-                dlg.Show();
+            MainWindow.Instance.SetClass((uint)((ListBox)sender).SelectedIndex);
+            Close();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace vaYolo.ViewModels
         }
 
         private static List<string> ValidExtensions = new() {
-            ".png" };
+            ".png", ".jpg" };
                         // ".jpg", ".jpeg",
                         // ".PNG", ".JPG", ".JPEG"};
 
