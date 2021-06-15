@@ -110,5 +110,25 @@ namespace vaYolo.Helpers
 
             return result;
         }
+
+        public static string? GetNextPath(string path)
+        {
+            var images = VaUtil.ListImagesInFolder(Path.GetDirectoryName(path));
+            var idx = images.IndexOf(path);
+            if (idx <= 0)
+                return null;                
+
+            return images[--idx];
+        }
+
+        public static string? GetPrevPath(string path)
+        {
+             var images = VaUtil.ListImagesInFolder(Path.GetDirectoryName(path));
+            var idx = images.IndexOf(path);
+            if (idx == images.Count - 1) 
+                return null;
+
+            return images[++idx];
+        }                
     }
 }

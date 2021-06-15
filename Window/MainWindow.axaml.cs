@@ -13,7 +13,6 @@ using vaYolo.ViewModels;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using vaYolo.Helpers;
-using vaYolo.Model;
 
 namespace vaYolo.Views
 {
@@ -133,30 +132,6 @@ namespace vaYolo.Views
                 Notify("No Images found!!", "Loading content");
         }
 
-        private string? GetNextPath()
-        {
-            var images = VaUtil.ListImagesInFolder(Path.GetDirectoryName(ViewModel.ImagePath));
-            var idx = images.IndexOf(ViewModel.ImagePath);
-            if (idx <= 0) {
-                Notify("First Image", "Load Prev Image");
-                return null;                
-            }
-
-            return images[--idx];
-        }
-
-        private string? GetPrevPath()
-        {
-             var images = VaUtil.ListImagesInFolder(Path.GetDirectoryName(ViewModel.ImagePath));
-            var idx = images.IndexOf(ViewModel.ImagePath);
-            if (idx == images.Count - 1) {
-                Notify("Last Image", "Load Next Image");
-                return null;
-            }                
-
-            return images[++idx];
-        }                
-
         public void SetClass(uint objectClass)
         {
             Ctrl.CurrentObjectClass = objectClass;
@@ -177,11 +152,11 @@ namespace vaYolo.Views
                 switch (e.Key)
                 {
                     case Key.Left:
-                        LoadImageByPath(GetNextPath());
+                        LoadImageByPath(VaUtil.GetNextPath(ViewModel.ImagePath));
                         break;
 
                     case Key.Right:
-                        LoadImageByPath(GetPrevPath());
+                        LoadImageByPath(VaUtil.GetPrevPath(ViewModel.ImagePath));
                         break;
 
                     case Key.O:
@@ -320,11 +295,15 @@ namespace vaYolo.Views
         public void OnNativeLoadFolderClicked(object sender, EventArgs args) => LoadFolder();
         public void OnLoadFolderClicked(object sender, RoutedEventArgs args) => LoadFolder();
 
-        public void OnNativePrevImageClicked(object sender, EventArgs args) => LoadImageByPath(GetPrevPath());
-        public void OnPrevImageClicked(object sender, RoutedEventArgs args) => LoadImageByPath(GetPrevPath());
+        public void OnNativePrevImageClicked(object sender, EventArgs args) => 
+            LoadImageByPath(VaUtil.GetPrevPath(ViewModel.ImagePath));
+        public void OnPrevImageClicked(object sender, RoutedEventArgs args) => 
+            LoadImageByPath(VaUtil.GetPrevPath(ViewModel.ImagePath));
 
-        public void OnNativeNextImageClicked(object sender, EventArgs args) => LoadImageByPath(GetNextPath());
-        public void OnNextImageClicked(object sender, RoutedEventArgs args) => LoadImageByPath(GetNextPath());
+        public void OnNativeNextImageClicked(object sender, EventArgs args) => 
+            LoadImageByPath(VaUtil.GetNextPath(ViewModel.ImagePath));
+        public void OnNextImageClicked(object sender, RoutedEventArgs args) => 
+            LoadImageByPath(VaUtil.GetNextPath(ViewModel.ImagePath));
 
         public void OnNativeAboutClicked(object sender, EventArgs args) => ShowAbout();
         public void OnAboutClicked(object sender, RoutedEventArgs args) => ShowAbout();
