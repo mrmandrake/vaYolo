@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Threading;
-using Avalonia.Controls;
-using Avalonia.Controls.Notifications;
-using System.Reactive;
 using ReactiveUI;
-using Renci.SshNet;
 using System.IO;
 using AvaloniaEdit.Document;
-using Renci.SshNet.Common;
 using Avalonia.Media.Imaging;
 using System.Text.RegularExpressions;
 using vaYolo.Helpers;
+using vaYolo.Model;
 
 namespace vaYolo.ViewModels
 {
@@ -102,7 +93,11 @@ namespace vaYolo.ViewModels
         {
             get => screenPid;
             set => this.RaiseAndSetIfChanged(ref screenPid, value);
-        }        
+        }
+
+        public string ConfigTemplate { get; set; } = "yolov4-tiny-custom.cfg";
+
+        public VaSetup Setup { get; set; }
 
         ObservableCollection<string> consoleOutput = new();
 
@@ -217,8 +212,36 @@ namespace vaYolo.ViewModels
         }
 
         public void Start() {
+            CreateTrain();
+            CreateValid();
+            CreateData();
+            CreateConfig();
             LaunchTrain(SshRemoteFolder, sshScreenName, sshDarknet);
             ScreenPid = GetScreenPid();
+        }
+
+        private void CreateConfig()
+        {
+            var cfgPath = YoloCfg.FromTemplate(ConfigTemplate, Setup).Save(VaUtil.GetCfgPath(sshLocalFolder));
+            Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(cfgPath));
+        }
+
+        private void CreateData()
+        {
+            var dataPath = VaData.Create(VaNames.Classes.Count, sshRemoteFolder).Save(VaUtil.GetDataPath(sshLocalFolder));
+            Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(dataPath));
+        }
+
+        private void CreateTrain()
+        {
+            var trainListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Save(VaUtil.GetTrainListPath(sshLocalFolder));
+            Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(trainListPath));
+        }
+
+        private void CreateValid()
+        {
+            var validListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Save(VaUtil.GetValidListPath(sshLocalFolder));
+            Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(validListPath));
         }
 
         public void Refresh() {

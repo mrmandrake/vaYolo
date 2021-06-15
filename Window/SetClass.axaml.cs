@@ -10,7 +10,9 @@ namespace vaYolo.Views
     {
         public SetClass()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterOwner;
             InitializeComponent();
+
         }
 
         private void InitializeComponent()

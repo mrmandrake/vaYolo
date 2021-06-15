@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace vaYolo.Models
+namespace vaYolo.Model
 {
     public class VaRect
     {

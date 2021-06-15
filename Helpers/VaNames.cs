@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using vaYolo.Models;
+using vaYolo.Helpers;
+using vaYolo.Model;
 
 namespace vaYolo
 {
@@ -23,7 +24,7 @@ namespace vaYolo
                             Description = "Undefined"
                         });
 
-                    Save(NamesPath(folder));
+                    GetNames().Save(NamesPath(folder));
                 }
                 else {
                     var lines = File.ReadAllLines(NamesPath(folder)).ToList();
@@ -44,10 +45,6 @@ namespace vaYolo
 
         public static IEnumerable<string> GetNames() {
             return Classes.OrderBy(l => l.ObjectClass).Select(l => l.Description);
-        }
-
-        public static void Save(string namesPath) {
-            File.WriteAllLines(namesPath, GetNames());
         }
     }
 }

@@ -1,17 +1,14 @@
 
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Dialogs;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reactive;
 using System.Threading.Tasks;
 using vaYolo.Helpers;
-using vaYolo.Models;
+using vaYolo.Model;
 
 
 namespace vaYolo.ViewModels

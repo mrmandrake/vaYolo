@@ -33,7 +33,7 @@
 		</StackPanel>
 
 		<TabControl>
-			<TabItem Header="Log">
+			<TabItem Header="Log" FontSize="12">
 				<Grid RowDefinitions="*,42" ColumnDefinitions="*">
 					<ExperimentalAcrylicBorder CornerRadius="10" Grid.Row="0" Grid.Column="0">
 						<ExperimentalAcrylicBorder.Material>
@@ -41,14 +41,14 @@
 											MaterialOpacity="0.7" BackgroundSource="Digger"/>
 						</ExperimentalAcrylicBorder.Material>
 						<avaloniaedit:TextEditor Name="ConsoleOutput" Margin="8" Document="{Binding Document}"
-							HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" FontSize="12"/>
+							HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" FontSize="13"/>
 					</ExperimentalAcrylicBorder>
 					<TextBox Grid.Row="1" Grid.Column="0" Height="42" Text="{Binding ConsoleInput}"
 						Background="DarkGray" Foreground="LightGray" FontFamily="Consolas" Margin="0 8 0 8"
 						Name="InputBlock" BorderBrush="{x:Null}" SelectionBrush="{x:Null}"/>
 				</Grid>
 			</TabItem>
-			<TabItem Header="Chart">
+			<TabItem Header="Chart" FontSize="12">
 				
 				<Grid RowDefinitions="*,42" ColumnDefinitions="*">
 					<Image Name="chart" Source="{Binding Chart}"/>

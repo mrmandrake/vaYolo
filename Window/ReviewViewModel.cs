@@ -17,7 +17,6 @@ using Renci.SshNet.Common;
 using Avalonia.Media.Imaging;
 using System.Text.RegularExpressions;
 using vaYolo.Helpers;
-using vaYolo.Models;
 using vaYolo.Model;
 
 namespace vaYolo.ViewModels

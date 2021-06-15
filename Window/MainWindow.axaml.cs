@@ -3,18 +3,17 @@ using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
-using Avalonia.Platform;
 using Avalonia.ReactiveUI;
 using ReactiveUI;
 using System;
 using System.IO;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using vaYolo;
 using vaYolo.ViewModels;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using vaYolo.Helpers;
+using vaYolo.Model;
 
 namespace vaYolo.Views
 {
@@ -161,6 +160,7 @@ namespace vaYolo.Views
         public void SetClass(uint objectClass)
         {
             Ctrl.CurrentObjectClass = objectClass;
+            Notify("Current object class:" + objectClass);
         }
 
         protected async override void OnKeyDown(KeyEventArgs e)
@@ -296,9 +296,10 @@ namespace vaYolo.Views
 
         public void ShowSetClass()
         {
+            VaNames.Load(ViewModel.FolderPath);
             new SetClass() {
                 ViewModel = new SetClassViewModel(VaNames.GetNames())
-            }.Show();
+            }.ShowDialog(this);
         }
 
         public void ShowReview()
@@ -339,7 +340,6 @@ namespace vaYolo.Views
 
         public void OnNativeConsoleClicked(object sender, EventArgs args) => ShowConsoleTrain();
         public void OnConsoleClicked(object sender, RoutedEventArgs args) => ShowConsoleTrain();
-
 #endregion
     }
 }

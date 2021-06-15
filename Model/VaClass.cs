@@ -1,7 +1,4 @@
-using Avalonia;
-using Avalonia.Media;
-
-namespace vaYolo.Models
+namespace vaYolo.Model
 {
     public class VaClass {
         public int ObjectClass {get; set;}

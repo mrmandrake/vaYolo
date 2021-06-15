@@ -1,7 +1,7 @@
 
 using Avalonia.Controls;
 
-namespace vaYolo.Models
+namespace vaYolo.Model
 {
     public class VaSetup
     {        

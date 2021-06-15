@@ -46,6 +46,30 @@ namespace vaYolo.Helpers {
             return false;
         }
 
+        public static bool Upload(ConnectionInfo conn, string SshRemoteFolder, string SshLocalFolder, string filename)
+        {
+            try
+            {
+                using (var sftp = new SftpClient(conn))
+                {
+                    sftp.Connect();
+                    sftp.ChangeDirectory(SshRemoteFolder);
+                    using (Stream f = File.OpenRead(Path.Combine(SshLocalFolder, filename)))
+                        sftp.UploadFile(f, SshRemoteFolder);
+
+                    sftp.Disconnect();
+                }
+                return true;
+            }
+            catch (Exception exc)
+            {
+                // write (exc.Message);
+            }
+
+            return false;
+        }
+
+
         public static bool Exists(ConnectionInfo conn, string path)
         {
             bool result = false;
