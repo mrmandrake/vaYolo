@@ -32,7 +32,7 @@
 					<DataGridTemplateColumn Header="Roi" Width="64">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
-								<Image Name="Roi" Source="{Binding Roi}" Margin="2"/>
+								<Image Name="Roi" Source="{Binding _Roi}" Margin="2"/>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 					</DataGridTemplateColumn>

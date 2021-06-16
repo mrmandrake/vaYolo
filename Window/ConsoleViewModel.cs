@@ -10,6 +10,7 @@ using vaYolo.Model;
 using vaYolo.Model.Yolo;
 using Microsoft.VisualBasic.FileIO;
 using vaYolo.Ext;
+using System.Threading.Tasks;
 
 namespace vaYolo.ViewModels
 {
@@ -123,7 +124,9 @@ namespace vaYolo.ViewModels
             }
         }
 
-        public void write(string str) => Document.Insert(Document.TextLength, str + "\n");
+        public void write(string str) {
+            Document.Insert(Document.TextLength, str + "\n");
+        } 
 
         public bool Init()
         {
@@ -131,10 +134,13 @@ namespace vaYolo.ViewModels
             write(String.Format("Username:{0} Local Folder:{1} Remote Folder:{2}", 
                 SshUsername, SshLocalFolder, SshRemoteFolder));
 
-            if (Ssh.Init(sshServer, Convert.ToUInt16(sshPort), 
-                sshUsername, sshPassword))
-                write("...CONNECTED!");
+            if (!Ssh.Init(sshServer, Convert.ToUInt16(sshPort), 
+                sshUsername, sshPassword)) {
+                    write("...ERROR NOT CONNECTED!");
+                    return false;
+                }                
 
+            write("...CONNECTED!");
             ScreenPid = GetScreenPid();            
             write("Remote Folder " + (!Sftp.Exists(Ssh.Connection, SshRemoteFolder) ? "NOT" : "") + " exist!");
             return true;
@@ -180,13 +186,13 @@ namespace vaYolo.ViewModels
                 if (m.Success) {
                     pid = Convert.ToInt32(m.Value.Substring(0, m.Value.IndexOf('.')));                    
                     if (pid > 0) 
-                        write(String.Format("Found screen active with pid {0}", pid));
-                    else
-                        write("No active screen found");
+                        write(String.Format("Found job active with pid {0}", pid));
                 }
-                else
-                    write("Error analyzing re");
+
+                write("No active job found");
             }
+            else
+                write("ERROR Listing jobs actives");
 
             return pid;
         }
@@ -197,9 +203,9 @@ namespace vaYolo.ViewModels
             string screencmd = String.Format("screen -d -m -L -S {0} ", SshScreenName);
             string timecmd = "/usr/bin/time --verbose ";
             string test = "ping 127.0.0.1 &2>&1";
-            string darknetcmd = String.Format("{0} detector -map -dont_show train", SshDarknet);
-            string dataPath = String.Format("{0}/{1}.data", SshRemoteFolder, FolderName);
-            string cfgPath = String.Format("{0}/{1}.cfg", SshRemoteFolder, FolderName);
+            string darknetcmd = String.Format("{0} detector -map -dont_show train ", SshDarknet);
+            string dataPath = String.Format("{0}/{1}.data ", SshRemoteFolder, FolderName);
+            string cfgPath = String.Format("{0}/{1}.cfg ", SshRemoteFolder, FolderName);
             string redirectStd = " 2>&1";
             var cmd = setfolder + screencmd + timecmd + darknetcmd + dataPath + cfgPath + redirectStd;
             // var cmd = setfolder + screencmd + test;

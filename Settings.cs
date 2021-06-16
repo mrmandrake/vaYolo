@@ -117,7 +117,7 @@ namespace vaYolo
                 SshPort = 65022,
                 SshUsername = "manovella",
                 SshPassword = "",
-                SshRemoteDarknet = "/home/manovella/darknet",
+                SshRemoteDarknet = "/home/manovella/src/darknet/darknet",
                 SshRemote = "/tmp"
             };
         }

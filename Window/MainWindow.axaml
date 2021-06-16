@@ -34,7 +34,6 @@
 					</NativeMenu>
 				</NativeMenuItem.Menu>
 			</NativeMenuItem>
-			<!--IsEnabled="{Binding FolderPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">-->
 			<NativeMenuItem Header="Training">
 				<NativeMenuItem.Menu>
 					<NativeMenu>

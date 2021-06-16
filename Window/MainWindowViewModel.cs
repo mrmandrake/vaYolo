@@ -52,11 +52,20 @@ namespace vaYolo.ViewModels
 
         public MainWindowViewModel()
         {
-            var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-            img = Bitmap.DecodeToWidth(assets.Open(new Uri("avares://vaYolo/Assets/vayolo2.png")), 1440,
-                        Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
-
+            LoadLogo();
             IsWin = OperatingSystem.IsWindows();                
+        }
+
+        private void LoadLogo()
+        {
+            try {
+                var assetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
+                img = Bitmap.DecodeToWidth(assetLoader.Open(new Uri("avares://vaYolo/Assets/vayolo2.png")), 1440,
+                            Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
+            }
+            catch (Exception exc) {
+
+            }
         }
 
         public void Add(Rect rc)
