@@ -98,6 +98,8 @@ namespace vaYolo.ViewModels
             set => this.RaiseAndSetIfChanged(ref screenPid, value); 
         }
 
+        public string FolderName { get; set; }
+
         public string ConfigTemplate { get; set; } = "yolo v4 tiny custom";
 
         ObservableCollection<string> consoleOutput = new();
@@ -115,7 +117,8 @@ namespace vaYolo.ViewModels
             if (folder != null)
             {
                 SshLocalFolder = folder;
-                SshScreenName = "vayolo." + new DirectoryInfo(folder).Name;
+                FolderName = new DirectoryInfo(folder).Name;
+                SshScreenName = "vayolo." + FolderName;
                 SshRemoteFolder = Path.Combine(Settings.Get().SshRemote, SshScreenName).Replace('\\', '/');
             }
         }
@@ -188,18 +191,18 @@ namespace vaYolo.ViewModels
             return pid;
         }
 
-        private void LaunchTrain(string remote, string name, string darknetPath)
+        private void LaunchTrain()
         {
-            string setfolder = String.Format("cd {0} && ", remote);
-            string screencmd = String.Format("screen -d -m -L -S {0} ", name);
+            string setfolder = String.Format("cd {0} && ", SshRemoteFolder);
+            string screencmd = String.Format("screen -d -m -L -S {0} ", SshScreenName);
             string timecmd = "/usr/bin/time --verbose ";
             string test = "ping 127.0.0.1 &2>&1";
-            string darknetcmd = String.Format("{0} detector -map -dont_show train", darknetPath);
-            string dataPath = String.Format("{0}/setok.data", remote);
-            string cfgPath = String.Format("{0}/setok.cfg", remote);
-            string redirectStd = "2>&1";
-            // var cmd = setfolder + screencmd + timecmd + darknetcmd + dataPath + cfgPath + redirectStd;
-            var cmd = setfolder + screencmd + test;
+            string darknetcmd = String.Format("{0} detector -map -dont_show train", SshDarknet);
+            string dataPath = String.Format("{0}/{1}.data", SshRemoteFolder, FolderName);
+            string cfgPath = String.Format("{0}/{1}.cfg", SshRemoteFolder, FolderName);
+            string redirectStd = " 2>&1";
+            var cmd = setfolder + screencmd + timecmd + darknetcmd + dataPath + cfgPath + redirectStd;
+            // var cmd = setfolder + screencmd + test;
             write("run " + cmd);
             write(Ssh.Run(cmd));
         }
@@ -231,7 +234,7 @@ namespace vaYolo.ViewModels
             CreateValid();
             CreateData();
             CreateConfig();
-            LaunchTrain(SshRemoteFolder, sshScreenName, sshDarknet);
+            LaunchTrain();
             ScreenPid = GetScreenPid();
         }
 

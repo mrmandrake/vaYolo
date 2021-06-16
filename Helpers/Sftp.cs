@@ -53,9 +53,9 @@ namespace vaYolo.Helpers {
                 using (var sftp = new SftpClient(conn))
                 {
                     sftp.Connect();
-                    sftp.ChangeDirectory(SshRemoteFolder);
-                    using (Stream f = File.OpenRead(Path.Combine(SshLocalFolder, filename)))
-                        sftp.UploadFile(f, SshRemoteFolder);
+                    // sftp.ChangeDirectory(SshRemoteFolder);
+                    using (Stream f = new FileStream(Path.Combine(SshLocalFolder, filename), FileMode.Open))
+                        sftp.UploadFile(f, Path.Combine(SshRemoteFolder, filename).Replace(@"\", "/"), true);
 
                     sftp.Disconnect();
                 }

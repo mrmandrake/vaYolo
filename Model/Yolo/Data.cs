@@ -34,7 +34,7 @@ namespace vaYolo.Model.Yolo
             };
         }
 
-        public string Save(string folder)
+        public string Save(string path)
         {
             List<string> lines = new()
             {
@@ -45,7 +45,6 @@ namespace vaYolo.Model.Yolo
                 String.Format("backup = {0}", BackupPath)
             };
 
-            var path = Util.DataPath(folder);
             File.WriteAllLines(path, lines.ToArray());
             return path;
         }

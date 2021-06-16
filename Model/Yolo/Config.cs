@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using vaYolo.Helpers;
 
 namespace vaYolo.Model.Yolo
 {
@@ -112,26 +113,27 @@ namespace vaYolo.Model.Yolo
 
         public string Save(string path)
         { 
-            var lines = File.ReadAllLines(Name);
+            var lines = File.ReadAllLines(Util.GetTemplatePath(Name));
 
             for (int i = 0; i < lines.Length; i++)
             {
-                if (lines[i].Contains("batch="))
+                var cleanLine = lines[i].Replace(" ", "");
+                if (cleanLine.Contains("batch=") && cleanLine[0] != '#')
                     lines[i] = String.Format("batch={0}", Settings.batch);
 
-                if (lines[i].Contains("subdivision="))
-                    lines[i] = String.Format("subdivision={0}", Settings.subdivision);
+                if (cleanLine.Contains("subdivisions=") && cleanLine[0] != '#')
+                    lines[i] = String.Format("subdivisions={0}", Settings.subdivision);
 
-                if (lines[i].Contains("width="))
+                if (cleanLine.Contains("width=") && cleanLine[0] != '#')
                     lines[i] = String.Format("width={0}", Settings.network_size_width);
 
-                if (lines[i].Contains("height="))
+                if (cleanLine.Contains("height=") && cleanLine[0] != '#')
                     lines[i] = String.Format("height={0}", Settings.network_size_height);
 
-                if (lines[i].Contains("max_batches="))
+                if (cleanLine.Contains("max_batches=") && cleanLine[0] != '#')
                     lines[i] = String.Format("max_batches={0}", Settings.max_batches);
 
-                if (lines[i].Contains("steps="))
+                if (cleanLine.Contains("steps=") && cleanLine[0] != '#')
                     lines[i] = String.Format("steps={0},{1}", Settings.max_batches * 0.8, Settings.max_batches * 0.9);
             }
 
@@ -158,9 +160,9 @@ namespace vaYolo.Model.Yolo
             {
                 int cnt = 0;
                 while (cnt++ < 10)
-                    if (lines[cnt - pos].Contains("filters="))
+                    if (lines[pos - cnt].Contains("filters="))
                     {
-                        lines[cnt - pos] = String.Format("filters={0}", Settings.filters);
+                        lines[pos - cnt] = String.Format("filters={0}", Settings.filters);
                         break;
                     }
 

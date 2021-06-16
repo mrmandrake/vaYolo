@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace vaYolo.Helpers
 {
@@ -84,6 +85,11 @@ namespace vaYolo.Helpers
             return Path.Combine(folder, "chart.png");
         }
 
+        public static string GetTemplatePath(string name)
+        {
+            var appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            return Path.Combine(appDir, "Templates", name);
+        }
 
         public static List<string> ListLabeledInFolder(string dir)
         {
