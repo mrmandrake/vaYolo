@@ -9,41 +9,52 @@ namespace vaYolo
 {
     public class VaNames
     {
-        public static List<VaClass> Classes = new ();
+        public static List<VaClass> Classes = new();
 
-        private static string NamesPath(string folder) {
-            return Path.Combine(folder, new DirectoryInfo(folder).Name + ".names");
-        }
+        public static void Load(string folder)
+        {
+            List<VaClass> result = new();
+            try
+            {
+                if (!File.Exists(VaUtil.NamesPath(folder)))
+                {
+                    result.Add(new VaClass()
+                    {
+                        ObjectClass = 0,
+                        Description = "Undefined"
+                    });
 
-        public static void Load(string folder) {
-            List<VaClass> result = new ();
-            try {    
-                if (!File.Exists(NamesPath(folder))) {
-                    result.Add(new VaClass() { 
-                            ObjectClass = 0,
-                            Description = "Undefined"
-                        });
-
-                    GetNames().Save(NamesPath(folder));
+                    Classes = result;
+                    Save(folder);
                 }
-                else {
-                    var lines = File.ReadAllLines(NamesPath(folder)).ToList();
+                else
+                {
+                    var lines = File.ReadAllLines(VaUtil.NamesPath(folder)).ToList();
                     int tmp = 0;
-                    lines.ForEach((l) => {
-                        result.Add(new VaClass() {
+                    lines.ForEach((l) =>
+                    {
+                        result.Add(new VaClass()
+                        {
                             ObjectClass = tmp++,
                             Description = l
                         });
                     });
+
+                    Classes = result;
                 }
             }
-            catch (Exception exc) {
+            catch (Exception exc)
+            {
             }
-
-            Classes = result;            
         }
 
-        public static IEnumerable<string> GetNames() {
+        public static string Save(string folder)
+        {
+            return GetNames().Save(VaUtil.NamesPath(folder));
+        }
+
+        public static IEnumerable<string> GetNames()
+        {
             return Classes.OrderBy(l => l.ObjectClass).Select(l => l.Description);
         }
     }

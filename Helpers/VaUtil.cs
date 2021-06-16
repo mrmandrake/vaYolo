@@ -53,39 +53,29 @@ namespace vaYolo.Helpers
             return result;
         }
 
-        public static string GetDatapath(string folder)
-        {
-            var name = new DirectoryInfo(folder).Name;
-            return Path.ChangeExtension(folder, "txt");
+        public static PathPrefix(string folder) {
+            return Path.Combine(folder, new DirectoryInfo(folder).Name);
         }
 
-        public static string GetTrainListPath(string folder)
-        {
-            var name = new DirectoryInfo(folder).Name;
-            return Path.Combine(folder, name + "_train.txt");
+        public static string TrainListPath(string folder) {
+            return PathPrefix(folder) + "_train.txt";
         }
 
-        public static string GetValidListPath(string folder)
-        {
-            var name = new DirectoryInfo(folder).Name;
-            return Path.Combine(folder, name + "_valid.txt");
+        public static string GetValidListPath(string folder) {
+            return PathPrefix(folder) + "_valid.txt";
         }
 
-        public static string GetDataPath(string folder)
+        public static string DataPath(string folder)
         {
-            var name = new DirectoryInfo(folder).Name;
-            return Path.Combine(folder, new DirectoryInfo(folder).Name, ".data");
+            return PathPrefix(folder) + ".data";
         }
 
-        public static string GetNamesPath(string folder)
-        {
-            var name = new DirectoryInfo(folder).Name;
-            return Path.Combine(folder, name + ".names");
+        private static string NamesPath(string folder) {
+            return PathPrefix(folder) + ".names";
         }
 
-        public static string GetCfgPath(string folder)
-        {
-            return Path.Combine(folder, new DirectoryInfo(folder).Name, ".cfg");
+        public static string ConfigPath(string folder) {
+            return PathPrefix(folder) + ".cfg";
         }
 
         public static List<string> ListLabeledInFolder(string dir)
