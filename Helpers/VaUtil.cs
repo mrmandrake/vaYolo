@@ -12,6 +12,11 @@ namespace vaYolo.Helpers
             File.WriteAllLines(path, en);
             return path;
         }
+
+        public static IEnumerable<string> Rebase(this IEnumerable<string> en, string oldDir, string newDir)
+        {
+            return (from e in en select Path.Combine(newDir, Path.GetRelativePath(oldDir, e).Replace(@"\", "/")));
+        }
     }
 
     public class VaUtil
@@ -86,6 +91,11 @@ namespace vaYolo.Helpers
         public static string SettingsPath(string folder)
         {
             return Path.Combine(folder, "vayolo.xml");
+        }
+
+        public static string ChartPath(string folder)
+        {
+            return Path.Combine(folder, "chart.png");
         }
 
 

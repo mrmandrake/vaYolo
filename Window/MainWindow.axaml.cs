@@ -92,8 +92,11 @@ namespace vaYolo.Views
 
         protected void ImageClickUp(object sender, PointerReleasedEventArgs e)
         {
-            Draw = false;
-            Ctrl.Add();
+            if (Draw)
+            {
+                Draw = false;
+                Ctrl.Add();
+            }
         }
 
         protected void ImageClickMove(object sender, PointerEventArgs e)
@@ -127,6 +130,8 @@ namespace vaYolo.Views
 
             Settings.Load(folder);
             VaNames.Load(folder);
+
+            File.Delete(VaUtil.ChartPath(folder));
 
             if (!LoadFirstImage(folder))
                 Notify("No Images found!!", "Loading content");
@@ -282,7 +287,6 @@ namespace vaYolo.Views
         public void ShowReview()
         {
             DataSavedCheck();
-
             new Review()
             {
                 ViewModel = new ReviewViewModel(ViewModel.FolderPath)

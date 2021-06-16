@@ -113,6 +113,7 @@ namespace vaYolo.ViewModels
         public SetupViewModel(string folder)
         {
             Templates = YoloCfg.Configs.Keys.ToList();
+            Folder = folder;
         }
 
         public void Save()

@@ -7,6 +7,7 @@ using Avalonia.Media.Imaging;
 using System.Text.RegularExpressions;
 using vaYolo.Helpers;
 using vaYolo.Model;
+using Microsoft.VisualBasic.FileIO;
 
 namespace vaYolo.ViewModels
 {
@@ -92,10 +93,10 @@ namespace vaYolo.ViewModels
         public int ScreenPid
         {
             get => screenPid;
-            set => this.RaiseAndSetIfChanged(ref screenPid, value);
+            set => this.RaiseAndSetIfChanged(ref screenPid, value); 
         }
 
-        public string ConfigTemplate { get; set; } = "yolov4-tiny-custom.cfg";
+        public string ConfigTemplate { get; set; } = "yolo v4 tiny custom";
 
         ObservableCollection<string> consoleOutput = new();
 
@@ -136,11 +137,23 @@ namespace vaYolo.ViewModels
 
         public bool Sync()
         {
+            write("Sync...");
+            DeleteSupportFiles(sshLocalFolder);
+
             var (s1, s2) = Sftp.Sync(Ssh.Connection, SshLocalFolder, SshRemoteFolder);
             if (s1)
-                s2.ForEach((f) => write("Uploading file" + f));
-
+                s2.ForEach((f) => write("Uploading " + f));
+            write("...Sync complete");
             return s1;
+        }
+
+        private void DeleteSupportFiles(string sshLocalFolder)
+        {
+            File.Delete(VaUtil.ChartPath(sshLocalFolder));
+            File.Delete(VaUtil.DataPath(sshLocalFolder));
+            File.Delete(VaUtil.TrainListPath(sshLocalFolder));
+            File.Delete(VaUtil.ValidListPath(sshLocalFolder));
+            File.Delete(VaUtil.ConfigPath(sshLocalFolder));
         }
 
         public void Finish()
@@ -197,7 +210,7 @@ namespace vaYolo.ViewModels
         {
             if (Sftp.Download(Ssh.Connection, sshRemoteFolder, sshLocalFolder, "chart.png")) {
                 try {
-                    var chartPath = Path.Combine(sshLocalFolder, "chart.png");
+                    var chartPath = VaUtil.ChartPath(sshLocalFolder);
 
                     if (new FileInfo(chartPath).Length > 0)
                         Chart = Bitmap.DecodeToWidth(File.OpenRead(chartPath),
@@ -234,13 +247,13 @@ namespace vaYolo.ViewModels
 
         private void CreateTrain()
         {
-            var trainListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Save(VaUtil.TrainListPath(sshLocalFolder));
+            var trainListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Rebase(SshLocalFolder, SshRemoteFolder).Save(VaUtil.TrainListPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(trainListPath));
         }
 
         private void CreateValid()
         {
-            var validListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Save(VaUtil.ValidListPath(sshLocalFolder));
+            var validListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Rebase(SshLocalFolder, SshRemoteFolder).Save(VaUtil.ValidListPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(validListPath));
         }
 

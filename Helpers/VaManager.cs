@@ -77,16 +77,22 @@ namespace vaYolo
         }
 
         public void Add() {
+
             if (IsEditMode())
             {
                 if (EditingRect != null)
+                {
+                    VaRect.DefaultRectSize = EditingRect._Rect.Size;
                     Rects.Add(EditingRect);
+                }
+
             }
             else
                 if (SelectedRect != null) {
                     VaRect.DefaultRectSize = SelectedRect._Rect.Size;
-                Rects.Add(SelectedRect);
+                    Rects.Add(SelectedRect);
                 }
+                    
 
             SelectedRect = null;
             EditingRect = null;

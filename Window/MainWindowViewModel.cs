@@ -53,7 +53,7 @@ namespace vaYolo.ViewModels
         public MainWindowViewModel()
         {
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-            img = Bitmap.DecodeToHeight(assets.Open(new Uri("avares://vaYolo/Assets/vayolo.png")), 320,
+            img = Bitmap.DecodeToWidth(assets.Open(new Uri("avares://vaYolo/Assets/vayolo2.png")), 1440,
                         Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.LowQuality);
 
             IsWin = OperatingSystem.IsWindows();                
