@@ -218,25 +218,25 @@ namespace vaYolo.ViewModels
 
         private void CreateConfig()
         {
-            var cfgPath = YoloCfg.FromTemplate(ConfigTemplate, Setup).Save(VaUtil.GetCfgPath(sshLocalFolder));
+            var cfgPath = YoloCfg.FromTemplate(ConfigTemplate, Setup).Save(VaUtil.ConfigPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(cfgPath));
         }
 
         private void CreateData()
         {
-            var dataPath = VaData.Create(VaNames.Classes.Count, sshRemoteFolder).Save(VaUtil.GetDataPath(sshLocalFolder));
+            var dataPath = VaData.Create(VaNames.Classes.Count, sshRemoteFolder).Save(VaUtil.DataPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(dataPath));
         }
 
         private void CreateTrain()
         {
-            var trainListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Save(VaUtil.GetTrainListPath(sshLocalFolder));
+            var trainListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Save(VaUtil.TrainListPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(trainListPath));
         }
 
         private void CreateValid()
         {
-            var validListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Save(VaUtil.GetValidListPath(sshLocalFolder));
+            var validListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Save(VaUtil.ValidListPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(validListPath));
         }
 

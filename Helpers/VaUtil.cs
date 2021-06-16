@@ -53,7 +53,7 @@ namespace vaYolo.Helpers
             return result;
         }
 
-        public static PathPrefix(string folder) {
+        private static string PathPrefix(string folder) {
             return Path.Combine(folder, new DirectoryInfo(folder).Name);
         }
 
@@ -61,7 +61,7 @@ namespace vaYolo.Helpers
             return PathPrefix(folder) + "_train.txt";
         }
 
-        public static string GetValidListPath(string folder) {
+        public static string ValidListPath(string folder) {
             return PathPrefix(folder) + "_valid.txt";
         }
 
@@ -70,7 +70,7 @@ namespace vaYolo.Helpers
             return PathPrefix(folder) + ".data";
         }
 
-        private static string NamesPath(string folder) {
+        public static string NamesPath(string folder) {
             return PathPrefix(folder) + ".names";
         }
 

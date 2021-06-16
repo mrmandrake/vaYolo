@@ -21,10 +21,6 @@ namespace vaYolo
         
         public int OffsetTextY { get; set; }
 
-        public double NormalizedDefaultRectWidth { get; set; }
-        
-        public double NormalizedDefaultRectHeight { get; set; }
-
         public bool MaximizeAfterLoad { get; set; }
 
         public string? SshServer { get; set; }
@@ -47,12 +43,6 @@ namespace vaYolo
                 instance = Default();
 
             return instance;
-        }
-
-        public Size DefaultRectSize {
-            get {
-                return new Size(NormalizedDefaultRectWidth, NormalizedDefaultRectHeight);
-            }
         }
 
         public Point TextDelta {
@@ -112,8 +102,6 @@ namespace vaYolo
                 GaugeSize = 12,
                 OffsetTextX = 2,
                 OffsetTextY = 6,
-                NormalizedDefaultRectWidth = 0.023,
-                NormalizedDefaultRectHeight = 0.04,
                 MaximizeAfterLoad = false,
                 SshServer = "127.0.0.1",
                 SshPort = 65022,

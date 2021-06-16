@@ -32,7 +32,7 @@ namespace vaYolo.ViewModels
             set
             {
                 _imagePath = value;
-                DataPath = VaUtil.GetDatapath(value);
+                DataPath = VaUtil.DataPath(new FileInfo(value).DirectoryName);
             }
         }
 

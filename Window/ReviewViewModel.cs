@@ -58,7 +58,7 @@ namespace vaYolo.ViewModels
                 var imgs = VaUtil.ListImagesInFolder(Folder);
                 imgs.ForEach((img) =>
                 {
-                    var datapath = VaUtil.GetDatapath(img);
+                    var datapath = VaUtil.DataPath(Folder);
                     if (File.Exists(datapath))
                     {
                         var rects = (from r in VaRect.LoadData(datapath) where r.ObjectClass == objectClass select r).ToList();

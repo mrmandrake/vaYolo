@@ -113,14 +113,14 @@ namespace vaYolo
 
             if (IsEditMode())
             {
-                EditingRect = SelectedRect != null ? SelectedRect : GetNewRect(pt, Settings.Get().DefaultRectSize, objClass);
+                EditingRect = SelectedRect != null ? SelectedRect : GetNewRect(pt, VaRect.DefaultRectSize, objClass);
                 SelectedRect = null;                
             }
             else
-            if (Settings.Get() != null) {
-                SelectedRect = selRects.Count > 0 ? selRects.First() : GetNewRect(pt, Settings.Get().DefaultRectSize, objClass);
-                EditingRect = null;
-            }
+                if (Settings.Get() != null) {
+                    SelectedRect = selRects.Count > 0 ? selRects.First() : GetNewRect(pt, VaRect.DefaultRectSize, objClass);
+                    EditingRect = null;
+                }
             selRects.ForEach(r => { Rects.Remove(r); });         
         }
 

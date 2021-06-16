@@ -27,9 +27,9 @@ namespace vaYolo.Model
             {
                 Classes = classes,
                 BackupPath = remoteFolder,
-                TrainPath = VaUtil.GetTrainListPath(remoteFolder),
-                ValidPath = VaUtil.GetValidListPath(remoteFolder),
-                NamesPath = VaUtil.GetNamesPath(remoteFolder)
+                TrainPath = VaUtil.TrainListPath(remoteFolder),
+                ValidPath = VaUtil.ValidListPath(remoteFolder),
+                NamesPath = VaUtil.NamesPath(remoteFolder)
             };
         }
 

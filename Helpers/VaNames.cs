@@ -31,14 +31,21 @@ namespace vaYolo
                 {
                     var lines = File.ReadAllLines(VaUtil.NamesPath(folder)).ToList();
                     int tmp = 0;
-                    lines.ForEach((l) =>
-                    {
+                    if (lines.Count > 0)
+                        lines.ForEach((l) =>
+                        {
+                            result.Add(new VaClass()
+                            {
+                                ObjectClass = tmp++,
+                                Description = l
+                            });
+                        });
+                    else
                         result.Add(new VaClass()
                         {
-                            ObjectClass = tmp++,
-                            Description = l
+                            ObjectClass = 0,
+                            Description = "Undefined"
                         });
-                    });
 
                     Classes = result;
                 }

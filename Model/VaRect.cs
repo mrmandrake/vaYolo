@@ -8,6 +8,10 @@ namespace vaYolo.Model
 {
     public class VaRect
     {
+        const double k = 16.0 / 416.0;
+
+        public static Size DefaultRectSize = new Size(k, k);
+
         public static Point normalizedGaugeDelta;
 
         public static Point normalizedTextDelta;

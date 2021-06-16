@@ -196,6 +196,7 @@ namespace vaYolo.Views
                     VaManager.Instance.Rects.Count > 0)
                     SaveData();
 
+                Saved = false;
                 Ctrl.Reset();
             }            
         }
@@ -209,7 +210,6 @@ namespace vaYolo.Views
                 return;
 
             DataSavedCheck();
-            Saved = false;
 
             await ViewModel.LoadImage(imagePath);
             if (ViewModel.Img != null)
@@ -231,7 +231,6 @@ namespace vaYolo.Views
                 return;
 
             DataSavedCheck();
-            Saved = false;
 
             await ViewModel.LoadImage(await GetPath());
             if (ViewModel.Img != null)
@@ -259,11 +258,14 @@ namespace vaYolo.Views
 
         public void ShowSetupTrain()
         {
+            DataSavedCheck();
             new Setup().Show(this);
         }
 
         public void ShowConsoleTrain()
         {
+            DataSavedCheck();
+
             new Console() {
                 ViewModel = new ConsoleViewModel(ViewModel.FolderPath)
             }.Show(this);
@@ -279,6 +281,8 @@ namespace vaYolo.Views
 
         public void ShowReview()
         {
+            DataSavedCheck();
+
             new Review()
             {
                 ViewModel = new ReviewViewModel(ViewModel.FolderPath)
