@@ -123,31 +123,27 @@ namespace vaYolo.ViewModels
 
         public bool Init()
         {
-            write("Connecting to -> " + SshServer + ":" + SshPort);
-            write("Additional info:");
-            write("Username:" + SshUsername);
-            write("Local Folder:" + SshLocalFolder);
-            write("Remote Folder:" + SshRemoteFolder);
+            write(String.Format("Connecting to -> {0}:{1}....", SshServer, SshPort));
+            write(String.Format("Username:{0} Local Folder:{1} Remote Folder:{2}", 
+                SshUsername, SshLocalFolder, SshRemoteFolder));
 
-            if (Ssh.Init(sshServer, 
-                    Convert.ToUInt16(sshPort), 
-                    sshUsername, 
-                    sshPassword))
-                    write("Connected!");
+            if (Ssh.Init(sshServer, Convert.ToUInt16(sshPort), 
+                sshUsername, sshPassword))
+                write("...CONNECTED!");
 
             ScreenPid = GetScreenPid();            
             write("Remote Folder " + (!Sftp.Exists(Ssh.Connection, SshRemoteFolder) ? "NOT" : "") + " exist!");
             var (s1, s2) = Sftp.Sync(Ssh.Connection, SshLocalFolder, SshRemoteFolder);
             if (s1)
-                s2.ForEach((f) => write("updaload file" + f));
+                s2.ForEach((f) => write("Uploading file" + f));
             return true;
         }
 
         public void Finish()
         {
-            write("Disconnect...");            
+            write("Disconnecting...");            
             Ssh.Finish();
-            write("Disconnected!");
+            write("...DISCONNECTED!");
 
         }    
 
