@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -33,8 +34,19 @@ namespace vaYolo.Model
             };
         }
 
-        public string Save(string path)
+        public string Save(string folder)
         {
+            List<string> lines = new()
+            {
+                String.Format("classes = {0}", Classes),
+                String.Format("train = {0}", TrainPath),
+                String.Format("valid = {0}", ValidPath),
+                String.Format("names = {0}", NamesPath),
+                String.Format("backup = {0}", BackupPath)
+            };
+
+            var path = VaUtil.DataPath(folder);
+            File.WriteAllLines(path, lines.ToArray());
             return path;
         }
     }

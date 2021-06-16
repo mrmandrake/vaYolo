@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace vaYolo
+namespace vaYolo.Ext
 {
     public static class PointExtension
     {

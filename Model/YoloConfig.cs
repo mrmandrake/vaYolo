@@ -2,117 +2,117 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace vaYolo.Model
+namespace vaYolo.Model.Yolo
 {
-    public class YoloCfg
+    public class Config
     {
-        public static Dictionary<string, YoloCfg> Configs = new() {
+        public static Dictionary<string, Config> Configs = new() {
             {
                 "yolov3 5 layers",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov3_5l.cfg",
-                    Pretrained = "darknet53.conv.74.weights"
+                    Name = "yolov3_5l.cfg",
+                    PretrainedWeights = "darknet53.conv.74.weights"
                 }
             },
             {
                 "yolov3",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov3.cfg",
-                    Pretrained = "darknet53.conv.74.weights"
+                    Name = "yolov3.cfg",
+                    PretrainedWeights = "darknet53.conv.74.weights"
                 }
             },
             {
                 "yolov3 spp",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov3-spp.cfg",
-                    Pretrained = "darknet53.conv.74.weights"
+                    Name = "yolov3-spp.cfg",
+                    PretrainedWeights = "darknet53.conv.74.weights"
                 }
             },
             {
                 "yolov3 tiny 3 layers",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov3-tiny_3l.cfg",
-                    Pretrained = "yolov3-tiny.conv.11.weights"
+                    Name = "yolov3-tiny_3l.cfg",
+                    PretrainedWeights = "yolov3-tiny.conv.11.weights"
                 }
             },
             {
                 "yolov3 tiny",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov3-tiny.cfg",
-                    Pretrained = "yolov3-tiny.conv.11.weights"
+                    Name = "yolov3-tiny.cfg",
+                    PretrainedWeights = "yolov3-tiny.conv.11.weights"
                 }
             },
             {
                 "yolo v3 tiny prn",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov3-tiny-prn.cfg",
-                    Pretrained = "yolov3-tiny.conv.11.weights"
+                    Name = "yolov3-tiny-prn.cfg",
+                    PretrainedWeights = "yolov3-tiny.conv.11.weights"
                 }
             },
             {
                 "yolo v4",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov4.cfg",
-                    Pretrained = "yolov4.conv.137.weights"
+                    Name = "yolov4.cfg",
+                    PretrainedWeights = "yolov4.conv.137.weights"
                 }
             },
             {
                 "yolo v4 custom",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov4-custom.cfg",
-                    Pretrained = "yolov4.conv.137.weights"
+                    Name = "yolov4-custom.cfg",
+                    PretrainedWeights = "yolov4.conv.137.weights"
                 }
             },
             {
                 "yolo v4 tiny 3 layers",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov4-tiny-3l.cfg",
-                    Pretrained = "yolov4-tiny.conv.29.weights"
+                    Name = "yolov4-tiny-3l.cfg",
+                    PretrainedWeights = "yolov4-tiny.conv.29.weights"
                 }
             },
             {
                 "yolo v4 tiny",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov4-tiny.cfg",
-                    Pretrained = "yolov4-tiny.conv.29.weights"
+                    Name = "yolov4-tiny.cfg",
+                    PretrainedWeights = "yolov4-tiny.conv.29.weights"
                 }
             },
             {
                 "yolo v4 tiny custom",
-                new YoloCfg()
+                new Config()
                 {
-                    CfgName = "yolov4-tiny-custom.cfg",
-                    Pretrained = "yolov4-tiny.conv.29.weights"
+                    Name = "yolov4-tiny-custom.cfg",
+                    PretrainedWeights = "yolov4-tiny.conv.29.weights"
                 }
             }
         };
 
-        public static YoloCfg FromTemplate(string templateName, VaSetup setup)
+        public static Config FromTemplate(string templateName, VaSetup setup)
         {
             var cfg = Configs[templateName];
             cfg.Settings = setup;
             return cfg;
         }
 
-        public string CfgName { get; set; }
+        public string Name { get; set; }
 
-        public string Pretrained { get; set; }
+        public string PretrainedWeights { get; set; }
 
         public VaSetup Settings { get; set; }
 
         public string Save(string path)
         { 
-            var lines = File.ReadAllLines(CfgName);
+            var lines = File.ReadAllLines(Name);
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -160,7 +160,7 @@ namespace vaYolo.Model
                 while (cnt++ < 10)
                     if (lines[cnt - pos].Contains("filters="))
                     {
-                        lines[cnt - pos] = String.Format("filters={0}", (Settings.classes + 5) * 3);
+                        lines[cnt - pos] = String.Format("filters={0}", Settings.filters);
                         break;
                     }
 

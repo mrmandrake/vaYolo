@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using Avalonia.Media;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Avalonia;
 using System.IO;
 using System.Xml.Serialization;
-using Avalonia.Controls;
 using vaYolo.Model;
 using vaYolo.Helpers;
 

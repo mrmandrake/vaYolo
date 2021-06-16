@@ -7,7 +7,9 @@ using Avalonia.Media.Imaging;
 using System.Text.RegularExpressions;
 using vaYolo.Helpers;
 using vaYolo.Model;
+using vaYolo.Model.Yolo;
 using Microsoft.VisualBasic.FileIO;
+using vaYolo.Ext;
 
 namespace vaYolo.ViewModels
 {
@@ -235,7 +237,7 @@ namespace vaYolo.ViewModels
 
         private void CreateConfig()
         {
-            var cfgPath = YoloCfg.FromTemplate(ConfigTemplate, Settings.Get().GetSetup()).Save(VaUtil.ConfigPath(sshLocalFolder));
+            var cfgPath = Config.FromTemplate(ConfigTemplate, Settings.Get().GetSetup()).Save(VaUtil.ConfigPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(cfgPath));
         }
 

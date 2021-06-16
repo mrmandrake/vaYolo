@@ -3,6 +3,7 @@ using Avalonia.Media;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using vaYolo.Ext;
 
 namespace vaYolo.Model
 {
