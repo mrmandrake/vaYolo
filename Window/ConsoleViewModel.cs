@@ -132,8 +132,8 @@ namespace vaYolo.ViewModels
         {
             write(String.Format("> CONNECTING to -> {0}:{1}....", SshServer, SshPort));
             write(String.Format("Username:{0}", SshUsername));
-            write(String.Format("Local Folder:{1} ", SshLocalFolder));
-            write(String.Format("Remote Folder:{2}", SshRemoteFolder));
+            write(String.Format("Local Folder:{0} ", SshLocalFolder));
+            write(String.Format("Remote Folder:{0}", SshRemoteFolder));
 
             if (!Ssh.Init(sshServer, Convert.ToUInt16(sshPort), 
                 sshUsername, sshPassword)) {
