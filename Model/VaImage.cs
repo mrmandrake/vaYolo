@@ -15,7 +15,7 @@ namespace vaYolo
 
         private Point? EditStartPoint;
 
-        private VaManager manager = VaManager.Instance;
+        private Manager manager = Manager.Instance;
 
         public VaImage() {
         }

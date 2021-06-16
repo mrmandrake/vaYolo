@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using vaYolo.Helpers;
 
-namespace vaYolo.Model
+namespace vaYolo.Model.Yolo
 {
-    class VaData
+    class Data
     {
         public int Classes { get; set; }
 
@@ -21,16 +21,16 @@ namespace vaYolo.Model
 
         public string BackupPath { get; set; }
 
-        public static VaData Create(int classes, string remoteFolder)
+        public static Data Create(int classes, string remoteFolder)
         {
 
-            return new VaData()
+            return new Data()
             {
                 Classes = classes,
                 BackupPath = remoteFolder,
-                TrainPath = VaUtil.TrainListPath(remoteFolder),
-                ValidPath = VaUtil.ValidListPath(remoteFolder),
-                NamesPath = VaUtil.NamesPath(remoteFolder)
+                TrainPath = Util.TrainListPath(remoteFolder),
+                ValidPath = Util.ValidListPath(remoteFolder),
+                NamesPath = Util.NamesPath(remoteFolder)
             };
         }
 
@@ -45,7 +45,7 @@ namespace vaYolo.Model
                 String.Format("backup = {0}", BackupPath)
             };
 
-            var path = VaUtil.DataPath(folder);
+            var path = Util.DataPath(folder);
             File.WriteAllLines(path, lines.ToArray());
             return path;
         }

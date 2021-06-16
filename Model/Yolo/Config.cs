@@ -97,7 +97,7 @@ namespace vaYolo.Model.Yolo
             }
         };
 
-        public static Config FromTemplate(string templateName, VaSetup setup)
+        public static Config FromTemplate(string templateName, AlgoSettings setup)
         {
             var cfg = Configs[templateName];
             cfg.Settings = setup;
@@ -108,7 +108,7 @@ namespace vaYolo.Model.Yolo
 
         public string PretrainedWeights { get; set; }
 
-        public VaSetup Settings { get; set; }
+        public AlgoSettings Settings { get; set; }
 
         public string Save(string path)
         { 

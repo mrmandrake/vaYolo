@@ -5,7 +5,7 @@ using System.IO;
 
 namespace vaYolo.Helpers
 {
-    public class VaUtil
+    public class Util
     {
         public static bool IsJpeg(string imagePath)
         {
@@ -110,7 +110,7 @@ namespace vaYolo.Helpers
 
         public static string? GetNextPath(string path)
         {
-            var images = VaUtil.ListImagesInFolder(Path.GetDirectoryName(path));
+            var images = Util.ListImagesInFolder(Path.GetDirectoryName(path));
             var idx = images.IndexOf(path);
             if (idx <= 0)
                 return null;                
@@ -120,7 +120,7 @@ namespace vaYolo.Helpers
 
         public static string? GetPrevPath(string path)
         {
-             var images = VaUtil.ListImagesInFolder(Path.GetDirectoryName(path));
+             var images = Util.ListImagesInFolder(Path.GetDirectoryName(path));
             var idx = images.IndexOf(path);
             if (idx == images.Count - 1) 
                 return null;

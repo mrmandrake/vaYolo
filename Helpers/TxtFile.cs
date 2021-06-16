@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 
-namespace vaYolo
+namespace vaYolo.Helpers
 {
-    public class VaTxtWriter
+    public class TxtWriter
     {
         public string Delimiter { get; private set; }
 
@@ -30,9 +30,9 @@ namespace vaYolo
         string doubleQuoteString = "\"\"";
         TextWriter wr;
 
-        public VaTxtWriter(TextWriter wr) : this(wr, ",") { }
+        public TxtWriter(TextWriter wr) : this(wr, ",") { }
 
-        public VaTxtWriter(TextWriter wr, string delimiter)
+        public TxtWriter(TextWriter wr, string delimiter)
         {
             this.wr = wr;
             Delimiter = delimiter;
@@ -88,7 +88,7 @@ namespace vaYolo
         }
     }
 
-    public class VaTxtReader
+    public class TxtReader
     {
 		int recordFieldCount = 0;
 
@@ -98,7 +98,7 @@ namespace vaYolo
 
 		public string Delimiter { get; private set; }
 
-        public VaTxtReader(TextReader rr, string delimiter)
+        public TxtReader(TextReader rr, string delimiter)
         {
             this.rr = rr;
 			Delimiter = delimiter;

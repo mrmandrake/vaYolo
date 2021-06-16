@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using vaYolo.Ext;
+using vaYolo.Helpers;
 
 namespace vaYolo.Model
 {
@@ -45,16 +46,16 @@ namespace vaYolo.Model
 
         public void Draw(DrawingContext context, Size sz, bool selected = false)
         {
-            if (VaManager.MyPens == null)
+            if (Manager.MyPens == null)
                 return;
 
-            var pen = selected ? VaManager.SelectedPen : VaManager.MyPens[ObjectClass];
-            var brush = selected ? VaManager.SelectedBrush : VaManager.MyBrushes[ObjectClass];
+            var pen = selected ? Manager.SelectedPen : Manager.MyPens[ObjectClass];
+            var brush = selected ? Manager.SelectedBrush : Manager.MyBrushes[ObjectClass];
 
             if (Undersized())
             {
-                pen = VaManager.ErrorPen;
-                brush = VaManager.ErrorBrush;
+                pen = Manager.ErrorPen;
+                brush = Manager.ErrorBrush;
             }
 
 
@@ -63,9 +64,9 @@ namespace vaYolo.Model
             context.DrawRectangle(pen, rc);
             context.FillRectangle(brush, gs[0].MulBySize(sz));
             context.FillRectangle(brush, gs[1].MulBySize(sz));
-            context.DrawText(VaManager.MyBrushes[ObjectClass], 
+            context.DrawText(Manager.MyBrushes[ObjectClass], 
                 rc.TopRight + Settings.Get().TextDelta, 
-                VaManager.MyFormattedText[ObjectClass]);
+                Manager.MyFormattedText[ObjectClass]);
         }
 
         public bool IsInLowerGauge(Point pt)
@@ -100,7 +101,7 @@ namespace vaYolo.Model
 
             using (var streamWr = new StreamWriter(datapath))
             {
-                var txtWriter = new VaTxtWriter(streamWr, " ");
+                var txtWriter = new TxtWriter(streamWr, " ");
                 rects.ForEach((r) =>
                 {
                     txtWriter.WriteField(r.ObjectClass.ToString());
@@ -124,7 +125,7 @@ namespace vaYolo.Model
                 {
                     using (var streamWr = new StreamReader(datapath))
                     {
-                        var txtReader = new VaTxtReader(streamWr, " ");
+                        var txtReader = new TxtReader(streamWr, " ");
 
                         while (txtReader.NextRecord()) {
                             uint objClass = txtReader.ReadField<uint>();

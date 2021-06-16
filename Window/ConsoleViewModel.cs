@@ -151,11 +151,11 @@ namespace vaYolo.ViewModels
 
         private void DeleteSupportFiles(string sshLocalFolder)
         {
-            File.Delete(VaUtil.ChartPath(sshLocalFolder));
-            File.Delete(VaUtil.DataPath(sshLocalFolder));
-            File.Delete(VaUtil.TrainListPath(sshLocalFolder));
-            File.Delete(VaUtil.ValidListPath(sshLocalFolder));
-            File.Delete(VaUtil.ConfigPath(sshLocalFolder));
+            File.Delete(Util.ChartPath(sshLocalFolder));
+            File.Delete(Util.DataPath(sshLocalFolder));
+            File.Delete(Util.TrainListPath(sshLocalFolder));
+            File.Delete(Util.ValidListPath(sshLocalFolder));
+            File.Delete(Util.ConfigPath(sshLocalFolder));
         }
 
         public void Finish()
@@ -212,7 +212,7 @@ namespace vaYolo.ViewModels
         {
             if (Sftp.Download(Ssh.Connection, sshRemoteFolder, sshLocalFolder, "chart.png")) {
                 try {
-                    var chartPath = VaUtil.ChartPath(sshLocalFolder);
+                    var chartPath = Util.ChartPath(sshLocalFolder);
 
                     if (new FileInfo(chartPath).Length > 0)
                         Chart = Bitmap.DecodeToWidth(File.OpenRead(chartPath),
@@ -237,25 +237,25 @@ namespace vaYolo.ViewModels
 
         private void CreateConfig()
         {
-            var cfgPath = Config.FromTemplate(ConfigTemplate, Settings.Get().GetSetup()).Save(VaUtil.ConfigPath(sshLocalFolder));
+            var cfgPath = Config.FromTemplate(ConfigTemplate, Settings.Get().GetSetup()).Save(Util.ConfigPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(cfgPath));
         }
 
         private void CreateData()
         {
-            var dataPath = VaData.Create(VaNames.Classes.Count, sshRemoteFolder).Save(VaUtil.DataPath(sshLocalFolder));
+            var dataPath = Data.Create(Names.Classes.Count, sshRemoteFolder).Save(Util.DataPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(dataPath));
         }
 
         private void CreateTrain()
         {
-            var trainListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Rebase(SshLocalFolder, SshRemoteFolder).Save(VaUtil.TrainListPath(sshLocalFolder));
+            var trainListPath = Util.ListLabeledInFolder(SshLocalFolder).Rebase(SshLocalFolder, SshRemoteFolder).Save(Util.TrainListPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(trainListPath));
         }
 
         private void CreateValid()
         {
-            var validListPath = VaUtil.ListLabeledInFolder(SshLocalFolder).Rebase(SshLocalFolder, SshRemoteFolder).Save(VaUtil.ValidListPath(sshLocalFolder));
+            var validListPath = Util.ListLabeledInFolder(SshLocalFolder).Rebase(SshLocalFolder, SshRemoteFolder).Save(Util.ValidListPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(validListPath));
         }
 

@@ -13,6 +13,7 @@ using vaYolo.ViewModels;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using vaYolo.Helpers;
+using vaYolo.Model.Yolo;
 
 namespace vaYolo.Views
 {
@@ -114,7 +115,7 @@ namespace vaYolo.Views
         }
 
         private bool LoadFirstImage(string dir) {
-            var imgs = VaUtil.ListImagesInFolder(dir);
+            var imgs = Util.ListImagesInFolder(dir);
             if (imgs.Count > 0) {
                 LoadImageByPath(imgs[0]);
                 return true;
@@ -129,9 +130,9 @@ namespace vaYolo.Views
             }.ShowAsync(this);
 
             Settings.Load(folder);
-            VaNames.Load(folder);
+            Names.Load(folder);
 
-            File.Delete(VaUtil.ChartPath(folder));
+            File.Delete(Util.ChartPath(folder));
 
             if (!LoadFirstImage(folder))
                 Notify("No Images found!!", "Loading content");
@@ -157,11 +158,11 @@ namespace vaYolo.Views
                 switch (e.Key)
                 {
                     case Key.Left:
-                        LoadImageByPath(VaUtil.GetNextPath(ViewModel.ImagePath));
+                        LoadImageByPath(Util.GetNextPath(ViewModel.ImagePath));
                         break;
 
                     case Key.Right:
-                        LoadImageByPath(VaUtil.GetPrevPath(ViewModel.ImagePath));
+                        LoadImageByPath(Util.GetPrevPath(ViewModel.ImagePath));
                         break;
 
                     case Key.O:
@@ -189,7 +190,7 @@ namespace vaYolo.Views
             if (ViewModel == null)
                 return;
 
-            var path = ViewModel.SaveData(VaManager.Instance.Rects);
+            var path = ViewModel.SaveData(Manager.Instance.Rects);
             Saved = true;
         }        
 
@@ -197,8 +198,8 @@ namespace vaYolo.Views
             if (Ctrl != null)
             {
                 if (!Saved &&
-                    VaManager.Instance.Rects != null &&
-                    VaManager.Instance.Rects.Count > 0)
+                    Manager.Instance.Rects != null &&
+                    Manager.Instance.Rects.Count > 0)
                     SaveData();
 
                 Saved = false;
@@ -218,7 +219,7 @@ namespace vaYolo.Views
 
             await ViewModel.LoadImage(imagePath);
             if (ViewModel.Img != null)
-                VaManager.Instance.Rects = ViewModel.LoadData();
+                Manager.Instance.Rects = ViewModel.LoadData();
 
             if (Settings.Get().MaximizeAfterLoad)
                 MaximizeAfterLoad();
@@ -239,7 +240,7 @@ namespace vaYolo.Views
 
             await ViewModel.LoadImage(await GetPath());
             if (ViewModel.Img != null)
-                VaManager.Instance.Rects = ViewModel.LoadData();
+                Manager.Instance.Rects = ViewModel.LoadData();
 
             if (Settings.Get().MaximizeAfterLoad)
                 MaximizeAfterLoad();
@@ -278,9 +279,9 @@ namespace vaYolo.Views
 
         public void ShowSetClass()
         {
-            VaNames.Load(ViewModel.FolderPath);
+            Names.Load(ViewModel.FolderPath);
             new SetClass() {
-                ViewModel = new SetClassViewModel(VaNames.GetNames())
+                ViewModel = new SetClassViewModel(Names.GetNames())
             }.ShowDialog(this);
         }
 
@@ -304,14 +305,14 @@ namespace vaYolo.Views
         public void OnLoadFolderClicked(object sender, RoutedEventArgs args) => LoadFolder();
 
         public void OnNativePrevImageClicked(object sender, EventArgs args) => 
-            LoadImageByPath(VaUtil.GetPrevPath(ViewModel.ImagePath));
+            LoadImageByPath(Util.GetPrevPath(ViewModel.ImagePath));
         public void OnPrevImageClicked(object sender, RoutedEventArgs args) => 
-            LoadImageByPath(VaUtil.GetPrevPath(ViewModel.ImagePath));
+            LoadImageByPath(Util.GetPrevPath(ViewModel.ImagePath));
 
         public void OnNativeNextImageClicked(object sender, EventArgs args) => 
-            LoadImageByPath(VaUtil.GetNextPath(ViewModel.ImagePath));
+            LoadImageByPath(Util.GetNextPath(ViewModel.ImagePath));
         public void OnNextImageClicked(object sender, RoutedEventArgs args) => 
-            LoadImageByPath(VaUtil.GetNextPath(ViewModel.ImagePath));
+            LoadImageByPath(Util.GetNextPath(ViewModel.ImagePath));
 
         public void OnNativeAboutClicked(object sender, EventArgs args) => ShowAbout();
         public void OnAboutClicked(object sender, RoutedEventArgs args) => ShowAbout();

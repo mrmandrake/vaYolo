@@ -8,7 +8,7 @@ using vaYolo.Model;
 
 namespace vaYolo
 {
-    public partial class VaManager
+    public partial class Manager
     {
         public static ISolidColorBrush[] MyBrushes = new ISolidColorBrush[] {
             Brushes.Green,

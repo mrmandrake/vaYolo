@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml.Serialization;
 using vaYolo.Model;
 using vaYolo.Helpers;
+using vaYolo.Model.Yolo;
 
 namespace vaYolo
 {
@@ -52,16 +53,16 @@ namespace vaYolo
             return instance;
         }
 
-        public VaSetup GetSetup()
+        public AlgoSettings GetSetup()
         {
-            return new VaSetup()
+            return new AlgoSettings()
             {
                 batch = BatchSize,
                 subdivision = Subdivision,
                 max_batches = MaxBatches,
                 network_size_height = NetworkHeight,
                 network_size_width = NetworkWidth,
-                classes = VaNames.Classes.Count()
+                classes = Names.Classes.Count()
             };
         }
 
@@ -82,7 +83,7 @@ namespace vaYolo
             if (folder == null)
                 return;
 
-            string path = VaUtil.SettingsPath(folder);
+            string path = Util.SettingsPath(folder);
             Settings? result = null;
             if (File.Exists(path))
                 result = LoadExisting(path);
@@ -100,7 +101,7 @@ namespace vaYolo
 
         public void Save(string folder)
         {
-            Save(instance, VaUtil.SettingsPath(folder));
+            Save(instance, Util.SettingsPath(folder));
         }
 
         private static Settings Default()

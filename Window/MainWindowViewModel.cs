@@ -32,7 +32,7 @@ namespace vaYolo.ViewModels
             set
             {
                 _imagePath = value;
-                TxtPath = VaUtil.TxtPath(value);
+                TxtPath = Util.TxtPath(value);
             }
         }
 

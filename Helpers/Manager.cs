@@ -9,7 +9,7 @@ using vaYolo.Ext;
 
 namespace vaYolo
 {
-    public partial class VaManager
+    public partial class Manager
     {
         public enum EditEnum {
             None,
@@ -17,11 +17,11 @@ namespace vaYolo
             EditLowerGauge,
         };
 
-        private static readonly Lazy<VaManager> instance = new (() => new VaManager());
+        private static readonly Lazy<Manager> instance = new (() => new Manager());
 
-        public static VaManager Instance { get { return instance.Value; } }
+        public static Manager Instance { get { return instance.Value; } }
 
-        private VaManager() {            
+        private Manager() {            
         }
 
         public bool IsEditMode() {

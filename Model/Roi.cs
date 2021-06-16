@@ -7,9 +7,9 @@ using Avalonia.Media.Imaging;
 
 namespace vaYolo.Model
 {
-    public class VaRoi
+    public class Roi
     {
-        public Bitmap Roi { get; set; }
+        public Bitmap _Roi { get; set; }
 
         public uint ObjectClass { get; set; }
 
@@ -34,17 +34,17 @@ namespace vaYolo.Model
             return null;
         }
 
-        public VaRoi(VaRect rect, System.Drawing.Bitmap bmp, string imagePath) {
-            Roi = CropBitmap(bmp, rect.UnNormalized(new Size(bmp.Width, bmp.Height)));
+        public Roi(VaRect rect, System.Drawing.Bitmap bmp, string imagePath) {
+            _Roi = CropBitmap(bmp, rect.UnNormalized(new Size(bmp.Width, bmp.Height)));
             ObjectClass = rect.ObjectClass;
             ImagePath = imagePath;
         }
 
-        public static List<VaRoi> LoadData(List<VaRect> rect, string imagePath) {
-            List<VaRoi> result = new ();
+        public static List<Roi> LoadData(List<VaRect> rect, string imagePath) {
+            List<Roi> result = new ();
             using (var img = new System.Drawing.Bitmap(imagePath)) {
                 rect.ForEach((r)=> {
-                    result.Add(new VaRoi(r, img, imagePath));
+                    result.Add(new Roi(r, img, imagePath));
                 });
             }
 
