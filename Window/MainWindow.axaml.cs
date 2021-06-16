@@ -259,7 +259,7 @@ namespace vaYolo.Views
         public void ShowSetupTrain()
         {
             DataSavedCheck();
-            new Setup().Show(this);
+            new Setup() { ViewModel = new SetupViewModel() }.Show(this);
         }
 
         public void ShowConsoleTrain()

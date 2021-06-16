@@ -3,17 +3,16 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
+using vaYolo.ViewModels;
 
 namespace vaYolo.Views
 {
-    public partial class Setup : Window
+    public partial class Setup : ReactiveWindow<SetupViewModel>
     {
         public Setup()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         private void InitializeComponent()

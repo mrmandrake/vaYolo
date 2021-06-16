@@ -4,103 +4,92 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:CompileBindings="True"
+        x:DataType="vm:SetupViewModel"		
         x:Class="vaYolo.Views.Setup"
-        Title="Setup" 
-        SizeToContent="WidthAndHeight" 
+        Title="Setup"
+        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
-        CanResize="False"        
-        HasSystemDecorations="False"
-        Width="800" Height="400">
-
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-    <StackPanel>
-        <ExperimentalAcrylicBorder CornerRadius="10" Grid.Row="0" Grid.Column="0" Height="400">
-            <ExperimentalAcrylicBorder.Material>
-                <ExperimentalAcrylicMaterial TintColor="Black" TintOpacity="0.7"
+        CanResize="False"
+        HasSystemDecorations="False">
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+	<StackPanel>
+		<ExperimentalAcrylicBorder CornerRadius="10" Grid.Row="0" Grid.Column="0" Width="600" Height="400">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial TintColor="Black" TintOpacity="0.7"
                                 MaterialOpacity="0.7" BackgroundSource="Digger"/>
-            </ExperimentalAcrylicBorder.Material>
-            <TabControl>
-				<TabItem Header="Settings">
+			</ExperimentalAcrylicBorder.Material>
+			<TabControl>
+				<TabItem Header="Settings" FontSize="14">
 					<StackPanel Margin="10">
 						<StackPanel Orientation="Horizontal">
-						<TextBlock Width="150"  Text="ImageDecodeWidth" Margin="0 16 0 0"/>
-						<NumericUpDown Name="ImageDecodeWidth" Minimum="720" Maximum="6000" Margin="8"/>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="150"  Text="Gauge Dim" Margin="0 16 0 0"/>
-						<NumericUpDown Name="GaugeDim" Minimum="4" Maximum="32" Margin="8"/>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="150"  Text="Normalized Default Rect Size" Margin="0 16 0 0"/>
-						<NumericUpDown Name="NormalizedDefaultRectSize" Minimum="0.01" Maximum="0.5" Margin="8"/>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal">
-						<TextBlock Width="150"  Text="Maximize After Load" Margin="0 16 0 0"/>
-						<CheckBox Name="MaximizeAfterLoad" Margin="8"/>
-					</StackPanel>
-
-						<StackPanel Orientation="Horizontal">
-						    <TextBox Name="SshServer" Watermark="Ssh Server" DockPanel.Dock="Top" Margin="4"/>
-						    <NumericUpDown Name="SshPort" Minimum="22" Maximum="65535" Margin="8"/>
+							<TextBlock Width="150"  Text="ImageDecodeWidth" Margin="0 16 0 0"/>
+							<NumericUpDown Name="ImageDecodeWidth" Minimum="720" Maximum="6000" Margin="8" Value="{Binding ImageDecodeWidth}"/>
 						</StackPanel>
-						<TextBox Name="SshUsername" Watermark="Ssh username" DockPanel.Dock="Top" Margin="4"/>
-						<TextBox Name="SshPassword" Watermark="Ssh password" DockPanel.Dock="Top" Margin="4" PasswordChar="."/>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Width="150"  Text="Gauge Dim" Margin="0 16 0 0"/>
+							<NumericUpDown Name="GaugeDim" Minimum="4" Maximum="32" Margin="8" Value="{Binding GaugeDim}"/>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<TextBox Name="SshServer" Watermark="Ssh Server" DockPanel.Dock="Top" Margin="4" Text="{Binding SshServer}"/>
+							<NumericUpDown Name="SshPort" Minimum="22" Maximum="65535" Margin="8" Value="{Binding SshPort}"/>
+						</StackPanel>
+						<TextBox Name="SshUsername" Watermark="Ssh username" DockPanel.Dock="Top" Margin="4" Text="{Binding SshUsername}"/>
+						<TextBox Name="SshPassword" Watermark="Ssh password" DockPanel.Dock="Top" Margin="4" PasswordChar="." Text="{Binding SshPassword}"/>
 					</StackPanel>
 				</TabItem>
-				<TabItem Header="Classes">
+				<TabItem Header="Classes" FontSize="14">
+				</TabItem>
+
+				<TabItem Header="Model" FontSize="14">
 					<StackPanel Margin="10">
-						<TextBox Watermark="Ssh username" DockPanel.Dock="Top" Margin="4"/>
-						<TextBox  Watermark="Ssh password" DockPanel.Dock="Top" Margin="4" PasswordChar="."/>
+						<TextBox Name="DarknetDirectory" Watermark="Darknet directory" DockPanel.Dock="Top" Margin="4" Text="{Binding DarknetDir}"/>
+						<ComboBox Name="ConfigurationTemplate"
+								  Items="{Binding Templates}"
+								  DockPanel.Dock="Top" Margin="4"/>
 					</StackPanel>
 				</TabItem>
+				<TabItem Header="Configuration" FontSize="14">
+					<StackPanel Margin="10">
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Width="150" Text="Network width" Margin="0 16 0 0"/>
+							<NumericUpDown Name="NetworkWidth" Minimum="32" Maximum="2048" Margin="8" Value="{Binding NetworkWidth}"/>
+						</StackPanel>
 
-				<TabItem Header="Model">
-                    <StackPanel Margin="10">
-                        <TextBox Name="DarknetDirectory" Watermark="Darknet directory" DockPanel.Dock="Top" Margin="4"/>
-                        <TextBox Name="ConfigurationTemplate" Watermark="Darknet Configuration Template" DockPanel.Dock="Top" Margin="4"/>				
-                    </StackPanel>						
-                </TabItem>
-                <TabItem Header="Configuration">
-                    <StackPanel Margin="10">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="150" Text="Network width" Margin="0 16 0 0"/>
-                            <NumericUpDown Name="NetworkWidth" Minimum="32" Maximum="2048" Margin="8"/>
-                        </StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Width="150"  Text="Network height" Margin="0 16 0 0"/>
+							<NumericUpDown Name="NetworkHeight" Minimum="32" Maximum="2048" Margin="8" Value="{Binding NetworkHeight}"/>
+						</StackPanel>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="150"  Text="Network height" Margin="0 16 0 0"/>
-                            <NumericUpDown Name="NetworkHeight" Minimum="32" Maximum="2048" Margin="8"/>
-                        </StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Width="150"  Text="Batch size" Margin="0 16 0 0"/>
+							<NumericUpDown Name="BatchSize" Minimum="1" Maximum="512" Margin="8" Value="{Binding BatchSize}"/>
+						</StackPanel>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="150"  Text="Batch size" Margin="0 16 0 0"/>
-                            <NumericUpDown Name="BatchSize" Minimum="1" Maximum="512" Margin="8"/>
-                        </StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Width="150"  Text="Subdivision" Margin="0 16 0 0"/>
+							<NumericUpDown Name="Subdivision" Minimum="1" Maximum="512" Margin="8" Value="{Binding Subdivision}"/>
+						</StackPanel>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="150"  Text="Subdivision" Margin="0 16 0 0"/>
-                            <NumericUpDown Name="Subdivision" Minimum="1" Maximum="512" Margin="8"/>
-                        </StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Width="150"  Text="Max Batches" Margin="0 16 0 0"/>
+							<NumericUpDown Name="MaxBatches" Minimum="1000" Maximum="100000" Margin="8" Value="{Binding MaxBatches}"/>
+						</StackPanel>
 
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="150"  Text="Max Batches" Margin="0 16 0 0"/>
-                            <NumericUpDown Name="MaxBatches" Minimum="1000" Maximum="100000" Margin="8"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal">
+						<!--<StackPanel Orientation="Horizontal">
                             <TextBlock Width="150"  Text="Learning rate" Margin="0 16 0 0"/>
                             <NumericUpDown Name="LearningRate" Minimum="0.000001" Maximum="0.999999" Margin="8"/>
-                        </StackPanel>
+                        </StackPanel>-->
 
-                        <StackPanel Orientation="Horizontal">
+						<!--<StackPanel Orientation="Horizontal">
                             <TextBlock Width="150"  Text="Max loss chart.png" Margin="0 16 0 0"/>
                             <NumericUpDown Name="MaxLossChartPng" Minimum="0.000001" Maximum="0.999999" Margin="8"/>
-                        </StackPanel>
-                    </StackPanel>
-                </TabItem>
-                <!--<TabItem Header="Yolo" IsVisibile="False">
+                        </StackPanel>-->
+					</StackPanel>
+				</TabItem>
+				<!--<TabItem Header="Yolo" IsVisibile="False">
                     <StackPanel Margin="10">
                         <CheckBox Name="RecalcYoloAnchors" Content="Recalculate yolo anchors" />
 
@@ -161,8 +150,8 @@
                         <CheckBox Name="ShowReceptiveField" Content="Show receptive fields" />
                     </StackPanel>
                 </TabItem>-->
-            </TabControl>    
-        </ExperimentalAcrylicBorder>
+			</TabControl>
+		</ExperimentalAcrylicBorder>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 			<Button Name="Cancel" Content="Cancel" HorizontalAlignment="Right" Margin="10" Click="OnCancel"/>
 			<Button Name="Confirm" Content="Confirm" HorizontalAlignment="Right" Margin="10"/>

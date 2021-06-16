@@ -6,7 +6,7 @@ namespace vaYolo.Model
 {
     public class YoloCfg
     {
-        private static Dictionary<string, YoloCfg> Configs = new() {
+        public static Dictionary<string, YoloCfg> Configs = new() {
             {
                 "yolov3 5 layers",
                 new YoloCfg()

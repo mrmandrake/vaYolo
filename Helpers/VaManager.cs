@@ -88,7 +88,6 @@ namespace vaYolo
                 Rects.Add(SelectedRect);
                 }
 
-
             SelectedRect = null;
             EditingRect = null;
             EditMode = EditEnum.None;
