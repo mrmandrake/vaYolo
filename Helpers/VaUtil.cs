@@ -78,6 +78,12 @@ namespace vaYolo.Helpers
             return PathPrefix(folder) + ".cfg";
         }
 
+        public static string TxtPath(string imagePath)
+        {
+            return Path.ChangeExtension(imagePath, ".txt");
+        }
+
+
         public static List<string> ListLabeledInFolder(string dir)
         {
             List<string> result = new();

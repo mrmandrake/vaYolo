@@ -83,8 +83,11 @@ namespace vaYolo
                     Rects.Add(EditingRect);
             }
             else
-                if (SelectedRect != null)
-                    Rects.Add(SelectedRect);
+                if (SelectedRect != null) {
+                    VaRect.DefaultRectSize = SelectedRect._Rect.Size;
+                Rects.Add(SelectedRect);
+                }
+
 
             SelectedRect = null;
             EditingRect = null;

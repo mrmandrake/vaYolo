@@ -10,7 +10,9 @@ namespace vaYolo.Model
     {
         const double k = 16.0 / 416.0;
 
-        public static Size DefaultRectSize = new Size(k, k);
+        const double k2 = 17.0 / 416.0;
+
+        public static Size DefaultRectSize = new Size(k2, k2);
 
         public static Point normalizedGaugeDelta;
 
@@ -29,6 +31,11 @@ namespace vaYolo.Model
             };
         }
 
+        public bool Undersized()
+        {
+            return (_Rect.Width < k) || (_Rect.Height < k);
+        }
+
         public Rect UnNormalized(Size sz)
         {
             return _Rect.MulBySize(sz);
@@ -40,9 +47,16 @@ namespace vaYolo.Model
             if (VaManager.MyPens == null)
                 return;
 
-            var selIdx = VaManager.MyBrushes.Length - 1;
-            var pen = VaManager.MyPens[selected ? selIdx : ObjectClass];
-            var brush = VaManager.MyBrushes[selected ? selIdx : ObjectClass];
+            var pen = selected ? VaManager.SelectedPen : VaManager.MyPens[ObjectClass];
+            var brush = selected ? VaManager.SelectedBrush : VaManager.MyBrushes[ObjectClass];
+
+            if (Undersized())
+            {
+                pen = VaManager.ErrorPen;
+                brush = VaManager.ErrorBrush;
+            }
+
+
             var gs = GetGauges();
             var rc = UnNormalized(sz);
             context.DrawRectangle(pen, rc);

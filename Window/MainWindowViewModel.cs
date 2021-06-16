@@ -17,7 +17,7 @@ namespace vaYolo.ViewModels
     {          
         public List<Rect> NormalizedRoi = new List<Rect>();
         public string? FolderPath { get; set; } = null;
-        public string? DataPath { get; set; }
+        public string? TxtPath { get; set; }
 
         private string title = "vaYolo Labeling toolkit - mrMandrake";
         public string Title {
@@ -32,7 +32,7 @@ namespace vaYolo.ViewModels
             set
             {
                 _imagePath = value;
-                DataPath = VaUtil.DataPath(new FileInfo(value).DirectoryName);
+                TxtPath = VaUtil.TxtPath(value);
             }
         }
 
@@ -101,11 +101,11 @@ namespace vaYolo.ViewModels
         }
 
         public string? SaveData(List<VaRect> rects) {
-            return VaRect.SaveData(DataPath, rects);
+            return VaRect.SaveData(TxtPath, rects);
         }
 
         public List<VaRect> LoadData() {
-            return VaRect.LoadData(DataPath);
+            return VaRect.LoadData(TxtPath);
         }
     }
 }

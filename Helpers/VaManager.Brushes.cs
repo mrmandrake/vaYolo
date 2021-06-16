@@ -83,7 +83,6 @@ namespace vaYolo
             Brushes.PowderBlue,
             Brushes.Purple,
             Brushes.Silver,
-            Brushes.Red,
             Brushes.RoyalBlue,
             Brushes.SaddleBrown,
             Brushes.Salmon,
@@ -161,8 +160,12 @@ namespace vaYolo
             Brushes.GhostWhite,
             Brushes.Gold,
             Brushes.Goldenrod,
-            Brushes.FloralWhite,
-            Brushes.YellowGreen};
+            Brushes.FloralWhite
+            };
 
+        public static ISolidColorBrush SelectedBrush = Brushes.YellowGreen;
+        public static Pen SelectedPen = new Pen(SelectedBrush);
+        public static ISolidColorBrush ErrorBrush = Brushes.Red;
+        public static Pen ErrorPen = new Pen(ErrorBrush);
     }
 }
