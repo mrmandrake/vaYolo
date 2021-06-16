@@ -22,6 +22,12 @@ namespace vaYolo.Views
 
         public void OnCancel(object sender, RoutedEventArgs args) => Close();
 
+        public void OnConfirm(object sender, RoutedEventArgs args)
+        {
+            ViewModel.Save();
+            Close();
+        }
+
         // public void Save() {
         //     string darknetDir;
         //     string cfgTemplate;

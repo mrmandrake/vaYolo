@@ -8,6 +8,8 @@ using Avalonia;
 using System.IO;
 using System.Xml.Serialization;
 using Avalonia.Controls;
+using vaYolo.Model;
+using vaYolo.Helpers;
 
 namespace vaYolo
 {
@@ -25,7 +27,7 @@ namespace vaYolo
 
         public string? SshServer { get; set; }
 
-        public uint SshPort { get; set; }
+        public int SshPort { get; set; }
 
         public string? SshUsername { get; set; }
 
@@ -35,6 +37,16 @@ namespace vaYolo
 
         public string SshRemote { get; set; } = "/tmp";
 
+        public int NetworkWidth { get; set; } = 416;
+
+        public int NetworkHeight { get; set; } = 416;
+
+        public int BatchSize { get; set; } = 64;
+
+        public int MaxBatches { get; set; } = 6000;
+
+        public int Subdivision { get; set; } = 16;
+
         private static Settings? instance = null;
 
         public static Settings? Get()
@@ -43,6 +55,19 @@ namespace vaYolo
                 instance = Default();
 
             return instance;
+        }
+
+        public VaSetup GetSetup()
+        {
+            return new VaSetup()
+            {
+                batch = BatchSize,
+                subdivision = Subdivision,
+                max_batches = MaxBatches,
+                network_size_height = NetworkHeight,
+                network_size_width = NetworkWidth,
+                classes = VaNames.Classes.Count()
+            };
         }
 
         public Point TextDelta {
@@ -61,8 +86,8 @@ namespace vaYolo
         {
             if (folder == null)
                 return;
-                
-            string path = Path.Combine(folder, "vayolo.xml");
+
+            string path = VaUtil.SettingsPath(folder);
             Settings? result = null;
             if (File.Exists(path))
                 result = LoadExisting(path);
@@ -78,20 +103,9 @@ namespace vaYolo
             instance = result;
         }
 
-        public static void Save(string folder)
+        public void Save(string folder)
         {
-            try
-            {
-                string path = Path.Combine(folder, "vayolo.xml");
-                FileStream fStream = new FileStream(path, FileMode.Create);
-                XmlSerializer xmlReader = new XmlSerializer(typeof(Settings));
-                xmlReader.Serialize(fStream, instance);
-                fStream.Close();
-            }
-            catch (Exception exc)
-            {
-                System.Diagnostics.Debug.WriteLine(exc.Message);
-            }
+            Save(instance, VaUtil.SettingsPath(folder));
         }
 
         private static Settings Default()
@@ -118,10 +132,7 @@ namespace vaYolo
             try
             {
                 var newdata = Default();
-                FileStream fStream = new FileStream(path, FileMode.Create);
-                XmlSerializer xmlReader = new XmlSerializer(newdata.GetType());
-                xmlReader.Serialize(fStream, newdata);
-                fStream.Close();
+                Save(newdata, path);
                 return newdata;
             }
             catch (Exception exc)
@@ -149,6 +160,14 @@ namespace vaYolo
             }
 
             return data;
+        }
+
+        private static void Save(Settings settings, string path)
+        {
+            FileStream fStream = new FileStream(path, FileMode.Create);
+            XmlSerializer xmlReader = new XmlSerializer(settings.GetType());
+            xmlReader.Serialize(fStream, settings);
+            fStream.Close();
         }
     }
 }

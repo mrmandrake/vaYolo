@@ -97,8 +97,6 @@ namespace vaYolo.ViewModels
 
         public string ConfigTemplate { get; set; } = "yolov4-tiny-custom.cfg";
 
-        public VaSetup Setup { get; set; }
-
         ObservableCollection<string> consoleOutput = new();
 
         public ObservableCollection<string> ConsoleOutput
@@ -133,10 +131,16 @@ namespace vaYolo.ViewModels
 
             ScreenPid = GetScreenPid();            
             write("Remote Folder " + (!Sftp.Exists(Ssh.Connection, SshRemoteFolder) ? "NOT" : "") + " exist!");
+            return true;
+        }
+
+        public bool Sync()
+        {
             var (s1, s2) = Sftp.Sync(Ssh.Connection, SshLocalFolder, SshRemoteFolder);
             if (s1)
                 s2.ForEach((f) => write("Uploading file" + f));
-            return true;
+
+            return s1;
         }
 
         public void Finish()
@@ -218,7 +222,7 @@ namespace vaYolo.ViewModels
 
         private void CreateConfig()
         {
-            var cfgPath = YoloCfg.FromTemplate(ConfigTemplate, Setup).Save(VaUtil.ConfigPath(sshLocalFolder));
+            var cfgPath = YoloCfg.FromTemplate(ConfigTemplate, Settings.Get().GetSetup()).Save(VaUtil.ConfigPath(sshLocalFolder));
             Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(cfgPath));
         }
 

@@ -83,6 +83,11 @@ namespace vaYolo.Helpers
             return Path.ChangeExtension(imagePath, ".txt");
         }
 
+        public static string SettingsPath(string folder)
+        {
+            return Path.Combine(folder, "vayolo.xml");
+        }
+
 
         public static List<string> ListLabeledInFolder(string dir)
         {

@@ -154,7 +154,7 @@
 		</ExperimentalAcrylicBorder>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 			<Button Name="Cancel" Content="Cancel" HorizontalAlignment="Right" Margin="10" Click="OnCancel"/>
-			<Button Name="Confirm" Content="Confirm" HorizontalAlignment="Right" Margin="10"/>
+			<Button Name="Confirm" Content="Confirm" HorizontalAlignment="Right" Margin="10"  Click="OnConfirm"/>
 		</StackPanel>
 	</StackPanel>
 </Window>

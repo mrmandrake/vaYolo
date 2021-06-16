@@ -38,6 +38,8 @@ namespace vaYolo.Views
 
         protected void OnStartClick(object sender, RoutedEventArgs e) => ViewModel?.Start();
 
+        protected void OnSyncClick(object sender, RoutedEventArgs e) => ViewModel?.Sync();
+
         protected void OnConnectClick(object sender, RoutedEventArgs e) => ViewModel?.Init();
 
         protected void OnQuitClick(object sender, RoutedEventArgs e) => ViewModel?.Finish();

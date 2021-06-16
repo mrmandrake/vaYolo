@@ -86,8 +86,8 @@ namespace vaYolo.ViewModels
             set => this.RaiseAndSetIfChanged(ref sshServer, value);
         }
 
-        string sshPort = Convert.ToString(Settings.Get().SshPort);
-        public string SshPort
+        int sshPort = Settings.Get().SshPort;
+        public int SshPort
         {
             get => sshPort;
             set => this.RaiseAndSetIfChanged(ref sshPort, value);
@@ -106,11 +106,28 @@ namespace vaYolo.ViewModels
             set => this.RaiseAndSetIfChanged(ref sshPassword, value);
         }
 
+        public string Folder { get; set; }
+
         public List<string> Templates { get; set; }
 
-        public SetupViewModel()
+        public SetupViewModel(string folder)
         {
             Templates = YoloCfg.Configs.Keys.ToList();
+        }
+
+        public void Save()
+        {
+            Settings.Get().SshServer = SshServer;
+            Settings.Get().SshPort = SshPort;
+            Settings.Get().SshUsername = sshUsername;
+            Settings.Get().SshRemoteDarknet= darknetDir;
+            Settings.Get().SshPassword = SshPassword;
+            Settings.Get().NetworkHeight = NetworkHeight;
+            Settings.Get().NetworkWidth= NetworkWidth;
+            Settings.Get().BatchSize = BatchSize;
+            Settings.Get().MaxBatches = MaxBatches;
+            Settings.Get().Subdivision = Subdivision;
+            Settings.Get().Save(Folder);
         }
     }
 }
