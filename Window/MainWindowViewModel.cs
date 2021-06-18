@@ -100,14 +100,14 @@ namespace vaYolo.ViewModels
             }
         }
 
-        private void ConvertImageToJpeg(string imagePath) {
-            try {
-                JpegSaver.Convert(imagePath);
-            }
-            catch (Exception exc) {
-                System.Diagnostics.Debug.WriteLine(exc.Message);                
-            }
-        }
+        // private void ConvertImageToJpeg(string imagePath) {
+        //     try {
+        //         ImgSaver.ConvertToJpg(imagePath);
+        //     }
+        //     catch (Exception exc) {
+        //         System.Diagnostics.Debug.WriteLine(exc.Message);                
+        //     }
+        // }
 
         public string? SaveData(List<VaRect> rects) {
             return VaRect.SaveData(TxtPath, rects);

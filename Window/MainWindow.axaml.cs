@@ -14,6 +14,7 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using vaYolo.Helpers;
 using vaYolo.Model.Yolo;
+using System.Linq;
 
 namespace vaYolo.Views
 {
@@ -68,7 +69,7 @@ namespace vaYolo.Views
 
             this.WhenActivated((d) => { 
                 HasSystemDecorations = true;
-                LoadFolder();
+                LoadProject();
             });
         }
 
@@ -124,7 +125,7 @@ namespace vaYolo.Views
             return false;
         }
 
-        private async void LoadFolder() {
+        private async void LoadProject() {
             var folder = await new OpenFolderDialog() {
                 Title = "Open Folder Dialog"
             }.ShowAsync(this);
@@ -133,16 +134,53 @@ namespace vaYolo.Views
                 Notify("No folder selected!", "Loading content");
                 return;
             }
-                
 
+            LoadProject(folder);
+        }
+
+        private void LoadProject(string folder) {
             Settings.Load(folder);
             Names.Load(folder);
-
+            ViewModel.FolderPath = folder;
             File.Delete(Util.ChartPath(folder));
 
             if (!LoadFirstImage(folder))
                 Notify("No Images found!!", "Loading content");
         }
+
+        private async void CreateProject() {
+            var folder = await new OpenFolderDialog() {
+                Title = "Select Folder Dialog"
+            }.ShowAsync(this);
+
+            if (folder == null) {
+                Notify("No folder selected!", "Loading content");
+                return;
+            }
+
+            LoadProject(folder);
+        }
+
+        private async void ImportImages() {
+            var lst = await new OpenFileDialog() {
+                Title = "Select Images to import Dialog",
+                AllowMultiple = true
+            }.ShowAsync(this);
+
+            int cnt = 0;
+            lst.ToList().ForEach((f) => {
+                try {
+                    ImgSaver.ConvertToPng(f, ViewModel.FolderPath);
+                    cnt++;
+                }
+                catch (Exception exc) {
+                    Notify(String.Format("Error: {0} not Copied in  {1}", f, ViewModel.FolderPath));
+                }
+            });
+            
+            Notify(String.Format("{0} Images imported", cnt));
+            LoadProject(ViewModel.FolderPath);
+        }        
 
         public void SetClass(uint objectClass)
         {
@@ -176,7 +214,7 @@ namespace vaYolo.Views
                         break;
 
                     case Key.F:
-                        LoadFolder();
+                        LoadProject();
                         break;
 
                     case Key.S:
@@ -309,8 +347,15 @@ namespace vaYolo.Views
 
 
 #region menuclick_handlers
-        public void OnNativeLoadFolderClicked(object sender, EventArgs args) => LoadFolder();
-        public void OnLoadFolderClicked(object sender, RoutedEventArgs args) => LoadFolder();
+        public void OnNativeLoadProjectClicked(object sender, EventArgs args) => LoadProject();
+        public void OnLoadProjectClicked(object sender, RoutedEventArgs args) => LoadProject();
+
+        public void OnNativeCreateProjectClicked(object sender, EventArgs args) => CreateProject();
+        public void OnCreateProjectClicked(object sender, RoutedEventArgs args) => CreateProject();
+
+        public void OnNativeImportImagesClicked(object sender, EventArgs args) => ImportImages();
+        public void OnImportImagesClicked(object sender, RoutedEventArgs args) => ImportImages();
+
 
         public void OnNativePrevImageClicked(object sender, EventArgs args) => 
             LoadImageByPath(Util.GetPrevPath(ViewModel.ImagePath));
