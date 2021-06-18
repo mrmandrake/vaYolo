@@ -9,11 +9,15 @@ using AvaloniaEdit;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using vaYolo.ViewModels;
+using System;
+using Avalonia.Threading;
 
 namespace vaYolo.Views
 {
     public partial class Console : ReactiveWindow<ConsoleViewModel>
     {
+        private DispatcherTimer timer = new () { Interval = TimeSpan.FromMilliseconds(5000) };
+        
         private TextEditor output
         {
             get => this.Find<TextEditor>("ConsoleOutput");
@@ -32,7 +36,10 @@ namespace vaYolo.Views
                 input.KeyDown += InputBlock_KeyDown;
                 input.Focus();
                 output.TextArea.Caret.CaretBrush = Brushes.Transparent;
-                ViewModel.Init();
+                if (ViewModel.Init()) {
+                    timer.Tick += (sender, e) => ViewModel.Refresh();
+                    timer.Start();
+                }                                
             });        
         }
 
@@ -48,7 +55,10 @@ namespace vaYolo.Views
 
         protected void OnKillClick(object sender, RoutedEventArgs e) => ViewModel?.Kill();
 
-        protected override void OnClosing(CancelEventArgs e) => ViewModel?.Finish();
+        protected override void OnClosing(CancelEventArgs e) {
+            ViewModel?.Finish();
+            timer.Stop();
+        } 
 
         void InputBlock_KeyDown(object sender, KeyEventArgs e)
         {
