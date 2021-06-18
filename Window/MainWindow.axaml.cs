@@ -129,6 +129,12 @@ namespace vaYolo.Views
                 Title = "Open Folder Dialog"
             }.ShowAsync(this);
 
+            if (folder == null) {
+                Notify("No folder selected!", "Loading content");
+                return;
+            }
+                
+
             Settings.Load(folder);
             Names.Load(folder);
 
@@ -194,7 +200,7 @@ namespace vaYolo.Views
             Saved = true;
         }        
 
-        private void DataSavedCheck() {
+        private void DataSavedCheck(bool reset = true) {
             if (Ctrl != null)
             {
                 if (!Saved &&
@@ -203,7 +209,9 @@ namespace vaYolo.Views
                     SaveData();
 
                 Saved = false;
-                Ctrl.Reset();
+
+                if (reset)
+                    Ctrl.Reset();
             }            
         }
 
@@ -287,11 +295,11 @@ namespace vaYolo.Views
 
         public void ShowReview()
         {
-            DataSavedCheck();
+            DataSavedCheck(false);
             new Review()
             {
                 ViewModel = new ReviewViewModel(ViewModel.FolderPath)
-            }.Show(this);
+            }.ShowDialog(this);
         }        
 
         public override void Render(DrawingContext context)

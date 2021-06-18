@@ -28,6 +28,14 @@ namespace vaYolo.Views
             Close();
         }
 
+        public void OnClickCheckLocalDarknet(object sender, RoutedEventArgs args) {
+
+        }
+
+        public void OnClickCheckRemoteDarknet(object sender, RoutedEventArgs args) {
+            
+        }
+
         // public void Save() {
         //     string darknetDir;
         //     string cfgTemplate;

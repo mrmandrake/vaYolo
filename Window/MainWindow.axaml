@@ -16,10 +16,12 @@
 
 	<NativeMenu.Menu>
 		<NativeMenu>
-			<NativeMenuItem Header="File">
+			<NativeMenuItem Header="Project">
 				<NativeMenuItem.Menu>
 					<NativeMenu>
-						<NativeMenuItem Header="Open Folder" Clicked="OnNativeLoadFolderClicked"/>
+						<NativeMenuItem Header="Open Project" Clicked="OnNativeLoadFolderClicked"/>
+						<NativeMenuItem Header="Create New Project" Clicked="OnNativeLoadFolderClicked"/>
+						<NativeMenuItem Header="Import new Images" Clicked="OnNativeLoadFolderClicked"/>
 						<NativeMenuItem Header="About vaYolo" Clicked="OnNativeAboutClicked"/>
 					</NativeMenu>
 				</NativeMenuItem.Menu>
@@ -34,7 +36,6 @@
 					</NativeMenu>
 				</NativeMenuItem.Menu>
 			</NativeMenuItem>
-			<!--IsEnabled="{Binding FolderPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">-->
 			<NativeMenuItem Header="Training">
 				<NativeMenuItem.Menu>
 					<NativeMenu>
@@ -43,6 +44,14 @@
 					</NativeMenu>
 				</NativeMenuItem.Menu>
 			</NativeMenuItem>
+			<NativeMenuItem Header="Detect">
+				<NativeMenuItem.Menu>
+					<NativeMenu>
+						<NativeMenuItem Header="Detect on image" Clicked="OnNativeSetupClicked"/>
+					</NativeMenu>
+				</NativeMenuItem.Menu>
+			</NativeMenuItem>
+
 		</NativeMenu>	
 	</NativeMenu.Menu>
 

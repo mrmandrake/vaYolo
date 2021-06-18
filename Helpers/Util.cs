@@ -46,7 +46,7 @@ namespace vaYolo.Helpers
         }
 
         private static string PathPrefix(string folder) {
-            return Path.Combine(folder, new DirectoryInfo(folder).Name);
+            return Path.Combine(folder, new DirectoryInfo(folder).Name.Replace("vayolo.", ""));
         }
 
         public static string TrainListPath(string folder) {
@@ -88,7 +88,7 @@ namespace vaYolo.Helpers
         public static string GetTemplatePath(string name)
         {
             var appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return Path.Combine(appDir, "Templates", name);
+            return Path.Combine(appDir, "templates", name);
         }
 
         public static List<string> ListLabeledInFolder(string dir)
