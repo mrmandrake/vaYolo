@@ -21,11 +21,11 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="*" />
-    <PackageReference Include="Avalonia.Desktop" Version="*" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="*" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="*" />
-	  <PackageReference Include="Avalonia.Controls.DataGrid" Version="*" />
+    <PackageReference Include="Avalonia" Version="0.10.999-cibuild0014036-beta" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.999-cibuild0014036-beta" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.999-cibuild0014036-beta" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.999-cibuild0014036-beta" />
+	<PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.999-cibuild0014036-beta" />
     <PackageReference Include="System.Resources.Extensions" Version="*" />
     <PackageReference Include="Dotnet.Bundle" Version="*" />
     <PackageReference Include="SSH.NET" Version="*" />
