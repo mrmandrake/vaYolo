@@ -73,6 +73,15 @@ namespace vaYolo.ViewModels
             NormalizedRoi.Add(rc);
         }
 
+        public void DeleteImage() {
+            if (ImagePath != null)
+                try {
+                    File.Delete(ImagePath);
+                }
+                catch (Exception exc) {                    
+                }
+        }
+
         public async Task LoadImage(string? imagePath)
         {
             if (imagePath != null)

@@ -33,6 +33,7 @@
 						<NativeMenuItem Header="Next image" Clicked="OnNativeNextImageClicked"/>
 						<NativeMenuItem Header="Set Class" Clicked="OnNativeSetClassClicked"/>
 						<NativeMenuItem Header="Review" Clicked="OnNativeReviewClicked"/>
+						<NativeMenuItem Header="Delete image" Clicked="OnNativeDeleteImageClicked"/>	
 					</NativeMenu>
 				</NativeMenuItem.Menu>
 			</NativeMenuItem>
@@ -71,6 +72,7 @@
 				<MenuItem Header="Previous image" Click="OnNextImageClicked"/>				
 				<MenuItem Header="Set Class" Click="OnSetClassClicked"/>
 				<MenuItem Header="Review" Click="OnReviewClicked"/>
+				<MenuItem Header="Delete image" Click="OnDeleteImageClicked"/>				
 			</MenuItem>
 			<MenuItem Header="Training">
 				<MenuItem Header="Setup" Click="OnSetupClicked"/>

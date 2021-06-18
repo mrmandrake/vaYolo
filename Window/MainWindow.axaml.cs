@@ -177,7 +177,7 @@ namespace vaYolo.Views
                     Notify(String.Format("Error: {0} not Copied in  {1}", f, ViewModel.FolderPath));
                 }
             });
-            
+
             Notify(String.Format("{0} Images imported", cnt));
             LoadProject(ViewModel.FolderPath);
         }        
@@ -270,6 +270,17 @@ namespace vaYolo.Views
             if (Settings.Get().MaximizeAfterLoad)
                 MaximizeAfterLoad();
         }
+
+        private async void DeleteCurrentImage()
+        {
+            if (ViewModel == null)
+                return;
+
+            if (await MessageBox.Show(this, "Really delete current image?", "Delete Request", MessageBox.MessageBoxButtons.YesNo) == MessageBox.MessageBoxResult.Yes)
+                ViewModel.DeleteImage();
+
+            LoadFirstImage(ViewModel.FolderPath);
+        }        
 
         private void MaximizeAfterLoad()
         {
@@ -375,6 +386,9 @@ namespace vaYolo.Views
 
         public void OnNativeReviewClicked(object sender, EventArgs args) => ShowReview();
         public void OnReviewClicked(object sender, RoutedEventArgs args) => ShowReview();
+
+        public void OnNativeDeleteImageClicked(object sender, EventArgs args) => DeleteCurrentImage();
+        public void OnDeleteImageClicked(object sender, RoutedEventArgs args) => DeleteCurrentImage();
 
         public void OnNativeSetupClicked(object sender, EventArgs args) => ShowSetupTrain();
         public void OnSetupClicked(object sender, RoutedEventArgs args) => ShowSetupTrain();
