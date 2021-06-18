@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800"
+        x:Class="vaYolo.Views.Detect"
+        Title="Review">
+	<DockPanel>
+		<TabControl Items="{Binding Tabs}" SelectionChanged="OnSelectionChanged" DockPanel.Dock="Top">
+			<TabControl.ItemTemplate>
+				<DataTemplate>
+					<TextBlock FontSize="14"
+						Text="{Binding Header}">
+					</TextBlock>
+				</DataTemplate>
+			</TabControl.ItemTemplate>
+			<TabControl.ContentTemplate>
+				<DataTemplate>
+				</DataTemplate>
+			</TabControl.ContentTemplate>
+		</TabControl>
+
+		<ExperimentalAcrylicBorder CornerRadius="10" Grid.Row="0" Grid.Column="0">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial TintColor="Black" TintOpacity="0.7"
+								MaterialOpacity="0.7" BackgroundSource="Digger"/>
+			</ExperimentalAcrylicBorder.Material>
+			<DataGrid Name="dataGrid" Margin="4" AutoGenerateColumns="False"
+					  IsReadOnly="True" HorizontalAlignment="Stretch"
+					  ColumnWidth="Auto" SelectionMode="Single" Items="{Binding Items}">
+				<DataGrid.Columns>
+					<DataGridTemplateColumn Header="Roi" Width="64">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Image Name="Roi" Source="{Binding _Roi}" Margin="2"/>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Header="#" Binding="{Binding ObjectClass}" Width="20" FontSize="14"/>
+					<DataGridTextColumn Header="Image" Binding="{Binding ImagePath}" FontSize="12"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</ExperimentalAcrylicBorder>
+	</DockPanel>
+</Window>

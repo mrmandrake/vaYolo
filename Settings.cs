@@ -31,6 +31,8 @@ namespace vaYolo
 
         public string SshRemoteDarknet { get; set; } = "/home/manovella/darknet";
 
+        public string SshLocalDarknet { get; set; } = "/home/manovella/darknet";        
+
         public string SshRemote { get; set; } = "/tmp";
 
         public int NetworkWidth { get; set; } = 416;

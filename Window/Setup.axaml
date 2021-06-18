@@ -45,7 +45,14 @@
 
 				<TabItem Header="Model" FontSize="14">
 					<StackPanel Margin="10">
-						<TextBox Name="DarknetDirectory" Watermark="Darknet directory" DockPanel.Dock="Top" Margin="4" Text="{Binding DarknetDir}"/>
+						<StackPanel Margin="10" Orientation="Horizontal">
+							<TextBox Name="LocalDarknetDirectory" Watermark="Local Darknet directory" DockPanel.Dock="Top" Margin="4" Text="{Binding LocalDarknetDir}"/>
+							<Button Content="Check" Click="OnClickCheckLocalDarknet"/>
+						</StackPanel>
+						<StackPanel Margin="10" Orientation="Horizontal">
+							<TextBox Name="RemoteDarknetDirectory" Watermark="Remote Darknet directory" DockPanel.Dock="Top" Margin="4" Text="{Binding RemoteDarknetDir}"/>
+							<Button Content="Check" Click="OnClickCheckRemoteDarknet"/>
+						</StackPanel>						
 						<ComboBox Name="ConfigurationTemplate"
 								  Items="{Binding Templates}"
 								  DockPanel.Dock="Top" Margin="4"/>

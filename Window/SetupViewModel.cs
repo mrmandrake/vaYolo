@@ -56,11 +56,18 @@ namespace vaYolo.ViewModels
             set => this.RaiseAndSetIfChanged(ref gaugeDim, value);
         }
 
-        string darknetDir = Settings.Get().SshRemoteDarknet;
-        public string DarknetDir
+        string remoteDarknetDir = Settings.Get().SshRemoteDarknet;
+        public string RemoteDarknetDir
         {
-            get => darknetDir;
-            set => this.RaiseAndSetIfChanged(ref darknetDir, value);
+            get => remoteDarknetDir;
+            set => this.RaiseAndSetIfChanged(ref remoteDarknetDir, value);
+        }
+
+        string localDarknetDir = Settings.Get().SshLocalDarknet;
+        public string LocalDarknetDir
+        {
+            get => localDarknetDir;
+            set => this.RaiseAndSetIfChanged(ref localDarknetDir, value);
         }
 
         string sshServer = Settings.Get().SshServer;
@@ -105,7 +112,8 @@ namespace vaYolo.ViewModels
             Settings.Get().SshServer = SshServer;
             Settings.Get().SshPort = SshPort;
             Settings.Get().SshUsername = sshUsername;
-            Settings.Get().SshRemoteDarknet= darknetDir;
+            Settings.Get().SshRemoteDarknet= RemoteDarknetDir;
+            Settings.Get().SshLocalDarknet= LocalDarknetDir;
             Settings.Get().SshPassword = SshPassword;
             Settings.Get().NetworkHeight = NetworkHeight;
             Settings.Get().NetworkWidth= NetworkWidth;
