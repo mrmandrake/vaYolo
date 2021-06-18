@@ -11,11 +11,14 @@ using vaYolo.Model.Yolo;
 using Microsoft.VisualBasic.FileIO;
 using vaYolo.Ext;
 using System.Threading.Tasks;
+using Avalonia.Threading;
 
 namespace vaYolo.ViewModels
 {
     public class ConsoleViewModel : ReactiveObject
     {
+        private int CurrentNumIterations = 0;
+
         TextDocument document;
         public TextDocument Document
         {
@@ -143,19 +146,21 @@ namespace vaYolo.ViewModels
 
             write("...CONNECTED!");
             ScreenPid = GetScreenPid();            
-            write("Remote Folder " + (!Sftp.Exists(Ssh.Connection, SshRemoteFolder) ? "NOT" : "") + " exist!");
-            return true;
+            var rfold = Sftp.Exists(Ssh.Connection, SshRemoteFolder);
+            write("Remote Folder " + (!rfold ? "NOT" : "") + " exist!");
+
+            return (ScreenPid > 0) && rfold;
         }
 
         public bool Sync()
         {
-            write("Sync...");
+            write("> SYNC RREMOTE FOLDER...");
             DeleteSupportFiles(sshLocalFolder);
 
             var (s1, s2) = Sftp.Sync(Ssh.Connection, SshLocalFolder, SshRemoteFolder);
             if (s1)
                 s2.ForEach((f) => write("Uploading " + f));
-            write("...Sync complete");
+            write("...SYNC COMPLETE");
             return s1;
         }
 
@@ -209,14 +214,26 @@ namespace vaYolo.ViewModels
             string cfgPath = String.Format("{0}/{1}.cfg ", SshRemoteFolder, FolderName);
             string redirectStd = " 2>&1";
             var cmd = setfolder + screencmd + timecmd + darknetcmd + dataPath + cfgPath + redirectStd;
-            //string test = "ping 127.0.0.1 &2>&1";
-            // var cmd = setfolder + screencmd + test;
             write("> RUNNING " + cmd);
             write(Ssh.Run(cmd));
         }
 
-        private void GetLogTail(string remote, int lines = 30) {
-            write(Ssh.Run(String.Format("tail -n {0} {1} ", lines, Path.Combine(SshRemoteFolder,"screenlog.0").Replace('\\', '/'))));
+        private int GetInfo(string remote, int n = 50) {
+            var a = Ssh.Run(String.Format("tail -n {0} {1} ", n, Path.Combine(SshRemoteFolder,"screenlog.0").Replace('\\', '/')));
+            var lines = a.Split('\n');
+            for (int i = lines.Length - 1; i > 0; i--) {
+                try {
+                    var numIterations = Convert.ToInt32(lines[i].Substring(0, lines[i].IndexOf(':')));
+                    if (numIterations > 0) {
+                        write(lines[i]);
+                        return numIterations;
+                    }
+                }
+                catch (Exception exc) {
+                }
+            }
+
+            return -1;
         }
 
         private void GetChart()
@@ -271,9 +288,12 @@ namespace vaYolo.ViewModels
         }
 
         public void Refresh() {
-            Document = new TextDocument();
-            GetLogTail(SshRemoteFolder);
-            GetChart();
+            var numIterations = GetInfo(SshRemoteFolder) / 100;
+            if (numIterations > 0 &&
+                CurrentNumIterations != numIterations) {
+                    CurrentNumIterations = numIterations;
+                    GetChart();
+                }
         } 
 
         public void Kill() {
