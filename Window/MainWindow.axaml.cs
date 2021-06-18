@@ -325,6 +325,13 @@ namespace vaYolo.Views
             new Setup() { ViewModel = new SetupViewModel(ViewModel.FolderPath) }.Show(this);
         }
 
+        public void ShowDetect()
+        {
+            DataSavedCheck();
+            new Detect() { ViewModel = new DetectViewModel(ViewModel.FolderPath) }.Show(this);
+        }
+
+
         public void ShowConsoleTrain()
         {
             DataSavedCheck();
@@ -392,6 +399,9 @@ namespace vaYolo.Views
 
         public void OnNativeSetupClicked(object sender, EventArgs args) => ShowSetupTrain();
         public void OnSetupClicked(object sender, RoutedEventArgs args) => ShowSetupTrain();
+
+        public void OnNativeDetectClicked(object sender, EventArgs args) => ShowDetect();
+        public void OnDetectClicked(object sender, RoutedEventArgs args) => ShowDetect();
 
         public void OnNativeConsoleClicked(object sender, EventArgs args) => ShowConsoleTrain();
         public void OnConsoleClicked(object sender, RoutedEventArgs args) => ShowConsoleTrain();

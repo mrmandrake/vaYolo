@@ -31,16 +31,30 @@ namespace vaYolo.Views
         public Console()
         {
             AvaloniaXamlLoader.Load(this);
-            this.WhenActivated((d) =>
+            this.WhenActivated(async (d) =>
             {
-                input.KeyDown += InputBlock_KeyDown;
-                input.Focus();
+                //input.KeyDown += InputBlock_KeyDown;
+                //input.Focus();
                 output.TextArea.Caret.CaretBrush = Brushes.Transparent;
-                if (ViewModel.Init()) {
-                    timer.Tick += (sender, e) => ViewModel.Refresh();
-                    timer.Start();
-                }                                
+                if (!ViewModel.Init())
+                {
+                    if (await MessageBox.Show(this, "Start train process?", "Training",
+                                            MessageBox.MessageBoxButtons.YesNo) == MessageBox.MessageBoxResult.Yes)
+                    {
+                        ViewModel?.Sync();
+                        ViewModel?.Start();
+                        StartTimer();
+                    }
+                }
+                else
+                    StartTimer();
             });        
+        }
+
+        private void StartTimer()
+        {
+            timer.Tick += (sender, e) => ViewModel.Refresh();
+            timer.Start();
         }
 
         protected void OnStartClick(object sender, RoutedEventArgs e) => ViewModel?.Start();
@@ -53,7 +67,16 @@ namespace vaYolo.Views
 
         protected void OnRefreshClick(object sender, RoutedEventArgs e) => ViewModel?.Refresh();
 
-        protected void OnKillClick(object sender, RoutedEventArgs e) => ViewModel?.Kill();
+        protected async void OnKillClick(object sender, RoutedEventArgs e)
+        {
+            if (await MessageBox.Show(this, "Kill current train process?", "Kill Training",
+                                    MessageBox.MessageBoxButtons.YesNo) == MessageBox.MessageBoxResult.Yes)
+            {
+                timer.Stop();
+                ViewModel?.Kill();
+                Close();
+            }
+        }
 
         protected override void OnClosing(CancelEventArgs e) {
             ViewModel?.Finish();

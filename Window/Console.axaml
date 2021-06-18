@@ -16,7 +16,7 @@
 	</Design.DataContext>
 
 	<DockPanel LastChildFill="True" Height="800" Width="1200">
-		<StackPanel IsVisible="False" Orientation="Horizontal" DockPanel.Dock="Top" Margin="4">
+		<!--<StackPanel IsVisible="False" Orientation="Horizontal" DockPanel.Dock="Top" Margin="4">
 			<TextBlock Text="Server" Margin="0 8 0 0"/>
 			<TextBox Name="Server" Text="{Binding SshServer}" Width="200" Margin="4 0 10 0" />
 			<TextBlock Text="Port"  Margin="10 8 0 0"/>
@@ -25,13 +25,13 @@
 			<TextBox Name="Username" Text="{Binding SshUsername}" Width="150" Margin="4 0 10 0" />
 			<TextBlock Text="Pwd" Margin="10 8 0 0"/>
 			<TextBox Name="Password" Text="{Binding SshPassword}" PasswordChar="*" Width="150" Margin="4 0 10 0" />
-		</StackPanel>			
-		<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="4">
+		</StackPanel>-->			
+		<!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="4">
 			<Button Name="btnStart" Click="OnStartClick" Content="Start" Margin="30 0 0 0"/>
 			<Button Name="btnSync" Click="OnSyncClick" Content="Sync" Margin="10 0 0 0"/>
 			<Button Name="btnRefresh" Click="OnRefreshClick" Content="Refresh" Margin="30 0 0 0"/>
 			<Button Name="btnKill" Click="OnKillClick" Content="Kill"/>
-		</StackPanel>
+		</StackPanel>-->
 
 		<TabControl>
 			<TabItem Header="Log" FontSize="12">
@@ -44,13 +44,15 @@
 						<avaloniaedit:TextEditor Name="ConsoleOutput" Margin="8" Document="{Binding Document}"
 							HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" FontSize="13"/>
 					</ExperimentalAcrylicBorder>
-					<TextBox Grid.Row="1" Grid.Column="0" Height="42" Text="{Binding ConsoleInput}"
+					<!--<TextBox IsVisible="False" Grid.Row="1" Grid.Column="0" Height="42" Text="{Binding ConsoleInput}"
 						Background="DarkGray" Foreground="LightGray" FontFamily="Consolas" Margin="0 8 0 8"
-						Name="InputBlock" BorderBrush="{x:Null}" SelectionBrush="{x:Null}"/>
-				</Grid>
+						Name="InputBlock" BorderBrush="{x:Null}" SelectionBrush="{x:Null}"/>-->
+          <Button Name="btnKill" Grid.Row="1" Grid.Column="0" Width="150"
+                  HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                  Click="OnKillClick" Content="Kill"/>
+        </Grid>
 			</TabItem>
-			<TabItem Header="Chart" FontSize="12">
-				
+			<TabItem Header="Chart" FontSize="12">				
 				<Grid RowDefinitions="*,42" ColumnDefinitions="*">
 					<Image Name="chart" Source="{Binding Chart}"/>
 				</Grid>				

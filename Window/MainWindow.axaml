@@ -48,7 +48,7 @@
 			<NativeMenuItem Header="Detect">
 				<NativeMenuItem.Menu>
 					<NativeMenu>
-						<NativeMenuItem Header="Detect on image" Clicked="OnNativeSetupClicked"/>
+						<NativeMenuItem Header="Detect on image" Clicked="OnNativeDetectClicked"/>
 					</NativeMenu>
 				</NativeMenuItem.Menu>
 			</NativeMenuItem>
@@ -78,7 +78,10 @@
 				<MenuItem Header="Setup" Click="OnSetupClicked"/>
 				<MenuItem Header="Console" Click="OnConsoleClicked"/>
 			</MenuItem>
-		</Menu>	
+      <MenuItem Header="Detect">
+				<MenuItem Header="Detect on image" Click="OnDetectClicked"/>
+      </MenuItem>
+    </Menu>	
 
 		<loc:VaImage Name="SegImage" Source="{Binding Img}" DockPanel.Dock="Top"
 			PointerPressed="ImageClickDown"

@@ -133,9 +133,9 @@ namespace vaYolo.ViewModels
 
         public bool Init()
         {
-            write(String.Format("Username:{0}", SshUsername));
-            write(String.Format("Local Folder:{0} ", SshLocalFolder));
-            write(String.Format("Remote Folder:{0}", SshRemoteFolder));
+            //write(String.Format("Username:{0}", SshUsername));
+            //write(String.Format("Local Folder:{0} ", SshLocalFolder));
+            //write(String.Format("Remote Folder:{0}", SshRemoteFolder));
 
             write(String.Format("> CONNECTING to -> {0}:{1}....", SshServer, SshPort));
             if (!Ssh.Init(sshServer, Convert.ToUInt16(sshPort), 
@@ -145,11 +145,9 @@ namespace vaYolo.ViewModels
             }                
 
             write("...CONNECTED!");
-            ScreenPid = GetScreenPid();            
             var rfold = Sftp.Exists(Ssh.Connection, SshRemoteFolder);
-            write("Remote Folder " + (!rfold ? "NOT" : "") + " exist!");
-
-            return (ScreenPid > 0) && rfold;
+            write("Remote Folder " + SshRemoteFolder + (!rfold ? " NOT" : "") + " exist!");
+            return (GetScreenPid() > 0) && rfold;
         }
 
         public bool Sync()
