@@ -316,7 +316,7 @@ namespace vaYolo.ViewModels
                     GetChart();
                 }
 
-            if (CurrentNumIterations >= Settings.Get().MaxBatches && 
+            if ((CurrentNumIterations >= Settings.Get().MaxBatches / 100) && 
                 ScreenPid > 0) {
                 write(String.Format("max batch reached, killing job {0}", ScreenPid));
                 Kill();
