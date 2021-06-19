@@ -13,22 +13,26 @@ namespace vaYolo.Helpers
 
         public static ConnectionInfo? Connection
         {
-            get { return sshConn; }
+            get { 
+                if (sshConn == null) 
+                    sshConn = new(Settings.Get().SshServer, 
+                                Convert.ToUInt16(Settings.Get().SshPort),
+                                Settings.Get().SshUsername,
+                                new AuthenticationMethod[] {
+                                    new PasswordAuthenticationMethod(Settings.Get().SshUsername, 
+                                        Settings.Get().SshPassword)}) {
+                    Timeout = new TimeSpan(0, 0, 5)
+                };
+                
+                return sshConn; 
+            }
         }
 
-        public static bool Init(string server, UInt16 port, string user, string pwd)
+        public static bool Init()
         {
             try
             {
-                sshConn = new(server, Convert.ToUInt16(port),
-                    user,
-                    new AuthenticationMethod[] {
-                        new PasswordAuthenticationMethod(user, pwd)})
-                {
-                    Timeout = new TimeSpan(0, 0, 5)
-                };
-
-                sshclient = new SshClient(sshConn);
+                sshclient = new SshClient(Connection);
                 sshclient.Connect();
                 return true;
 

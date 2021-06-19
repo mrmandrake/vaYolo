@@ -137,9 +137,8 @@ namespace vaYolo.ViewModels
             //write(String.Format("Local Folder:{0} ", SshLocalFolder));
             //write(String.Format("Remote Folder:{0}", SshRemoteFolder));
 
-            write(String.Format("> CONNECTING to -> {0}:{1}....", SshServer, SshPort));
-            if (!Ssh.Init(sshServer, Convert.ToUInt16(sshPort), 
-                sshUsername, sshPassword)) {
+            write(String.Format("> CONNECTING to {0}:{1}....", SshServer, SshPort));
+            if (!Ssh.Init()) {
                     write("...ERROR NOT CONNECTED!");
                     return false;
             }                
@@ -252,37 +251,58 @@ namespace vaYolo.ViewModels
             }
         }
 
-        public void Start() {
-            CreateTrain();
-            CreateValid();
-            CreateData();
-            CreateConfig();
-            LaunchTrain();
-            ScreenPid = GetScreenPid();
+        public bool Start() {
+            try {
+                Sftp.Upload(Ssh.Connection, 
+                    SshRemoteFolder, SshLocalFolder, 
+                    Path.GetFileName(CreateTrain()));
+
+                Sftp.Upload(Ssh.Connection, 
+                    SshRemoteFolder, SshLocalFolder, 
+                    Path.GetFileName(CreateValid()));
+
+                Sftp.Upload(Ssh.Connection, 
+                    SshRemoteFolder, SshLocalFolder, 
+                    Path.GetFileName(CreateData()));
+
+                Sftp.Upload(Ssh.Connection, 
+                    SshRemoteFolder, SshLocalFolder, 
+                    Path.GetFileName(CreateConfig()));
+
+                LaunchTrain();
+                ScreenPid = GetScreenPid();
+                return true;
+            }
+            catch (Exception exc) {
+            }
+
+            return false;
         }
 
-        private void CreateConfig()
+        private string CreateConfig()
         {
-            var cfgPath = Config.FromTemplate(ConfigTemplate, Settings.Get().GetSetup()).Save(Util.ConfigPath(sshLocalFolder));
-            Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(cfgPath));
+            return Config.FromTemplate(ConfigTemplate, Settings.Get().GetSetup())
+                        .Save(Util.ConfigPath(sshLocalFolder));            
         }
 
-        private void CreateData()
+        private string CreateData()
         {
-            var dataPath = Data.Create(Names.Classes.Count, sshRemoteFolder).Save(Util.DataPath(sshLocalFolder));
-            Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(dataPath));
+            return Data.Create(Names.Classes.Count, sshRemoteFolder)
+                        .Save(Util.DataPath(sshLocalFolder));            
         }
 
-        private void CreateTrain()
+        private string CreateTrain()
         {
-            var trainListPath = Util.ListLabeledInFolder(SshLocalFolder).Rebase(SshLocalFolder, SshRemoteFolder).Save(Util.TrainListPath(sshLocalFolder));
-            Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(trainListPath));
+            return Util.ListLabeledInFolder(SshLocalFolder)
+                        .Rebase(SshLocalFolder, SshRemoteFolder)
+                        .Save(Util.TrainListPath(sshLocalFolder));
         }
 
-        private void CreateValid()
+        private string CreateValid()
         {
-            var validListPath = Util.ListLabeledInFolder(SshLocalFolder).Rebase(SshLocalFolder, SshRemoteFolder).Save(Util.ValidListPath(sshLocalFolder));
-            Sftp.Upload(Ssh.Connection, SshRemoteFolder, SshLocalFolder, Path.GetFileName(validListPath));
+            return Util.ListLabeledInFolder(SshLocalFolder)
+                        .Rebase(SshLocalFolder, SshRemoteFolder)
+                        .Save(Util.ValidListPath(sshLocalFolder));            
         }
 
         public void Refresh() {

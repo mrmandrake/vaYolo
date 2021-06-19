@@ -1,3 +1,5 @@
+using System;
+using System.Reflection;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -8,6 +10,10 @@ namespace vaYolo
 {
     public class App : Application
     {
+        public static Version Version => Assembly.GetExecutingAssembly().GetName().Version;
+        public static string VersionStr => Version.ToString(3);
+
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);

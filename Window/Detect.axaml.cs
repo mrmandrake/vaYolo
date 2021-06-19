@@ -5,16 +5,13 @@ using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using vaYolo.Model;
 using vaYolo.ViewModels;
+using vaYolo.Controls;
+using ReactiveUI;
 
 namespace vaYolo.Views
 {
     public partial class Detect : ReactiveWindow<DetectViewModel>
     {
-        public DataGrid DG
-        {
-            get => this.FindControl<DataGrid>("dataGrid");
-        }
-
         public Detect()
         {
             InitializeComponent();
@@ -23,6 +20,9 @@ namespace vaYolo.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+            this.WhenActivated((d) => { 
+                ViewModel.Detect();
+            });
         }
     }
 }

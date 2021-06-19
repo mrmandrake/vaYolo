@@ -75,6 +75,11 @@ namespace vaYolo.Helpers
             return Path.ChangeExtension(imagePath, ".txt");
         }
 
+        public static string WeightsPath(string folder)
+        {
+            return PathPrefix(folder) + "_last.weights";
+        }
+
         public static string SettingsPath(string folder)
         {
             return Path.Combine(folder, "vayolo.xml");

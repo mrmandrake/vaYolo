@@ -45,6 +45,10 @@ namespace vaYolo
 
         public int Subdivision { get; set; } = 16;
 
+        public float ScoreThreshold { get; set; } = 0.8f;
+
+        public float NMSThreshold { get; set; } = 0.1f;
+
         private static Settings? instance = null;
 
         public static Settings? Get()
@@ -120,7 +124,9 @@ namespace vaYolo
                 SshUsername = "manovella",
                 SshPassword = "",
                 SshRemoteDarknet = "/home/manovella/src/darknet/darknet",
-                SshRemote = "/tmp"
+                SshRemote = "/tmp",
+                ScoreThreshold = 0.8f,
+                NMSThreshold = 0.1f
             };
         }
 

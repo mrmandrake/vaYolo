@@ -70,8 +70,11 @@ namespace vaYolo.Helpers {
         }
 
 
-        public static bool Exists(ConnectionInfo conn, string path)
+        public static bool Exists(ConnectionInfo? conn, string path)
         {
+            if (conn == null)
+                throw new Exception("connection not valid");
+
             bool result = false;
             using (var sftp = new SftpClient(conn))
             {
@@ -87,6 +90,10 @@ namespace vaYolo.Helpers {
             }
 
             return result;
+        }
+
+        public static bool RetrieveWeights(string localFolder) {
+            return false;
         }
 
         public static (bool, List<FileInfo>) Sync(ConnectionInfo conn, string local, string remote)

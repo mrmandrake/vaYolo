@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,33 +7,28 @@
     <AssemblyVersion>0.1.1.0</AssemblyVersion>
     <FileVersion>0.1.1.0</FileVersion>
   </PropertyGroup>
-  
   <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Assets\**"/>
   </ItemGroup>
-  
   <ItemGroup>
-    <AvaloniaXaml Remove="Models\**" />
-    <Compile Remove="Models\**" />
-    <EmbeddedResource Remove="Models\**" />
-    <None Remove="Models\**" />
+    <AvaloniaXaml Remove="Models\**"/>
+    <Compile Remove="Models\**"/>
+    <EmbeddedResource Remove="Models\**"/>
+    <None Remove="Models\**"/>
   </ItemGroup>
-  
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.999-cibuild0014036-beta" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.999-cibuild0014036-beta" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.999-cibuild0014036-beta" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.999-cibuild0014036-beta" />
-	<PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.999-cibuild0014036-beta" />
-    <PackageReference Include="System.Resources.Extensions" Version="*" />
-    <PackageReference Include="Dotnet.Bundle" Version="*" />
-    <PackageReference Include="SSH.NET" Version="*" />
-    <PackageReference Include="Avalonia.AvaloniaEdit" Version="*" />	
-    <PackageReference Include="OpenCvSharp4" Version="*" />
-    <PackageReference Include="OpenCvSharp4.runtime.osx.10.15-x64" Version="*" Condition="$([MSBuild]::IsOsPlatform('OSX'))" />
-    <PackageReference Include="OpenCvSharp4.runtime.win" Version="*" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />    
+    <PackageReference Include="Avalonia" Version="0.10.999-cibuild0014036-beta"/>
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.999-cibuild0014036-beta"/>
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.999-cibuild0014036-beta"/>
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.999-cibuild0014036-beta"/>
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.999-cibuild0014036-beta"/>
+    <PackageReference Include="System.Resources.Extensions" Version="*"/>
+    <PackageReference Include="Dotnet.Bundle" Version="*"/>
+    <PackageReference Include="SSH.NET" Version="*"/>
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="*"/>
+    <PackageReference Include="OpenCvSharp4" Version="*"/>
+    <PackageReference Include="OpenCvSharp4.runtime.osx.10.15-x64" Version="*"/>
   </ItemGroup>
-  
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -42,12 +36,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-  
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  
 </Project>

@@ -15,6 +15,7 @@ using Avalonia.Media;
 using vaYolo.Helpers;
 using vaYolo.Model.Yolo;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace vaYolo.Views
 {
@@ -309,14 +310,19 @@ namespace vaYolo.Views
             Notify("Current class:" + c);
         }
 
+        public string Version => $"Vayolo Version: {App.VersionStr} {RuntimeInformation.ProcessArchitecture}";
+        public string OSDescription => $"{RuntimeInformation.OSDescription} {RuntimeInformation.OSArchitecture}";
+        public string FrameworkDescription => RuntimeInformation.FrameworkDescription;
+        public int ProcessorCount => Environment.ProcessorCount;
+        public int ScreenCount => Screens.ScreenCount;
         public async void ShowAbout()
         {
             await MessageBox.Show(this,
-                "vaYolo 0.0.1 version\n\n\n" + 
-                "Another Yolo Image segmentation tool\n\n" +
-                "Optimized for MacOS / Astropad / Ipad and Pencil\n",
-                "image tool segmentation",
-                    MessageBox.MessageBoxButtons.Ok);
+                "vaYolo: Very Anonymouse Darknet IDE\r\n" + 
+                Version + "\r\n" +
+                FrameworkDescription + "\r\n", 
+                "Very Anonymouse Darknet IDE",
+                MessageBox.MessageBoxButtons.Ok);
         }
 
         public void ShowSetupTrain()
@@ -325,12 +331,67 @@ namespace vaYolo.Views
             new Setup() { ViewModel = new SetupViewModel(ViewModel.FolderPath) }.Show(this);
         }
 
-        public void ShowDetect()
+        public async void ShowDetect()
         {
-            DataSavedCheck();
-            new Detect() { ViewModel = new DetectViewModel(ViewModel.FolderPath) }.Show(this);
+            DataSavedCheck();            
+            if (await CheckWeights() && 
+                await CheckConfig())
+            {
+                var path = await GetPath();
+
+                if (!File.Exists(path))
+                    return;
+
+                new Detect()
+                {
+                    ViewModel = new DetectViewModel(path, ViewModel.FolderPath)
+                }.Show(this);
+            }
         }
 
+        private async Task<bool> CheckWeights()
+        {
+            if (!File.Exists(Util.WeightsPath(ViewModel.FolderPath))) {
+                Notify("Weights not founds locally");
+
+                if (await MessageBox.Show(this, 
+                    "Weights not found, retrieve from remote?", "Weights model", 
+                    MessageBox.MessageBoxButtons.YesNo) == MessageBox.MessageBoxResult.Yes) {
+                        if (Sftp.RetrieveWeights(ViewModel.FolderPath))
+                            return true;
+                        else {
+                            Notify("Error retrieving model weights");                        
+                            return false;
+                        }
+                    }
+                else
+                    return false;
+            } 
+
+            return true;
+        }
+
+        private async Task<bool> CheckConfig()
+        {
+            if (!File.Exists(Util.ConfigPath(ViewModel.FolderPath))) {
+                Notify("Config file found locally");
+
+                if (await MessageBox.Show(this, 
+                    "Config not found, retrieve from remote?", "Config File Model", 
+                    MessageBox.MessageBoxButtons.YesNo) == MessageBox.MessageBoxResult.Yes) {
+                        if (Sftp.RetrieveWeights(ViewModel.FolderPath))
+                            return true;
+                        else {
+                            Notify("Error retrieving model config");                        
+                            return false;
+                        }
+                }
+                else
+                    return false;
+            } 
+
+            return true;
+        }        
 
         public void ShowConsoleTrain()
         {
