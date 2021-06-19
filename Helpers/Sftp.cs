@@ -25,14 +25,8 @@ namespace vaYolo.Helpers {
                 {
                     sftp.Connect();
                     sftp.ChangeDirectory(SshRemoteFolder);
-                    using (Stream f = File.OpenWrite(Path.Combine(SshLocalFolder, filename))) {
-                        // write(String.Format("Downloading {0} from {1} in {2}", 
-                        //     filename, 
-                        //     SshRemoteFolder, 
-                        //     SshLocalFolder));
-
+                    using (Stream f = File.OpenWrite(Path.Combine(SshLocalFolder, filename)))
                         sftp.DownloadFile(filename, f);
-                    }
 
                     sftp.Disconnect();
                 }
@@ -69,7 +63,6 @@ namespace vaYolo.Helpers {
             return false;
         }
 
-
         public static bool Exists(ConnectionInfo? conn, string path)
         {
             if (conn == null)
@@ -90,10 +83,6 @@ namespace vaYolo.Helpers {
             }
 
             return result;
-        }
-
-        public static bool RetrieveWeights(string localFolder) {
-            return false;
         }
 
         public static (bool, List<FileInfo>) Sync(ConnectionInfo conn, string local, string remote)

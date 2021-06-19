@@ -351,36 +351,45 @@ namespace vaYolo.Views
 
         private async Task<bool> CheckWeights()
         {
+            if (await MessageBox.Show(this, 
+                "Retrieve from remote last weights?", "Weights model", 
+                MessageBox.MessageBoxButtons.YesNo) == MessageBox.MessageBoxResult.Yes) 
+            {
+                if (!Sftp.Download(Ssh.Connection, Util.RemoteFolder(ViewModel.FolderPath),
+                    ViewModel.FolderPath, Path.GetFileName(Util.WeightsPath(ViewModel.FolderPath)))) 
+                {
+                    Notify("Error retrieving model weights");                        
+                    return false;
+                }
+            }
+
             if (!File.Exists(Util.WeightsPath(ViewModel.FolderPath))) {
                 Notify("Weights not founds locally");
+                return false;
+            }
 
-                if (await MessageBox.Show(this, 
-                    "Weights not found, retrieve from remote?", "Weights model", 
-                    MessageBox.MessageBoxButtons.YesNo) == MessageBox.MessageBoxResult.Yes) {
-                        if (Sftp.RetrieveWeights(ViewModel.FolderPath))
-                            return true;
-                        else {
-                            Notify("Error retrieving model weights");                        
-                            return false;
-                        }
-                    }
-                else
-                    return false;
-            } 
-
-            return true;
+            return true;                
         }
 
         private async Task<bool> CheckConfig()
         {
-            if (!File.Exists(Util.ConfigPath(ViewModel.FolderPath))) {
+            if (!File.Exists(Util.ConfigPath(ViewModel.FolderPath)))
+            {
                 Notify("Config file found locally");
 
                 if (await MessageBox.Show(this, 
                     "Config not found, retrieve from remote?", "Config File Model", 
                     MessageBox.MessageBoxButtons.YesNo) == MessageBox.MessageBoxResult.Yes) {
-                        if (Sftp.RetrieveWeights(ViewModel.FolderPath))
-                            return true;
+                        if (Sftp.Download(Ssh.Connection, Util.RemoteFolder(ViewModel.FolderPath),
+                            ViewModel.FolderPath, Util.ConfigPath(ViewModel.FolderPath))) 
+                        {
+                            if (!File.Exists(Util.WeightsPath(ViewModel.FolderPath))) {
+                                Notify("Configuration model not founds locally");
+                                return false;
+                            }
+
+                            return true;                            
+                        }
                         else {
                             Notify("Error retrieving model config");                        
                             return false;
