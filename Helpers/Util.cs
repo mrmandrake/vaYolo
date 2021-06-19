@@ -93,7 +93,15 @@ namespace vaYolo.Helpers
         public static string GetTemplatePath(string name)
         {
             var appDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return Path.Combine(appDir, "templates", name);
+            return Path.Combine(appDir, "darknet", "templates", name);
+        }
+
+        public static string ScreenName(string localFolder) {
+            return "vayolo." + new DirectoryInfo(localFolder).Name;
+        }
+
+        public static string RemoteFolder(string localFolder) {
+            return Path.Combine(Settings.Get().SshRemote, ScreenName(localFolder)).Replace('\\', '/');
         }
 
         public static List<string> ListLabeledInFolder(string dir)
