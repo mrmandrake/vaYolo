@@ -12,6 +12,8 @@ using Microsoft.VisualBasic.FileIO;
 using vaYolo.Ext;
 using System.Threading.Tasks;
 using Avalonia.Threading;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace vaYolo.ViewModels
 {
@@ -126,7 +128,8 @@ namespace vaYolo.ViewModels
         }
 
         public void write(string str) {
-            Document.Insert(Document.TextLength, str + "\n");
+            var a = str.SplitBy();
+            a.ToList().ForEach((p) => Document.Insert(Document.TextLength, p + "\n"));
         } 
 
         public bool Init()
@@ -305,7 +308,7 @@ namespace vaYolo.ViewModels
                         .Save(Util.ValidListPath(sshLocalFolder));            
         }
 
-        public void Refresh() {
+        public bool Refresh() {
             var numIterations = GetInfo(SshRemoteFolder) / 100;
             if (numIterations > 0 &&
                 CurrentNumIterations != numIterations) {
@@ -317,7 +320,10 @@ namespace vaYolo.ViewModels
                 ScreenPid > 0) {
                 write(String.Format("max batch reached, killing job {0}", ScreenPid));
                 Kill();
+                return false;                
             }
+
+            return true;
         } 
 
         public void Kill() {

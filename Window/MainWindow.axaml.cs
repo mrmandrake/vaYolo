@@ -151,7 +151,7 @@ namespace vaYolo.Views
 
         private async void CreateProject() {
             var folder = await new OpenFolderDialog() {
-                Title = "Select Folder Dialog"
+                Title = "Open Existing vayolo Project or select new empty project folder"
             }.ShowAsync(this);
 
             if (folder == null) {

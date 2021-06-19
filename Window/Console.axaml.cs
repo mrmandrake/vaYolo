@@ -33,8 +33,8 @@ namespace vaYolo.Views
             AvaloniaXamlLoader.Load(this);
             this.WhenActivated(async (d) =>
             {
-                //input.KeyDown += InputBlock_KeyDown;
-                //input.Focus();
+                input.KeyDown += InputBlock_KeyDown;
+                input.Focus();
                 output.TextArea.Caret.CaretBrush = Brushes.Transparent;
                 if (!ViewModel.Init())
                 {
@@ -53,7 +53,11 @@ namespace vaYolo.Views
 
         private void StartTimer()
         {
-            timer.Tick += (sender, e) => ViewModel.Refresh();
+            timer.Tick += (sender, e) => {
+                if (!ViewModel.Refresh())
+                    timer.Stop();
+            };
+
             timer.Start();
         }
 

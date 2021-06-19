@@ -15,7 +15,7 @@
 		<vm:ConsoleViewModel/>
 	</Design.DataContext>
 
-	<DockPanel LastChildFill="True" Height="800" Width="1200">
+	<DockPanel LastChildFill="True" Height="600" Width="740">
 		<!--<StackPanel IsVisible="False" Orientation="Horizontal" DockPanel.Dock="Top" Margin="4">
 			<TextBlock Text="Server" Margin="0 8 0 0"/>
 			<TextBox Name="Server" Text="{Binding SshServer}" Width="200" Margin="4 0 10 0" />
@@ -44,12 +44,15 @@
 						<avaloniaedit:TextEditor Name="ConsoleOutput" Margin="8" Document="{Binding Document}"
 							HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" FontSize="13"/>
 					</ExperimentalAcrylicBorder>
-					<!--<TextBox IsVisible="False" Grid.Row="1" Grid.Column="0" Height="42" Text="{Binding ConsoleInput}"
-						Background="DarkGray" Foreground="LightGray" FontFamily="Consolas" Margin="0 8 0 8"
-						Name="InputBlock" BorderBrush="{x:Null}" SelectionBrush="{x:Null}"/>-->
+		<StackPanel Orientation="Horizontal">
+		<TextBox IsVisible="False" Grid.Row="1" Grid.Column="0" Text="{Binding ConsoleInput}"
+			Background="DarkGray" Foreground="LightGray" FontFamily="Consolas" Margin="0 8 0 8"
+			Name="InputBlock" BorderBrush="{x:Null}" SelectionBrush="{x:Null}"/>
           <Button Name="btnKill" Grid.Row="1" Grid.Column="0" Width="150"
                   HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                   Click="OnKillClick" Content="Kill"/>
+
+		</StackPanel>
         </Grid>
 			</TabItem>
 			<TabItem Header="Chart" FontSize="12">				
