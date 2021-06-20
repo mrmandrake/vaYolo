@@ -125,8 +125,8 @@ namespace vaYolo
                 SshPassword = "",
                 SshRemoteDarknet = "/home/manovella/src/darknet/darknet",
                 SshRemote = "/tmp",
-                ScoreThreshold = 0.8f,
-                NMSThreshold = 0.1f
+                ScoreThreshold = 0.25f,
+                NMSThreshold = 0.4f
             };
         }
 

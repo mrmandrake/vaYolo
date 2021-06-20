@@ -5,3 +5,4 @@ mkdir ./darknet/cfg/*.cfg ./bin/Release/net6.0/osx-x64/publish/vaYolo.app/Conten
 mkdir ./darknet/cfg/*.cfg ./bin/Release/net6.0/osx-x64/publish/vaYolo.app/Contents/MacOS/darknet/pretrained
 cp -rvf ./darknet/templates/*.cfg ./bin/Release/net6.0/osx-x64/publish/vaYolo.app/Contents/MacOS/darknet/templates
 cp -rvf ./darknet/pretrained/*.weights ./bin/Release/net6.0/osx-x64/publish/vaYolo.app/Contents/MacOS/darknet/pretrained
+cp -rvf ./darknet/lib/*.dylib ./bin/Release/net6.0/osx-x64/publish/vaYolo.app/Contents/MacOS/
