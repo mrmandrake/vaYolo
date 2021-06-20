@@ -28,6 +28,7 @@
     <PackageReference Include="Avalonia.AvaloniaEdit" Version="*"/>
     <PackageReference Include="OpenCvSharp4" Version="*"/>
     <PackageReference Include="OpenCvSharp4.runtime.osx.10.15-x64" Version="*"/>
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="*"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
