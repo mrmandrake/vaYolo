@@ -8,15 +8,15 @@
         Title="{Binding Title}">
 
   <DockPanel LastChildFill="True">
-    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="42">
-      <Button Name="OpenImage" Content="Open Image"/>
-      <Button Name="Retrieve Weights" Content="Retrieve Weights"/>
-      <Slider Name="ScoreThreshold" Value="{Binding ScoreThreshold}" Width="200" Margin="30 -10"/>
-      <Slider Name="NMSThreshold" Value="{Binding NMSThreshold}" Width="200" Margin="30 -10"/>
+    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="64">
+      <Button Name="OpenImage" Content="Open Image" Click="OnOpenImageClick"/>
+      <Button Name="Retrieve Weights" Content="Retrieve Weights" Click="OnRetrieveWeights"/>
+      <NumericUpDown Name="ScoreThreshold" Value="{Binding ScoreThreshold}" Minimum="0.01" Maximum="1.0" Width="200" ValueChanged="OnThresholdChanged"/>
+      <NumericUpDown Name="NMSThreshold" Value="{Binding NMSThreshold}" Minimum="0.01" Maximum="1.0"  Width="200" ValueChanged="OnThresholdChanged"/>
     </StackPanel>
     <DataGrid DockPanel.Dock="Top" Name="BBoxGrid" Margin="4" AutoGenerateColumns="False"
-					  IsReadOnly="True" HorizontalAlignment="Stretch"
-					  ColumnWidth="Auto" SelectionMode="Single" Items="{Binding Boxes}">
+					  IsReadOnly="True" HorizontalAlignment="Stretch" IsVisible="False"
+					  ColumnWidth="Auto" SelectionMode="Single" Items="{Binding Boxes}" MaxHeight="300">
       <DataGrid.Columns>
         <DataGridTextColumn Header="prob" Binding="{Binding prob}" Width="64" FontSize="14"/>
         <DataGridTextColumn Header="class" Binding="{Binding class}" Width="64" FontSize="14"/>

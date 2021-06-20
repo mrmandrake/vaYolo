@@ -9,6 +9,7 @@ using vaYolo.Controls;
 using ReactiveUI;
 using Avalonia.Media;
 using vaYolo.Helpers;
+using Avalonia.Input;
 
 namespace vaYolo.Views
 {
@@ -27,11 +28,27 @@ namespace vaYolo.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+            ImageBox.GridColor = Brushes.DarkGray;
+            ImageBox.GridColorAlternate = Brushes.DarkGray;
+
             this.WhenActivated(async (d) => {
-                ViewModel.Detect(await Util.GetPath(this));
-                ImageBox.GridColor = Brushes.Black;
-                ImageBox.GridColorAlternate = Brushes.DarkGray;
+                LoadImage();
             });
+        }
+
+        protected void OnOpenImageClick(object sender, RoutedEventArgs args) {
+            LoadImage();
+        }
+
+        protected void OnRetrieveWeights(object sender, RoutedEventArgs args) {
+            LoadImage();
+        }
+        private async void LoadImage() {
+            ViewModel.Detect(await Util.GetPath(this));
+        }
+
+        protected void OnThresholdChanged(object sender, NumericUpDownValueChangedEventArgs args) {
+            ViewModel.UpdateRoi();
         }
     }
 }

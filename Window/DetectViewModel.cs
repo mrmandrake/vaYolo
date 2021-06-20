@@ -77,8 +77,13 @@ namespace vaYolo.ViewModels
 
         public DetectViewModel(string folder)
         {
-            FolderPath = folder;       
+            FolderPath = folder;
+            Yolo = new YoloWrapper(
+                Util.ConfigPath(FolderPath), 
+                Util.WeightsPath(FolderPath), 0);
         }
+
+        private static YoloWrapper Yolo;
 
         public async void Detect(string imgPath) {
             Img = new Bitmap(imgPath);
@@ -90,17 +95,13 @@ namespace vaYolo.ViewModels
                         Settings.Get().NMSThreshold);
 
             await Task.Run(new Action(() => {
-                var yolo = new YoloWrapper(
-                        Util.ConfigPath(FolderPath), 
-                        Util.WeightsPath(FolderPath), 0);
-                Boxes = yolo.Detect(ImgPath);
-
+                Boxes = Yolo.Detect(ImgPath);
                 UpdateRoi();
                 UpdateTitle();
             }));
         }
 
-        private void UpdateRoi()
+        public void UpdateRoi()
         {
             int[] indexes;
             OpenCvSharp.Dnn.CvDnn.NMSBoxes(
