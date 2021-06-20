@@ -108,14 +108,6 @@ namespace vaYolo.Views
                 Ctrl.Move(e.GetCurrentPoint((Avalonia.Controls.Image)sender).Position);
         }
 
-        public async Task<string?> GetPath()
-        {
-            OpenFileDialog dialog = new OpenFileDialog() { AllowMultiple = false };
-            dialog.Filters.Add(new FileDialogFilter() { Name = "Images", Extensions = { "jpg;png" } });
-            string[] result = await dialog.ShowAsync(this);
-            return (result != null && result.Length > 0) ? result[0] : null;
-        }
-
         private bool LoadFirstImage(string dir) {
             var imgs = Util.ListImagesInFolder(dir);
             if (imgs.Count > 0) {
@@ -296,7 +288,7 @@ namespace vaYolo.Views
 
             DataSavedCheck();
 
-            await ViewModel.LoadImage(await GetPath());
+            await ViewModel.LoadImage(await Util.GetPath(this));
             if (ViewModel.Img != null)
                 Manager.Instance.Rects = ViewModel.LoadData();
 
@@ -336,17 +328,9 @@ namespace vaYolo.Views
             DataSavedCheck();            
             if (await CheckWeights() && 
                 await CheckConfig())
-            {
-                var path = await GetPath();
-
-                if (!File.Exists(path))
-                    return;
-
-                new Detect()
-                {
-                    ViewModel = new DetectViewModel(path, ViewModel.FolderPath)
+                new Detect() {
+                    ViewModel = new DetectViewModel(ViewModel.FolderPath)
                 }.Show(this);
-            }
         }
 
         private async Task<bool> CheckWeights()

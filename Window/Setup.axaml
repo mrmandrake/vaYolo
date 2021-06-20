@@ -40,8 +40,6 @@
 						<TextBox Name="SshPassword" Watermark="Ssh password" DockPanel.Dock="Top" Margin="4" PasswordChar="." Text="{Binding SshPassword}"/>
 					</StackPanel>
 				</TabItem>
-				<TabItem Header="Classes" FontSize="14">
-				</TabItem>
 
 				<TabItem Header="Model" FontSize="14">
 					<StackPanel Margin="10">

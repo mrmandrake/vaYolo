@@ -20,7 +20,6 @@
 				<NativeMenuItem.Menu>
 					<NativeMenu>
 						<NativeMenuItem Header="Open Project" Clicked="OnNativeLoadProjectClicked"/>
-						<NativeMenuItem Header="Create New Project" Clicked="OnNativeCreateProjectClicked"/>
 						<NativeMenuItem Header="Import new Images" Clicked="OnNativeImportImagesClicked"/>
 						<NativeMenuItem Header="About vaYolo" Clicked="OnNativeAboutClicked"/>
 					</NativeMenu>
@@ -63,7 +62,6 @@
 			IsEnabled="{Binding IsWin}">
 			<MenuItem Header="File">
 				<MenuItem Header="Open Project" Click="OnLoadProjectClicked"/>
-				<MenuItem Header="Create New Project" Click="OnCreateProjectClicked"/>
 				<MenuItem Header="Import new Images" Click="OnImportImagesClicked"/>
 				<MenuItem Header="About vaYolo" Click="OnAboutClicked"/>
 			</MenuItem>

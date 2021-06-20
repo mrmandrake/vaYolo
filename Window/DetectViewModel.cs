@@ -26,7 +26,31 @@ namespace vaYolo.ViewModels
         string Title {
             get => title;
             set => this.RaiseAndSetIfChanged(ref title, value);
-        }        
+        }
+
+        bbox_t[] boxes;
+
+        public bbox_t[] Boxes
+        {
+            get => boxes;
+            set => this.RaiseAndSetIfChanged(ref boxes, value);
+        }
+
+        float scoreThreshold;
+
+        public float ScoreThreshold
+        {
+            get => scoreThreshold;
+            set => this.RaiseAndSetIfChanged(ref scoreThreshold, value);
+        }
+
+        float nmsThreshold;
+
+        public float NMSThreshold
+        {
+            get => nmsThreshold;
+            set => this.RaiseAndSetIfChanged(ref nmsThreshold, value);
+        }
 
         ObservableCollection<Rect> roi;
 
@@ -51,14 +75,15 @@ namespace vaYolo.ViewModels
             return new Rect(box.x, box.y, box.w, box.h);
         }
 
-        public DetectViewModel(string imgPath, string folder)
+        public DetectViewModel(string folder)
         {
-            Img = new Bitmap(imgPath); 
-            ImgPath = imgPath;
             FolderPath = folder;       
         }
 
-        public async void Detect() {
+        public async void Detect(string imgPath) {
+            Img = new Bitmap(imgPath);
+            ImgPath = imgPath;
+
             Title = String.Format("Detecting on {0}, Thresholds: {1} {2} ......", 
                         ImgPath,                     
                         Settings.Get().ScoreThreshold, 
@@ -68,23 +93,30 @@ namespace vaYolo.ViewModels
                 var yolo = new YoloWrapper(
                         Util.ConfigPath(FolderPath), 
                         Util.WeightsPath(FolderPath), 0);
-                var boxes = yolo.Detect(ImgPath);  
-                int[] indexes;
-                OpenCvSharp.Dnn.CvDnn.NMSBoxes(
-                    from b in boxes select new OpenCvSharp.Rect((int)b.x, (int)b.y, (int)b.w, (int)b.h), 
-                    from b in boxes select b.prob, 
-                    Settings.Get().ScoreThreshold, 
-                    Settings.Get().NMSThreshold, 
-                    out indexes);
+                Boxes = yolo.Detect(ImgPath);
 
-                Roi = new ObservableCollection<Rect>(from i in indexes select GetRect(boxes[i]));
-
-                Title = String.Format("{0} Objects on {1} Thresholds: {1} ,  {2}", 
-                        Roi.Count(),
-                        ImgPath,                     
-                        Settings.Get().ScoreThreshold, 
-                        Settings.Get().NMSThreshold);
+                UpdateRoi();
+                UpdateTitle();
             }));
+        }
+
+        private void UpdateRoi()
+        {
+            int[] indexes;
+            OpenCvSharp.Dnn.CvDnn.NMSBoxes(
+                from b in Boxes select new OpenCvSharp.Rect((int)b.x, (int)b.y, (int)b.w, (int)b.h),
+                from b in Boxes select b.prob,
+                ScoreThreshold, NMSThreshold,
+                out indexes);
+
+            Roi = new ObservableCollection<Rect>(from i in indexes select GetRect(Boxes[i]));
+        }
+
+        private void UpdateTitle()
+        {
+            Title = String.Format("{0} Objects on {1} Thresholds: {1} ,  {2}",
+                        Roi.Count(), ImgPath,
+                        ScoreThreshold, NMSThreshold);
         }
     }
 }

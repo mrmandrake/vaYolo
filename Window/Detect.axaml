@@ -6,6 +6,28 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800"
         x:Class="vaYolo.Views.Detect"
         Title="{Binding Title}">
-  <ctrls:AdvancedImageBox Name="ImageBox" 
-        Image="{Binding Img}" Regions="{Binding Roi}"/>
+
+  <DockPanel LastChildFill="True">
+    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="42">
+      <Button Name="OpenImage" Content="Open Image"/>
+      <Button Name="Retrieve Weights" Content="Retrieve Weights"/>
+      <Slider Name="ScoreThreshold" Value="{Binding ScoreThreshold}" Width="200" Margin="30 -10"/>
+      <Slider Name="NMSThreshold" Value="{Binding NMSThreshold}" Width="200" Margin="30 -10"/>
+    </StackPanel>
+    <DataGrid DockPanel.Dock="Top" Name="BBoxGrid" Margin="4" AutoGenerateColumns="False"
+					  IsReadOnly="True" HorizontalAlignment="Stretch"
+					  ColumnWidth="Auto" SelectionMode="Single" Items="{Binding Boxes}">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="prob" Binding="{Binding prob}" Width="64" FontSize="14"/>
+        <DataGridTextColumn Header="class" Binding="{Binding class}" Width="64" FontSize="14"/>
+        <DataGridTextColumn Header="x" Binding="{Binding x}" Width="20" FontSize="14"/>
+        <DataGridTextColumn Header="y" Binding="{Binding y}" Width="20" FontSize="14"/>
+        <DataGridTextColumn Header="w" Binding="{Binding w}" Width="20" FontSize="14"/>
+        <DataGridTextColumn Header="h" Binding="{Binding h}" Width="20" FontSize="14"/>
+        <DataGridTextColumn Header="Image" Binding="{Binding ImagePath}" FontSize="12"/>
+      </DataGrid.Columns>
+    </DataGrid>
+    <ctrls:AdvancedImageBox Name="ImageBox"
+          Image="{Binding Img}" Regions="{Binding Roi}"/>
+  </DockPanel>
 </Window>

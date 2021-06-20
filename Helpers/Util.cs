@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
+using Avalonia.Controls;
 
 namespace vaYolo.Helpers
 {
@@ -145,6 +147,15 @@ namespace vaYolo.Helpers
                 return null;
 
             return images[++idx];
-        }                
+        }
+
+        public static async Task<string?> GetPath(Window wnd)
+        {
+            OpenFileDialog dialog = new OpenFileDialog() { AllowMultiple = false };
+            dialog.Filters.Add(new FileDialogFilter() { Name = "Images", Extensions = { "jpg;png" } });
+            string[] result = await dialog.ShowAsync(wnd);
+            return (result != null && result.Length > 0) ? result[0] : null;
+        }
+
     }
 }
