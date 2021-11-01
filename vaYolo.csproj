@@ -17,11 +17,11 @@
     <None Remove="Models\**"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.999-cibuild0014036-beta"/>
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.999-cibuild0014036-beta"/>
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.999-cibuild0014036-beta"/>
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.999-cibuild0014036-beta"/>
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.999-cibuild0014036-beta"/>
+    <PackageReference Include="Avalonia" Version="0.10.10"/>
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.10"/>
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.10"/>
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.10"/>
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.10"/>
     <PackageReference Include="System.Resources.Extensions" Version="*"/>
     <PackageReference Include="Dotnet.Bundle" Version="*"/>
     <PackageReference Include="SSH.NET" Version="*"/>
