@@ -1,4 +1,4 @@
-    Very Anonymous Yolo labeling Toolkit in the Covid Era (Optimised 4 Macos + IPad + Pencil
+    Very Anonymous Yolo labeling Toolkit in the Covid Era (Optimised 4 Macos + IPad + Pencil)
 
 ![vayolo](https://user-images.githubusercontent.com/50768285/121197227-6d90d500-c871-11eb-841e-7bdf9898b320.png)
 
